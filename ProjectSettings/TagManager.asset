@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Tire
+  - Car
+  - Player
+  - CarSphere
   - 
   - 
   - 
