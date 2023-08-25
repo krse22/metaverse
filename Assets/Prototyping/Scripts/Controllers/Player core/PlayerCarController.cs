@@ -51,7 +51,6 @@ namespace Prototyping {
             if (car != null)
             {
                 closestCar = car.gameObject;
-                Debug.Log(closestCar.gameObject.transform.name);
             }
         }
 
