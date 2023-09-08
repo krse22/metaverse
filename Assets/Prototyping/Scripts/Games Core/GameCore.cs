@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace Prototyping {
+
     public class GameCore : MonoBehaviour
     {
         public static GameCore Instance { get; private set; }
@@ -12,7 +13,6 @@ namespace Prototyping {
         {
             Instance = this;    
         }
-
 
     }
 }

@@ -2,8 +2,14 @@ using UnityEngine;
 
 namespace Prototyping
 {
+    public interface IGamePortal
+    {
+        void Play();
+    }
+
     public class GamePortal : MonoBehaviour
     {
+        [SerializeField] private GameObject game;
         [SerializeField] private string gameName;
         private GamePortalSingle portalSingle;
 
@@ -16,7 +22,7 @@ namespace Prototyping
 
         public void OnPlay()
         {
-            Debug.Log("Play " + gameName);
+            game.GetComponent<IGamePortal>().Play();
         }
 
     }
