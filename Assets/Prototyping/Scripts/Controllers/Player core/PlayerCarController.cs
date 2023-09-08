@@ -1,14 +1,21 @@
 using UnityEngine;
 using ArcadeVP;
+using UnityEngine.UIElements;
 
 namespace Prototyping {
-    public class PlayerCarController : MonoBehaviour
+    public class PlayerCarController : MonoBehaviour, ICameraHolder
     {
         [SerializeField] private LayerMask carMask;
         [SerializeField] private float carSearchRadius;
 
+        private PlayerReference reference;
         private GameObject closestCar;
         private ArcadeVehicleController currentCar;
+
+        private void Start()
+        {
+            reference = GetComponent<PlayerReference>();
+        }
 
         void Update()
         {
@@ -75,13 +82,23 @@ namespace Prototyping {
         {
             currentCar = closestCar.GetComponent<ArcadeVehicleController>();
             currentCar.EnterCar(this);
+            reference.rb.isKinematic = true;
+            PlayerCoreCamera.SetCameraOwner(this);
         }
 
         void ExitCar()
         {
             currentCar.LeaveCar(this);
             currentCar = null;
+            reference.rb.isKinematic = false;
+            PlayerCoreCamera.SetCameraOwner(reference.coreController);
         }
-       
+
+        public (Vector3, Vector3) positionAndRotation()
+        {
+            Vector3 camTargetPos = new Vector3(currentCar.transform.position.x, currentCar.transform.position.y + 35f, currentCar.transform.position.z - 12.5f);
+            Vector3 camTargetRot = new Vector3(70f, 0f, 0f);
+            return (camTargetPos, camTargetRot);
+        }
     }
 }

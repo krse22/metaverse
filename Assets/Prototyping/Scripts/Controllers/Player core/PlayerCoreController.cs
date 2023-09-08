@@ -2,8 +2,14 @@ using UnityEngine;
 
 namespace Prototyping
 {
-    public class PlayerCoreController : MonoBehaviour
+    public class PlayerCoreController : MonoBehaviour, ICameraHolder
     {
+        [Header("Camera")]
+        [SerializeField] private float zPosition;
+        [SerializeField] private float yPosition;
+        [SerializeField] private float xRotation;
+
+        [Header("Movement")]
         [SerializeField] private float movementSpeed;
         private float horizontal;
         private float vertical;
@@ -12,8 +18,8 @@ namespace Prototyping
 
         private void Start()
         {
-            PlayerCoreCamera.Instance.RegisterTransformTarget(transform);
             rb = GetComponent<Rigidbody>();
+            PlayerCoreCamera.SetCameraOwner(this);
         }
 
         private void FixedUpdate()
@@ -25,5 +31,11 @@ namespace Prototyping
             rb.velocity = velocity;
         }
 
+        public (Vector3, Vector3) positionAndRotation()
+        {
+            Vector3 camTargetPos = new Vector3(transform.position.x, transform.position.y + yPosition, transform.position.z + zPosition);
+            Vector3 camTargetRot = new Vector3(xRotation, 0f, 0f);
+            return (camTargetPos, camTargetRot);
+        }
     }
 }

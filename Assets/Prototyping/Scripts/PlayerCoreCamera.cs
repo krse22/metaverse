@@ -3,31 +3,32 @@ using UnityEngine;
 namespace Prototyping {
     public class PlayerCoreCamera : MonoBehaviour
     {
-        public static PlayerCoreCamera Instance;
+        private static PlayerCoreCamera Instance;
 
         [SerializeField] private float zPosition;
         [SerializeField] private float yPosition;
         [SerializeField] private float xRotation;
 
-        private Transform target;
+        private ICameraHolder target;
 
         void Awake () {
             Instance = this;
+        }
+
+        public static void SetCameraOwner(ICameraHolder holderTarget) {
+            Instance.target = holderTarget;
         }
 
         private void LateUpdate()
         {
             if (target != null)
             {
-                transform.position = new Vector3 (target.position.x, yPosition, target.position.z + zPosition);
-                transform.rotation = Quaternion.Euler(xRotation, 0f, 0f);
+                (Vector3 positionTarget, Vector3 rotationTarget) = target.positionAndRotation();
+                transform.position = positionTarget;
+                transform.rotation = Quaternion.Euler(rotationTarget);
             }
         }
 
-        public void RegisterTransformTarget(Transform transform)
-        {
-            target = transform;
-        }
 
     }
 }
