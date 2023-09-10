@@ -15,7 +15,7 @@ namespace Prototyping.Games
 
         private Rigidbody rb;
         private CapsuleCollider capsuleCollider;
-        private bool startController = false;
+        private PlayerRunnerManager playerRunnerManager;
 
         private int[] positions = { -1, 0, 1 };
         private int currentPosition = 0;
@@ -25,6 +25,8 @@ namespace Prototyping.Games
 
         private bool sliding = false;
         private Coroutine slideCoroutine;
+
+        private bool runGame = true;
 
         [Header("Delta")]
         [SerializeField] private float deltaRange;
@@ -37,19 +39,36 @@ namespace Prototyping.Games
             capsuleCollider = GetComponent<CapsuleCollider>();  
         }
 
-        public void StartController()
+        public void StartController(PlayerRunnerManager manager)
         {
-            startController = true;
             currentX = transform.position.x;
             initialZ = transform.position.z;
+            playerRunnerManager = manager;
         }
 
         void Update()
         {
-            Inputs();
-            CalculateDeltaX();
-            Positions();
-            RemoveSlide();
+            if (!runGame)
+            {
+                Inputs();
+                CalculateDeltaX();
+                Positions();
+                RemoveSlide();
+            } else
+            {
+                rb.velocity = Vector3.zero;
+            }
+        }
+
+        public void ObsticleHit()
+        {
+            runGame = true;
+            playerRunnerManager.OnGameEnd();
+        }
+
+        public void Restart()
+        {
+            runGame = false;
         }
 
         void FixedUpdate()
@@ -140,7 +159,7 @@ namespace Prototyping.Games
 
         void BaseMovement()
         {
-            if (startController)
+            if (!runGame)
             {
                 Vector3 velocityVector = new Vector3(rb.velocity.x, rb.velocity.y, movementSpeed);
                 rb.velocity = velocityVector;

@@ -1,3 +1,4 @@
+using Prototyping.Games;
 using UnityEngine;
 
 namespace Prototyping {
@@ -9,9 +10,16 @@ namespace Prototyping {
         [Header("UI Prefabs")]
         public GameObject GamePortalSingle;
 
+        [SerializeField] private PlayerCoreController playerCoreController;
+
         private void Awake()
         {
             Instance = this;    
+        }
+
+        public void ExitPortal()
+        {
+            PlayerCoreCamera.SetCameraOwner(playerCoreController);
         }
 
     }
