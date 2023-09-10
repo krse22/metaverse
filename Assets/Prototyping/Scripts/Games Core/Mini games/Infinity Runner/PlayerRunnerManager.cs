@@ -5,11 +5,19 @@ namespace Prototyping.Games
     public class PlayerRunnerManager : MonoBehaviour, IGamePortal
     {
         [SerializeField] private Transform player;
+        [SerializeField] private Transform positions;
+        
+        PlayerRunnerController controller;
 
         public void Play()
         {
-            PlayerCoreCamera.SetCameraOwner(player.GetComponent<PlayerRunnerController>());
+            controller = player.GetComponent<PlayerRunnerController>();
+            PlayerCoreCamera.SetCameraOwner(controller);
+            controller.StartController();
         }
+
+
+
     }
 }
 
