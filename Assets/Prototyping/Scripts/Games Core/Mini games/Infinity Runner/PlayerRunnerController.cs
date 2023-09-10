@@ -23,7 +23,8 @@ namespace Prototyping.Games
         private float currentX = 0f;
         private float deltaX = 0f;
 
-        private bool hasJumped = false;
+        private bool sliding = false;
+        private Coroutine slideCoroutine;
 
         [Header("Delta")]
         [SerializeField] private float deltaRange;
@@ -58,36 +59,82 @@ namespace Prototyping.Games
 
         void Inputs()
         {
-            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !hasJumped)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-                hasJumped = true;
-                StartCoroutine(ResetJump());
+                Jump();
             }
             if (Input.GetKeyDown(KeyCode.A))
             {
-                if (currentPosition > positions[0])
-                {
-                    rb.AddForce(-transform.right * sideForce, ForceMode.Impulse);
-                    currentPosition--;
-                }
+                SlideLeft();
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
-           
-                if (currentPosition < positions[positions.Length - 1])
-                {
-                    rb.AddForce(transform.right * sideForce, ForceMode.Impulse);
-                    currentPosition++;
-                }
+                SlideRight();
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                Slide();
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y, initialZ);
             }
-            if (Input.GetKeyDown(KeyCode.S))
+        }
+
+        void Jump()
+        {
+            if (IsGrounded())
             {
-                capsuleCollider.height = 0.25f;
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                StopSlideCoroutine();
+            }
+        }
+
+        void SlideLeft()
+        {
+            if (currentPosition > positions[0])
+            {
+                rb.AddForce(-transform.right * sideForce, ForceMode.Impulse);
+                currentPosition--;
+            }
+        }
+
+        void SlideRight()
+        {
+            if (currentPosition < positions[positions.Length - 1])
+            {
+                rb.AddForce(transform.right * sideForce, ForceMode.Impulse);
+                currentPosition++;
+            }
+        }
+
+        void Slide()
+        {
+            if (!sliding)
+            {
+                capsuleCollider.height = 1f;
+                sliding = true;
+                slideCoroutine = StartCoroutine(ResetSlide());
+                if (!IsGrounded())
+                {
+                    rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
+                }
+            } else
+            {
+                if (slideCoroutine != null)
+                {
+                    StopCoroutine(slideCoroutine);
+                    slideCoroutine = StartCoroutine(ResetSlide());
+                }
+            }
+        }
+
+        void StopSlideCoroutine()
+        {
+            if (slideCoroutine != null)
+            {
+                StopCoroutine(slideCoroutine);
+                sliding = false;
             }
         }
 
@@ -118,18 +165,21 @@ namespace Prototyping.Games
 
         void RemoveSlide()
         {
-
+            if (!sliding)
+            {
+                capsuleCollider.height = Mathf.Lerp(capsuleCollider.height, 2f, Time.deltaTime * 15f);
+            }
         }
 
         bool IsGrounded ()
         {
-            return Physics.Raycast(transform.position, -transform.up, capsuleCollider.height + 0.0001f, groundMask);
+            return Physics.Raycast(transform.position, -transform.up, capsuleCollider.height / 2f + 0.0001f, groundMask);
         }
 
-        IEnumerator ResetJump()
+        IEnumerator ResetSlide()
         {
-            yield return new WaitForSeconds(0.5f);
-            hasJumped = false;
+            yield return new WaitForSeconds(1.2f);
+            sliding = false;
         }
 
         public (Vector3, Vector3) positionAndRotation()

@@ -16,8 +16,6 @@ namespace Prototyping.Games
             controller.StartController();
         }
 
-
-
     }
 }
 
