@@ -11,22 +11,27 @@ namespace Prototyping.Games
         [SerializeField] private GameObject endgameUI;
         [SerializeField] private int laneCount;
 
-        [SerializeField] private bool isPrototype;
-
         PlayerRunnerController controller;
 
+        [SerializeField] private bool prototype;
+
+        private List<Transform> currentBlocks;
 
         void Start()
         {
-            if (isPrototype)
+            if (prototype)
             {
-                RestartGame();
+                Play();
             }
         }
 
         public void Play()
         {
-
+            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
+            currentBlocks = new List<Transform>();
+            controller = player.GetComponent<PlayerRunnerController>();
+            PlayerCoreCamera.SetCameraOwner(controller);
+            endgameUI.SetActive(true);
         }
 
         private int[] GenerateLanes()
@@ -55,13 +60,10 @@ namespace Prototyping.Games
             endgameUI.SetActive(true);
         }
 
-        public void RestartGame() {
+        public void StartGame() {
             endgameUI.SetActive(false);
-            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
-            controller = player.GetComponent<PlayerRunnerController>();
             int[] lanes = GenerateLanes();
             controller.Play(lanes);
-            PlayerCoreCamera.SetCameraOwner(controller);
         }
 
         public void ExitGame()

@@ -9,7 +9,7 @@ public class InfinityRunnerUI : MonoBehaviour
 
     public void RestartGame()
     {
-        manager.RestartGame();
+        manager.StartGame();
     }
 
     public void ExitGame()

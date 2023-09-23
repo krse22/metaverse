@@ -62,7 +62,6 @@ namespace Prototyping.Games
                 Inputs();
                 CalculateDelta();
                 SlideCanceling();
-                ForwardMovement();
                 CameraEffects();
             }
         }
@@ -106,7 +105,7 @@ namespace Prototyping.Games
         {
             if (lanePosition > lanes[0] && !dashing)
             {
-                rigidBody.AddForce(-transform.right * sideDashPower, ForceMode.Impulse);
+                rigidBody.AddForce(-Vector3.right * sideDashPower, ForceMode.Impulse);
                 lanePosition--;
                 dashing = true;
             }
@@ -116,7 +115,7 @@ namespace Prototyping.Games
         {
             if (lanePosition < lanes[lanes.Length - 1] && !dashing)
             {
-                rigidBody.AddForce(transform.right * sideDashPower, ForceMode.Impulse);
+                rigidBody.AddForce(Vector3.right * sideDashPower, ForceMode.Impulse);
                 lanePosition++;
                 dashing = true;
             }
@@ -127,7 +126,7 @@ namespace Prototyping.Games
             if (IsGrounded())
             {
                 float slideOffset = (initialColliderheight - colliderReference.height);
-                rigidBody.AddForce(transform.up * (jumpForce + slideOffset), ForceMode.Impulse);
+                rigidBody.AddForce(Vector3.up * (jumpForce + slideOffset), ForceMode.Impulse);
                 slideCancel = true;
             }
         }
@@ -137,7 +136,7 @@ namespace Prototyping.Games
             colliderReference.height = initialColliderheight / 2f;
             if (!IsGrounded())
             {
-                rigidBody.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
+                rigidBody.AddForce(-Vector3.up * jumpForce, ForceMode.Impulse);
             }
             isSliding = true;
             cancelTick = Time.time;
@@ -169,7 +168,7 @@ namespace Prototyping.Games
                 float delta = Math.Abs(currentX - transform.position.x);
                 if (delta > sideDashDistance)
                 {
-                    rigidBody.velocity = new Vector3(0f, transform.position.y, transform.position.z);
+                    rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y, rigidBody.velocity.z);
 
                     float side = Math.Sign(lanePosition);
                     float targetX = initialX + (sideDashDistance * Mathf.Abs(lanePosition) * side);
@@ -179,12 +178,6 @@ namespace Prototyping.Games
                     dashing = false;
                 }
             }
-        }
-
-        void ForwardMovement()
-        {
-            Vector3 vec = rigidBody.velocity;
-            rigidBody.velocity = new Vector3(vec.x, vec.y, forwardForceBase);
         }
 
         bool IsGrounded()
