@@ -31,7 +31,7 @@ namespace Prototyping
             rb.velocity = velocity;
         }
 
-        public (Vector3, Vector3) positionAndRotation()
+        public (Vector3, Vector3) PositionAndRotation()
         {
             Vector3 camTargetPos = new Vector3(transform.position.x, transform.position.y + yPosition, transform.position.z + zPosition);
             Vector3 camTargetRot = new Vector3(xRotation, 0f, 0f);

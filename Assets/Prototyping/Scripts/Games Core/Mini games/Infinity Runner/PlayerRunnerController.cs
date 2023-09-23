@@ -1,87 +1,89 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Prototyping.Games
 {
     public class PlayerRunnerController : MonoBehaviour, ICameraHolder
     {
+        private Rigidbody rigidBody;
+        private CapsuleCollider colliderReference;
 
-        [Header("Main")]
-        [SerializeField] private Transform cameraPosition;
-        [SerializeField] private float movementSpeed;
-        [SerializeField] private float jumpForce;
-        [SerializeField] private float sideForce;
         [SerializeField] private LayerMask groundMask;
+        [SerializeField] private float sideDashPower;
+        [SerializeField] private float sideDashDistance;
 
-        private Rigidbody rb;
-        private CapsuleCollider capsuleCollider;
-        private PlayerRunnerManager playerRunnerManager;
+        private float currentX;
+        private float initialX;
+        private bool dashing = false;
 
-        private int[] positions = { -1, 0, 1 };
-        private int currentPosition = 0;
+        [SerializeField] private float jumpForce;
+        [SerializeField] private Transform cameraTarget;
+        private float camSinValue = 0;
+        private float initalCamLocalY;
 
-        private float currentX = 0f;
-        private float deltaX = 0f;
+        [SerializeField] private float camSinChangeForce;
+        [SerializeField] private float camSinYChange;
 
-        private bool sliding = false;
-        private Coroutine slideCoroutine;
+        private int[] lanes;
+        private int lanePosition = 0;
 
-        private bool runGame = true;
+        private float initialColliderheight;
+        private bool slideCancel = false;
+        private bool isSliding = false;
 
-        [Header("Delta")]
-        [SerializeField] private float deltaRange;
+        private float timeToCancel = 1.2f;
+        private float cancelTick = 0f;
 
-        // During development
-        private float initialZ;
+        [SerializeField] private float forwardForceBase;
+        private bool isPlaying = false;
 
-        void Start() { 
-            rb = GetComponent<Rigidbody>(); 
-            capsuleCollider = GetComponent<CapsuleCollider>();  
-        }
-
-        public void StartController(PlayerRunnerManager manager)
+        void Start()
         {
+            rigidBody = GetComponent<Rigidbody>();
+            colliderReference = GetComponent<CapsuleCollider>();
             currentX = transform.position.x;
-            initialZ = transform.position.z;
-            playerRunnerManager = manager;
+            initialX = transform.position.x;
+            initialColliderheight = colliderReference.height;
+            initalCamLocalY = cameraTarget.localPosition.y;
         }
 
-        void Update()
+        public void Play(int[] lanesFromManager)
         {
-            if (!runGame)
+            isPlaying = true;
+            lanes = lanesFromManager;
+        }
+
+        public void Update()
+        {
+            if (isPlaying)
             {
                 Inputs();
-                CalculateDeltaX();
-                Positions();
-                RemoveSlide();
-            } else
+                CalculateDelta();
+                SlideCanceling();
+                ForwardMovement();
+                CameraEffects();
+            }
+        }
+
+        void CameraEffects()
+        {
+            if (IsGrounded() && !isSliding)
             {
-                rb.velocity = Vector3.zero;
+                camSinValue += camSinChangeForce;
+                Vector3 localPos = cameraTarget.localPosition;
+                cameraTarget.localPosition = new Vector3(localPos.x, initalCamLocalY + Mathf.Sin(camSinValue) * camSinYChange, localPos.z);
             }
         }
 
         public void ObsticleHit()
         {
-            runGame = true;
-            playerRunnerManager.OnGameEnd();
-        }
-
-        public void Restart()
-        {
-            runGame = false;
-        }
-
-        void FixedUpdate()
-        {
-            BaseMovement();
+            Debug.Log("Game end");
         }
 
         void Inputs()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Jump();
-            }
             if (Input.GetKeyDown(KeyCode.A))
             {
                 SlideLeft();
@@ -90,13 +92,33 @@ namespace Prototyping.Games
             {
                 SlideRight();
             }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
+            }
             if (Input.GetKeyDown(KeyCode.S))
             {
                 Slide();
             }
-            if (Input.GetKeyDown(KeyCode.C))
+        }
+
+        void SlideLeft()
+        {
+            if (lanePosition > lanes[0] && !dashing)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y, initialZ);
+                rigidBody.AddForce(-transform.right * sideDashPower, ForceMode.Impulse);
+                lanePosition--;
+                dashing = true;
+            }
+        }
+
+        void SlideRight()
+        {
+            if (lanePosition < lanes[lanes.Length - 1] && !dashing)
+            {
+                rigidBody.AddForce(transform.right * sideDashPower, ForceMode.Impulse);
+                lanePosition++;
+                dashing = true;
             }
         }
 
@@ -104,110 +126,76 @@ namespace Prototyping.Games
         {
             if (IsGrounded())
             {
-                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-                StopSlideCoroutine();
-            }
-        }
-
-        void SlideLeft()
-        {
-            if (currentPosition > positions[0])
-            {
-                rb.AddForce(-transform.right * sideForce, ForceMode.Impulse);
-                currentPosition--;
-            }
-        }
-
-        void SlideRight()
-        {
-            if (currentPosition < positions[positions.Length - 1])
-            {
-                rb.AddForce(transform.right * sideForce, ForceMode.Impulse);
-                currentPosition++;
+                float slideOffset = (initialColliderheight - colliderReference.height);
+                rigidBody.AddForce(transform.up * (jumpForce + slideOffset), ForceMode.Impulse);
+                slideCancel = true;
             }
         }
 
         void Slide()
         {
-            if (!sliding)
+            colliderReference.height = initialColliderheight / 2f;
+            if (!IsGrounded())
             {
-                capsuleCollider.height = 1f;
-                sliding = true;
-                slideCoroutine = StartCoroutine(ResetSlide());
-                if (!IsGrounded())
+                rigidBody.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
+            }
+            isSliding = true;
+            cancelTick = Time.time;
+        }
+
+        void SlideCanceling()
+        {
+            if (Time.time > cancelTick + timeToCancel && !slideCancel)
+            {
+                slideCancel = true;
+            }
+
+            if (slideCancel)
+            {
+                colliderReference.height = Mathf.Lerp(colliderReference.height, initialColliderheight + 0.1f, Time.deltaTime * 8);
+                if (colliderReference.height > initialColliderheight)
                 {
-                    rb.AddForce(-transform.up * jumpForce, ForceMode.Impulse);
+                    slideCancel = false;
+                    isSliding = false;
+                    colliderReference.height = initialColliderheight;
                 }
-            } else
+            }
+        }
+
+        void CalculateDelta()
+        {
+            if (dashing)
             {
-                if (slideCoroutine != null)
+                float delta = Math.Abs(currentX - transform.position.x);
+                if (delta > sideDashDistance)
                 {
-                    StopCoroutine(slideCoroutine);
-                    slideCoroutine = StartCoroutine(ResetSlide());
+                    rigidBody.velocity = new Vector3(0f, transform.position.y, transform.position.z);
+
+                    float side = Math.Sign(lanePosition);
+                    float targetX = initialX + (sideDashDistance * Mathf.Abs(lanePosition) * side);
+                    transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
+                    currentX = transform.position.x;
+
+                    dashing = false;
                 }
             }
         }
 
-        void StopSlideCoroutine()
+        void ForwardMovement()
         {
-            if (slideCoroutine != null)
-            {
-                StopCoroutine(slideCoroutine);
-                sliding = false;
-            }
+            Vector3 vec = rigidBody.velocity;
+            rigidBody.velocity = new Vector3(vec.x, vec.y, forwardForceBase);
         }
 
-        void BaseMovement()
+        bool IsGrounded()
         {
-            if (!runGame)
-            {
-                Vector3 velocityVector = new Vector3(rb.velocity.x, rb.velocity.y, movementSpeed);
-                rb.velocity = velocityVector;
-            }
-        }
-        
-        void CalculateDeltaX()
-        {
-            deltaX = Mathf.Abs(currentX - transform.position.x);
+            return Physics.Raycast(transform.position, -transform.up, colliderReference.height / 2f + 0.1f, groundMask);
         }
 
-        void Positions()
+        public (Vector3, Vector3) PositionAndRotation()
         {
-            if (deltaX >= deltaRange)
-            {
-                float setX = Mathf.Round(transform.position.x);
-                transform.position = new Vector3(setX, transform.position.y, transform.position.z);
-                currentX = transform.position.x;
-                rb.velocity = new Vector3(0f, rb.velocity.y, rb.velocity.z);
-            }
+            return (cameraTarget.position, cameraTarget.eulerAngles);
         }
-
-        void RemoveSlide()
-        {
-            if (!sliding)
-            {
-                capsuleCollider.height = Mathf.Lerp(capsuleCollider.height, 2f, Time.deltaTime * 15f);
-            }
-        }
-
-        bool IsGrounded ()
-        {
-            return Physics.Raycast(transform.position, -transform.up, capsuleCollider.height / 2f + 0.0001f, groundMask);
-        }
-
-        IEnumerator ResetSlide()
-        {
-            yield return new WaitForSeconds(1.2f);
-            sliding = false;
-        }
-
-        public (Vector3, Vector3) positionAndRotation()
-        {
-            Vector3 pos = cameraPosition.position;
-            Vector3 rot = cameraPosition.rotation.eulerAngles;
-            return (pos, rot);
-        }
-
     }
 }
 

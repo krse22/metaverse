@@ -20658,7 +20658,6 @@ GameObject:
   - component: {fileID: 486707523}
   - component: {fileID: 486707526}
   - component: {fileID: 486707525}
-  - component: {fileID: 486707524}
   m_Layer: 0
   m_Name: StartPosition
   m_TagString: Untagged
@@ -20681,27 +20680,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1051166810}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &486707524
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 486707522}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &486707525
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36247,9 +36225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f186642b6963924f90fef3e60056c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zPosition: -12.5
-  yPosition: 35
-  xRotation: 70
 --- !u!1 &967375798
 GameObject:
   m_ObjectHideFlags: 0
@@ -41518,6 +41493,7 @@ MonoBehaviour:
   player: {fileID: 1367459552}
   startPosition: {fileID: 486707523}
   endgameUI: {fileID: 24930033}
+  laneCount: 3
 --- !u!1 &1105337064
 GameObject:
   m_ObjectHideFlags: 0
@@ -53147,14 +53123,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb604488e7b0c941a05d258ab775afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPosition: {fileID: 1600780945}
-  movementSpeed: 10
-  jumpForce: 5.5
-  sideForce: 9
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  deltaRange: 2
+  sideDashPower: 200
+  sideDashDistance: 3
+  jumpForce: 5.5
+  cameraTarget: {fileID: 1600780945}
+  camSinChangeForce: 20
+  forwardForceBase: 3
 --- !u!114 &1367459554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58162,6 +58139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1051166811}
+  endGameUI: {fileID: 24930034}
 --- !u!1 &1483676801
 GameObject:
   m_ObjectHideFlags: 0
@@ -59048,7 +59026,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1480015522}
         m_TargetAssemblyTypeName: InfinityRunnerUI, Assembly-CSharp
-        m_MethodName: RestartGame
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -64151,7 +64129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GamePortalSingle: {fileID: 2460406596030526449, guid: dee85bc1457604844a8f43244e6ebb5f, type: 3}
-  playerRunnerManager: {fileID: 0}
+  playerCoreController: {fileID: 1201473625}
 --- !u!4 &1890493981
 Transform:
   m_ObjectHideFlags: 0
@@ -65775,7 +65753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 146.5625, y: 140.2}
+  m_AnchoredPosition: {x: 145.76251, y: 140.2}
   m_SizeDelta: {x: 175.25, y: 175.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5146904187194793281

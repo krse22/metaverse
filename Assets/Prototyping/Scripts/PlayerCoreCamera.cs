@@ -5,10 +5,6 @@ namespace Prototyping {
     {
         private static PlayerCoreCamera Instance;
 
-        [SerializeField] private float zPosition;
-        [SerializeField] private float yPosition;
-        [SerializeField] private float xRotation;
-
         private ICameraHolder target;
 
         void Awake () {
@@ -23,7 +19,7 @@ namespace Prototyping {
         {
             if (target != null)
             {
-                (Vector3 positionTarget, Vector3 rotationTarget) = target.positionAndRotation();
+                (Vector3 positionTarget, Vector3 rotationTarget) = target.PositionAndRotation();
                 transform.position = positionTarget;
                 transform.rotation = Quaternion.Euler(rotationTarget);
             }

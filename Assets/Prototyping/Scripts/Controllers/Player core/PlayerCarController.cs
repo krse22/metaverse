@@ -94,7 +94,7 @@ namespace Prototyping {
             PlayerCoreCamera.SetCameraOwner(reference.coreController);
         }
 
-        public (Vector3, Vector3) positionAndRotation()
+        public (Vector3, Vector3) PositionAndRotation()
         {
             Vector3 camTargetPos = new Vector3(currentCar.transform.position.x, currentCar.transform.position.y + 35f, currentCar.transform.position.z - 12.5f);
             Vector3 camTargetRot = new Vector3(70f, 0f, 0f);

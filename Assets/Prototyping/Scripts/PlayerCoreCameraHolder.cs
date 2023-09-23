@@ -4,6 +4,6 @@ namespace Prototyping
 {
     public interface ICameraHolder
     {
-        (Vector3, Vector3) positionAndRotation();
+        (Vector3, Vector3) PositionAndRotation();
     }
 }
