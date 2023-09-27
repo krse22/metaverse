@@ -16,6 +16,7 @@ namespace Prototyping.Games
 
         private float currentX;
         private float initialX;
+        private float currentY;
         private bool dashing = false;
 
         [SerializeField] private float jumpForce;
@@ -44,6 +45,7 @@ namespace Prototyping.Games
             colliderReference = GetComponent<CapsuleCollider>();
             currentX = transform.position.x;
             initialX = transform.position.x;
+            currentY = transform.position.y;
             initialColliderheight = colliderReference.height;
             initalCamLocalY = cameraTarget.localPosition.y;
         }
@@ -60,7 +62,8 @@ namespace Prototyping.Games
             if (isPlaying)
             {
                 Inputs();
-                CalculateDelta();
+                CalculateDeltaX();
+                CalculateDeltaY();
                 SlideCanceling();
                 CameraEffects();
             }
@@ -136,7 +139,7 @@ namespace Prototyping.Games
             colliderReference.height = initialColliderheight / 2f;
             if (!IsGrounded())
             {
-                rigidBody.AddForce(-Vector3.up * jumpForce, ForceMode.Impulse);
+                rigidBody.AddForce(-Vector3.up * sideDashPower, ForceMode.Impulse);
             }
             isSliding = true;
             cancelTick = Time.time;
@@ -161,22 +164,31 @@ namespace Prototyping.Games
             }
         }
 
-        void CalculateDelta()
+        void CalculateDeltaX()
         {
             if (dashing)
             {
-                float delta = Math.Abs(currentX - transform.position.x);
+                float delta = Mathf.Abs(currentX - transform.position.x);
                 if (delta > sideDashDistance)
                 {
                     rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y, rigidBody.velocity.z);
 
-                    float side = Math.Sign(lanePosition);
+                    float side = Mathf.Sign(lanePosition);
                     float targetX = initialX + (sideDashDistance * Mathf.Abs(lanePosition) * side);
                     transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
                     currentX = transform.position.x;
 
                     dashing = false;
                 }
+            }
+        }
+
+        void CalculateDeltaY()
+        {
+            float delta = Mathf.Abs(currentY - transform.position.y);
+            if (delta > sideDashDistance)
+            {
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, -1.2f, rigidBody.velocity.z);
             }
         }
 

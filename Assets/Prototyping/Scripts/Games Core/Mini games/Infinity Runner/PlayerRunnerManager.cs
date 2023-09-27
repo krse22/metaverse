@@ -65,7 +65,9 @@ namespace Prototyping.Games
                     InfinityRunnerBlock infinityRunnerBlock = gameObject.GetComponent<InfinityRunnerBlock>();
                     float offset = infinityRunnerBlock.End.position.z - infinityRunnerBlock.transform.position.z;
                     gameObject.transform.position = new Vector3(0f, yPosition, lastGoEndPos.z + offset);
-                    infinityRunnerBlock.SetSidePosition(sideDashDistance);
+
+                    // infinityRunnerBlock.SetSidePosition(sideDashDistance);
+
                     currentBlocks.Add(infinityRunnerBlock);
                 }
             }
