@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Prototyping.Games
@@ -15,7 +16,16 @@ namespace Prototyping.Games
 
         [SerializeField] private bool prototype;
 
-        private List<Transform> currentBlocks;
+        [SerializeField] private GameObject[] threeLaneBaseBlocks;
+        [SerializeField] private float sideDashDistance;
+
+        [SerializeField] private float yPosition;
+        [SerializeField] private float movementSpeed;
+        [SerializeField] private int totalBlockCount;
+        [SerializeField] private Transform initialObject;
+
+        private bool gameStarted = false;
+        private List<InfinityRunnerBlock> currentBlocks;
 
         void Start()
         {
@@ -25,10 +35,63 @@ namespace Prototyping.Games
             }
         }
 
+        void Update()
+        {
+            MoveBlocks();
+            SpawnBlocks();
+            DeleteBlocks();
+        }
+
+        void MoveBlocks()
+        {
+            if (gameStarted)
+            {
+                foreach (InfinityRunnerBlock t in currentBlocks)
+                {
+                    Vector3 vec = t.transform.position;
+                    t.transform.position = new Vector3(vec.x, vec.y, vec.z - movementSpeed * Time.deltaTime);
+                }
+            }
+        }
+
+        void SpawnBlocks() { 
+            if (gameStarted && currentBlocks.Count > 0)
+            {
+                if (currentBlocks.Count < totalBlockCount)
+                {
+                    InfinityRunnerBlock lastGameObject = currentBlocks.Last();
+                    Vector3 lastGoEndPos = lastGameObject.End.position;
+                    GameObject gameObject = Instantiate(threeLaneBaseBlocks[Random.Range(0, threeLaneBaseBlocks.Length)], null, true);
+                    InfinityRunnerBlock infinityRunnerBlock = gameObject.GetComponent<InfinityRunnerBlock>();
+                    float offset = infinityRunnerBlock.End.position.z - infinityRunnerBlock.transform.position.z;
+                    gameObject.transform.position = new Vector3(0f, yPosition, lastGoEndPos.z + offset);
+                    infinityRunnerBlock.SetSidePosition(sideDashDistance);
+                    currentBlocks.Add(infinityRunnerBlock);
+                }
+            }
+        }
+
+        void DeleteBlocks()
+        {
+            if (gameStarted)
+            {
+                InfinityRunnerBlock firstBlock = currentBlocks.First();
+                if (firstBlock != null)
+                {
+                    InfinityRunnerBlock infinityRunnerBlock = firstBlock.GetComponent<InfinityRunnerBlock>();
+                    if (infinityRunnerBlock.End.position.z < player.position.z)
+                    {
+                        currentBlocks.Remove(firstBlock);
+                        Destroy(firstBlock.gameObject);
+                    }
+                }
+            }
+        }
+
         public void Play()
         {
             player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
-            currentBlocks = new List<Transform>();
+            currentBlocks = new List<InfinityRunnerBlock>();
             controller = player.GetComponent<PlayerRunnerController>();
             PlayerCoreCamera.SetCameraOwner(controller);
             endgameUI.SetActive(true);
@@ -57,13 +120,20 @@ namespace Prototyping.Games
 
         public void OnGameEnd()
         {
+            gameStarted = false;
             endgameUI.SetActive(true);
+            initialObject.gameObject.SetActive(true);
         }
 
         public void StartGame() {
+            GameObject gameObject = Instantiate(threeLaneBaseBlocks[0], null, true);
+            gameObject.transform.position = new Vector3(0f, yPosition, initialObject.position.z);
+            currentBlocks.Add(gameObject.GetComponent<InfinityRunnerBlock>());
             endgameUI.SetActive(false);
             int[] lanes = GenerateLanes();
-            controller.Play(lanes);
+            controller.Play(lanes, sideDashDistance);
+            initialObject.gameObject.SetActive(false);
+            gameStarted = true;
         }
 
         public void ExitGame()

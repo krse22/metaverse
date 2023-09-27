@@ -12,7 +12,7 @@ namespace Prototyping.Games
 
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float sideDashPower;
-        [SerializeField] private float sideDashDistance;
+        private float sideDashDistance;
 
         private float currentX;
         private float initialX;
@@ -36,7 +36,6 @@ namespace Prototyping.Games
         private float timeToCancel = 1.2f;
         private float cancelTick = 0f;
 
-        [SerializeField] private float forwardForceBase;
         private bool isPlaying = false;
 
         void Start()
@@ -49,10 +48,11 @@ namespace Prototyping.Games
             initalCamLocalY = cameraTarget.localPosition.y;
         }
 
-        public void Play(int[] lanesFromManager)
+        public void Play(int[] lanesFromManager, float dashDistance)
         {
             isPlaying = true;
             lanes = lanesFromManager;
+            sideDashDistance = dashDistance;
         }
 
         public void Update()
