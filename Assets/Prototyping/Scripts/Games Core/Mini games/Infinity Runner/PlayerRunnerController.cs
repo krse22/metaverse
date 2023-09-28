@@ -139,7 +139,7 @@ namespace Prototyping.Games
             colliderReference.height = initialColliderheight / 2f;
             if (!IsGrounded())
             {
-                rigidBody.AddForce(-Vector3.up * sideDashPower, ForceMode.Impulse);
+                rigidBody.AddForce(-Vector3.up * sideDashPower / 2f, ForceMode.Impulse);
             }
             isSliding = true;
             cancelTick = Time.time;
