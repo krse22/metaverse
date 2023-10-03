@@ -156,6 +156,7 @@ namespace Prototyping.Games
 
         void Slide()
         {
+            slideCancel = false;
             colliderReference.height = initialColliderheight / 2f;
             if (!IsGrounded())
             {
