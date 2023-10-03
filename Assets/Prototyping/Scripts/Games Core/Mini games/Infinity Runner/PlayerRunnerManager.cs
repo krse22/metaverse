@@ -18,6 +18,7 @@ namespace Prototyping.Games
 
         [SerializeField] private bool prototype;
         [SerializeField] private bool runSystems;
+        [SerializeField] private bool spawnTraps;
 
         [SerializeField] private GameObject[] threeLaneBaseBlocks;
         [SerializeField] private float sideDashDistance;
@@ -29,6 +30,9 @@ namespace Prototyping.Games
 
         [SerializeField] private GameObject[] traps;
         [SerializeField] private float trapGap;
+
+        [SerializeField] private float playerInitialY;
+        [SerializeField] private float playerInitialX;
 
         private bool gameStarted = false;
         private List<InfinityRunnerBlock> currentBlocks;
@@ -82,17 +86,20 @@ namespace Prototyping.Games
 
         void SpawnTrapsOnABlock(InfinityRunnerBlock block)
         {
-            float position = block.Start.position.z;
-            float offset = 0;
-            while (offset < block.Length - trapGap)
+            if (spawnTraps)
             {
-                int trapPicker = Random.Range(0, traps.Length);
-                GameObject trap = Instantiate(traps[trapPicker], block.transform);
-                InfinityRunnerTrap trapScript = trap.GetComponent<InfinityRunnerTrap>();
-                float trapLength = trapScript.Length;
-                trap.transform.position = new Vector3(0f, block.Top.position.y + trapScript.YOffset, position + trapScript.Length / 2f);
-                position += trapLength / 2f + trapGap;
-                offset += trapLength / 2f + trapGap;
+                float position = block.Start.position.z;
+                float offset = 0;
+                while (offset < block.Length - trapGap)
+                {
+                    int trapPicker = Random.Range(0, traps.Length);
+                    GameObject trap = Instantiate(traps[trapPicker], block.transform);
+                    InfinityRunnerTrap trapScript = trap.GetComponent<InfinityRunnerTrap>();
+                    float trapLength = trapScript.Length;
+                    trap.transform.position = new Vector3(0f, block.Top.position.y + trapScript.YOffset, position + trapScript.Length / 2f);
+                    position += trapLength / 2f + trapGap;
+                    offset += trapLength / 2f + trapGap;
+                }
             }
         }
 
@@ -148,17 +155,26 @@ namespace Prototyping.Games
             gameStarted = false;
             endgameUI.SetActive(true);
             initialObject.gameObject.SetActive(true);
+            controller.Stop();
         }
 
         public void StartGame() {
+            for (int i = currentBlocks.Count -1; i >= 0; i--)
+            {
+                GameObject go = currentBlocks[i].gameObject;
+                currentBlocks.Remove(currentBlocks[i]);
+                Destroy(go);
+            }
+
             GameObject gameObject = Instantiate(threeLaneBaseBlocks[0], null, true);
             gameObject.transform.position = new Vector3(0f, yPosition, initialObject.position.z);
             currentBlocks.Add(gameObject.GetComponent<InfinityRunnerBlock>());
             endgameUI.SetActive(false);
             int[] lanes = GenerateLanes();
-            controller.Play(lanes, sideDashDistance);
+            controller.Play(lanes, sideDashDistance, this);
             initialObject.gameObject.SetActive(false);
             gameStarted = true;
+            controller.Restart();
         }
 
         public void ExitGame()

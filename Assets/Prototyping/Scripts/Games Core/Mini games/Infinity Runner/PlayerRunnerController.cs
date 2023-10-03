@@ -10,6 +10,8 @@ namespace Prototyping.Games
         private Rigidbody rigidBody;
         private CapsuleCollider colliderReference;
 
+        private PlayerRunnerManager manager;
+
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float sideDashPower;
         private float sideDashDistance;
@@ -50,11 +52,29 @@ namespace Prototyping.Games
             initalCamLocalY = cameraTarget.localPosition.y;
         }
 
-        public void Play(int[] lanesFromManager, float dashDistance)
+        public void Play(int[] lanesFromManager, float dashDistance, PlayerRunnerManager runnerManager)
         {
             isPlaying = true;
             lanes = lanesFromManager;
             sideDashDistance = dashDistance;
+            manager = runnerManager;
+        }
+
+        public void Restart()
+        {
+            isPlaying = true;
+            rigidBody.isKinematic = false;
+            transform.position = new Vector3(initialX, 1f, 0f);
+            currentX = transform.position.x;
+            currentY = transform.position.y;
+            lanePosition = 0;
+            dashing = false;
+        }
+
+        public void Stop()
+        {
+            isPlaying = false;
+            rigidBody.isKinematic = true;
         }
 
         public void Update()
@@ -81,7 +101,7 @@ namespace Prototyping.Games
 
         public void ObsticleHit()
         {
-            Debug.Log("Game end");
+            manager.OnGameEnd(); 
         }
 
         void Inputs()
@@ -139,7 +159,12 @@ namespace Prototyping.Games
             colliderReference.height = initialColliderheight / 2f;
             if (!IsGrounded())
             {
-                rigidBody.AddForce(-Vector3.up * sideDashPower / 2f, ForceMode.Impulse);
+                float multipliedVelocity = 0;
+                if (rigidBody.velocity.y > 0)
+                {
+                    multipliedVelocity = rigidBody.velocity.y;
+                }
+                rigidBody.AddForce(-Vector3.up * (multipliedVelocity + (sideDashPower / 2f)) , ForceMode.Impulse);
             }
             isSliding = true;
             cancelTick = Time.time;

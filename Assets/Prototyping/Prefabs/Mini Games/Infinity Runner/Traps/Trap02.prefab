@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7842504153047627450}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: InfinityRunnerObsticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 6315648390343286526}
   m_Layer: 0
   m_Name: Trap02
-  m_TagString: Untagged
+  m_TagString: InfinityRunnerObsticle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
