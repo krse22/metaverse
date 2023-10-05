@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Prototyping.Games
 {
@@ -28,8 +29,10 @@ namespace Prototyping.Games
         [SerializeField] private int totalBlockCount;
         [SerializeField] private Transform initialObject;
 
+        [SerializeField] private GameObject trapSpawnPoint;
         [SerializeField] private GameObject[] traps;
         [SerializeField] private float trapGap;
+        private InfinityRunnerTrap lastTrap;
 
         [SerializeField] private float playerInitialY;
         [SerializeField] private float playerInitialX;
@@ -52,6 +55,7 @@ namespace Prototyping.Games
                 MoveBlocks();
                 SpawnBlocks();
                 DeleteBlocks();
+                SpawnTraps();
             }
         }
 
@@ -79,28 +83,39 @@ namespace Prototyping.Games
                     float offset = infinityRunnerBlock.End.position.z - infinityRunnerBlock.transform.position.z;
                     gameObject.transform.position = new Vector3(0f, yPosition, lastGoEndPos.z + offset);
                     currentBlocks.Add(infinityRunnerBlock);
-                    SpawnTrapsOnABlock(infinityRunnerBlock);
                 }
             }
         }
 
-        void SpawnTrapsOnABlock(InfinityRunnerBlock block)
+        void SpawnTraps()
         {
-            if (spawnTraps)
+            if (gameStarted && currentBlocks.Count > 0)
             {
-                float position = block.Start.position.z;
-                float offset = 0;
-                while (offset < block.Length - trapGap)
+                if (lastTrap)
                 {
-                    int trapPicker = Random.Range(0, traps.Length);
-                    GameObject trap = Instantiate(traps[trapPicker], block.transform);
-                    InfinityRunnerTrap trapScript = trap.GetComponent<InfinityRunnerTrap>();
-                    float trapLength = trapScript.Length;
-                    trap.transform.position = new Vector3(0f, block.Top.position.y + trapScript.YOffset, position + trapScript.Length / 2f);
-                    position += trapLength / 2f + trapGap;
-                    offset += trapLength / 2f + trapGap;
+                    float distance = Mathf.Abs(trapSpawnPoint.transform.position.z - lastTrap.transform.position.z);
+                    if (distance > trapGap + lastTrap.Length / 2f)
+                    {
+                        lastTrap = SpawnTrap();
+                    }
+                }
+                else
+                {
+                    lastTrap = SpawnTrap();
                 }
             }
+        }
+
+        InfinityRunnerTrap SpawnTrap ()
+        {
+            InfinityRunnerBlock block = currentBlocks.Last();
+            int trapPicker = Random.Range(0, traps.Length);
+            GameObject trap = Instantiate(traps[trapPicker], block.transform);
+            InfinityRunnerTrap trapScript = trap.GetComponent<InfinityRunnerTrap>();
+            float trapY = block.Top.position.y + trapScript.YOffset;
+            float trapZ = trapSpawnPoint.transform.position.z;
+            trap.transform.position = new Vector3(0, trapY, trapZ + trapScript.Length / 2f);
+            return trapScript;
         }
 
         void DeleteBlocks()
