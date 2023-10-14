@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Prototyping.Games
 {
@@ -40,11 +39,24 @@ namespace Prototyping.Games
         private bool gameStarted = false;
         private List<InfinityRunnerBlock> currentBlocks;
 
+        [SerializeField] private GameObject[] buildings;
+        [SerializeField] private Transform buildingsLeft;
+        [SerializeField] private Transform buildingsRight;
+
+        private List<InfinityRunnerBuilding> leftBuildings;
+        private List<InfinityRunnerBuilding> rightBuildings;
+
+        [SerializeField] private InfinityRunnerSpawnSystem[] spawnSystems;
+
+        public float MovementSpeed { get { return movementSpeed; } }
+        public bool IsPlaying { get { return gameStarted; } }
+
         void Start()
         {
             if (prototype)
             {
                 Play();
+                spawnSystems.ToList().ForEach((s) => s.Initialize(this));
             }
         }
 
@@ -52,10 +64,11 @@ namespace Prototyping.Games
         {
             if (runSystems)
             {
-                MoveBlocks();
-                SpawnBlocks();
-                DeleteBlocks();
-                SpawnTraps();
+                //MoveBlocks();
+                //SpawnBlocks();
+                //DeleteBlocks();
+                //SpawnTraps();
+                //SpawnBuildings();
             }
         }
 
@@ -106,6 +119,48 @@ namespace Prototyping.Games
             }
         }
 
+        float lastPositionOffsetLeft = 0;
+        float lastPositionOffsetRight = 0;
+
+        void SpawnBuildings()
+        {
+            while(leftBuildings.Count < 10)
+            {
+                GameObject go = Instantiate(buildings[Random.RandomRange(0, buildings.Length)]);
+                float z = lastPositionOffsetLeft + buildingsLeft.position.z;
+                go.transform.position = new Vector3(buildingsLeft.position.x, buildingsLeft.position.y, z);
+                InfinityRunnerBuilding infinityRunnerBuilding = go.GetComponent<InfinityRunnerBuilding>();
+                infinityRunnerBuilding.Center.localScale = new Vector3(infinityRunnerBuilding.Center.localScale.x * -1, 1f, 1f);
+                lastPositionOffsetLeft += infinityRunnerBuilding.Length + 2;
+                leftBuildings.Add(infinityRunnerBuilding);
+            }
+            while (rightBuildings.Count < 10)
+            {
+                GameObject go = Instantiate(buildings[Random.RandomRange(0, buildings.Length)]);
+                float z = lastPositionOffsetRight + buildingsLeft.position.z;
+                go.transform.position = new Vector3(buildingsRight.position.x, buildingsRight.position.y, z);
+                InfinityRunnerBuilding infinityRunnerBuilding = go.GetComponent<InfinityRunnerBuilding>();
+                lastPositionOffsetRight += infinityRunnerBuilding.Length + 2;
+                rightBuildings.Add(infinityRunnerBuilding);
+            }
+            if (gameStarted)
+            {
+                foreach (InfinityRunnerBuilding t in leftBuildings.Union(rightBuildings))
+                {
+                    Vector3 vec = t.transform.position;
+                    t.transform.position = new Vector3(vec.x, vec.y, vec.z - movementSpeed * Time.deltaTime);
+                }
+            }
+            if (gameStarted) {
+                InfinityRunnerBuilding building = leftBuildings.First();
+                if (building.transform.position.z < player.position.z - building.Length / 2f)
+                {
+                    leftBuildings.Remove(building);
+                    Destroy(building.gameObject);
+                }
+            }
+        }
+
         InfinityRunnerTrap SpawnTrap ()
         {
             InfinityRunnerBlock block = currentBlocks.Last();
@@ -139,6 +194,8 @@ namespace Prototyping.Games
         {
             player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
             currentBlocks = new List<InfinityRunnerBlock>();
+            leftBuildings = new List<InfinityRunnerBuilding>();
+            rightBuildings = new List<InfinityRunnerBuilding>();
             controller = player.GetComponent<PlayerRunnerController>();
             PlayerCoreCamera.SetCameraOwner(controller);
             endgameUI.SetActive(true);
@@ -169,25 +226,27 @@ namespace Prototyping.Games
         {
             gameStarted = false;
             endgameUI.SetActive(true);
-            initialObject.gameObject.SetActive(true);
+            // initialObject.gameObject.SetActive(true);
             controller.Stop();
+
         }
 
         public void StartGame() {
-            for (int i = currentBlocks.Count -1; i >= 0; i--)
-            {
-                GameObject go = currentBlocks[i].gameObject;
-                currentBlocks.Remove(currentBlocks[i]);
-                Destroy(go);
-            }
 
-            GameObject gameObject = Instantiate(threeLaneBaseBlocks[0], null, true);
-            gameObject.transform.position = new Vector3(0f, yPosition, initialObject.position.z);
-            currentBlocks.Add(gameObject.GetComponent<InfinityRunnerBlock>());
+            //for (int i = currentBlocks.Count -1; i >= 0; i--)
+            //{
+            //    GameObject go = currentBlocks[i].gameObject;
+            //    currentBlocks.Remove(currentBlocks[i]);
+            //    Destroy(go);
+            //}
+
+            //GameObject gameObject = Instantiate(threeLaneBaseBlocks[0], null, true);
+            //gameObject.transform.position = new Vector3(0f, yPosition, initialObject.position.z);
+            //currentBlocks.Add(gameObject.GetComponent<InfinityRunnerBlock>());
             endgameUI.SetActive(false);
             int[] lanes = GenerateLanes();
             controller.Play(lanes, sideDashDistance, this);
-            initialObject.gameObject.SetActive(false);
+            //initialObject.gameObject.SetActive(false);
             gameStarted = true;
             controller.Restart();
         }
