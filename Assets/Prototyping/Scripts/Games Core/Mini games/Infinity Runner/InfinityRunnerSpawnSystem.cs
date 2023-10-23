@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Prototyping.Games {
     public class InfinityRunnerSpawnSystem : MonoBehaviour
@@ -12,9 +10,8 @@ namespace Prototyping.Games {
 
         private PlayerRunnerManager manager;
         private InfinityRunnerObject lastSpawned;
-        private Transform lastSpawnedTransform;
 
-        private bool runSystem;
+        private float initialZ;
 
         private void Update()
         {
@@ -23,7 +20,13 @@ namespace Prototyping.Games {
 
         public void Initialize(PlayerRunnerManager playerRunnerManager)
         {
+            initialZ = transform.position.z;
             manager = playerRunnerManager;
+        }
+
+        public void Restart()
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, initialZ);
             InitialSpawn();
         }
 
@@ -36,7 +39,6 @@ namespace Prototyping.Games {
                 InfinityRunnerObject spawnable = go.GetComponent<InfinityRunnerObject>();
                 spawnable.SetManager(manager);
                 float x = transform.position.x;
-       
                 float currentLength = spawnable.Length / 2f;
                 float lastLength = lastSpawned == null ? 0 : lastSpawned.Length / 2f;
                 float offset = gap + currentLength + lastLength;
@@ -46,8 +48,8 @@ namespace Prototyping.Games {
                 spawnGap += offset;
                 go.transform.position = new Vector3(x, transform.position.y, spawnGap);
                 lastSpawned = spawnable;
-                lastSpawnedTransform = go.transform;
                 InvertSpawned(go);
+                manager.RegisterObject(go);
             } 
             transform.position = new Vector3(transform.position.x, transform.position.y, spawnGap);
         }
@@ -56,15 +58,15 @@ namespace Prototyping.Games {
         {
             if (manager.IsPlaying)
             {
-                if (transform.position.z - lastSpawnedTransform.position.z > gap + lastSpawned.Length / 2f)
+                if (transform.position.z - lastSpawned.transform.position.z > gap + lastSpawned.Length / 2f)
                 {
                     GameObject go = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
                     InfinityRunnerObject spawnable = go.GetComponent<InfinityRunnerObject>();
                     spawnable.SetManager(manager);
                     go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + spawnable.Length / 2f);
                     lastSpawned = spawnable;
-                    lastSpawnedTransform = go.transform;
                     InvertSpawned(go);
+                    manager.RegisterObject(go);
                 }
             }
         }

@@ -29,12 +29,15 @@ namespace Prototyping.Games
         public bool IsPlaying { get { return gameStarted; } }
         public float PlayerZ { get { return player.position.z; } }
 
+        [SerializeField] private Transform objectsParent;
+
         void Start()
         {
             if (prototype)
             {
                 Play();
                 spawnSystems.ToList().ForEach((s) => s.Initialize(this));
+                spawnSystems.ToList().ForEach((s) => s.Restart());
             }
         }
 
@@ -72,10 +75,11 @@ namespace Prototyping.Games
             gameStarted = false;
             endgameUI.SetActive(true);
             controller.Stop();
-
         }
 
         public void StartGame() {
+            ObjectCleanup();
+            spawnSystems.ToList().ForEach((s) => s.Restart());
             endgameUI.SetActive(false);
             int[] lanes = GenerateLanes();
             controller.Play(lanes, sideDashDistance, this);
@@ -87,6 +91,19 @@ namespace Prototyping.Games
         {
             GameCore.Instance.ExitPortal();
             player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
+        }
+
+        public void RegisterObject(GameObject obj)
+        {
+            obj.transform.SetParent(objectsParent);
+        }
+
+        public void ObjectCleanup()
+        {
+            foreach (Transform child in objectsParent)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
     }
