@@ -286,51 +286,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b543909150ff7c746988cb0c64c106c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
   player: {fileID: 1443196150}
   startPosition: {fileID: 2008278436}
   endgameUI: {fileID: 942022420}
   laneCount: 3
   prototype: 1
-  runSystems: 1
-  spawnTraps: 1
   threeLaneBaseBlocks:
   - {fileID: 6596249979442347435, guid: c6d913d6662cdb2469774498acbbf47e, type: 3}
   - {fileID: 6276164032290704823, guid: 8ec43efbb71f2834ea0a49a2dd425509, type: 3}
   - {fileID: 4707249942190705279, guid: fa267b9a02f537f4da60c0bb4af19a7c, type: 3}
   sideDashDistance: 2
-  yPosition: -0.5
   movementSpeed: 13
-  totalBlockCount: 3
-  initialObject: {fileID: 0}
-  trapSpawnPoint: {fileID: 0}
-  traps:
-  - {fileID: 8328290443793174063, guid: 59c9f96eb4a0d95488d91c0eeb9ae753, type: 3}
-  - {fileID: 1741470659517680590, guid: 25d404f5ecf31a048ad484787ee72e12, type: 3}
-  - {fileID: 1983205743393619697, guid: 9039a349eb85438409d5578ac9c6f822, type: 3}
-  - {fileID: 5290749474834943556, guid: a302dc758151f2b4ead3f3fdff08b450, type: 3}
-  - {fileID: 8821764052447913554, guid: c20c2d7275b597f44b6b062d70c10112, type: 3}
-  - {fileID: 4685988358122702982, guid: 47c28d2d0ce45fd44a7be68d89fbad5c, type: 3}
-  - {fileID: 331472648002894018, guid: c36c46d6eff7b584cbb71378027f0d8f, type: 3}
-  - {fileID: 3077376168741377136, guid: 81b28078ed976884e8811a2f706ac9bb, type: 3}
-  - {fileID: 4670419265221908696, guid: e645c9c97fe2ff949ae31dbac07dc6f7, type: 3}
-  - {fileID: 402096206087289657, guid: 8472b1cbcfec39e4d85cd1bdf45f49b4, type: 3}
-  trapGap: 10
-  playerInitialY: 1
-  playerInitialX: 0
-  buildings:
-  - {fileID: 7658140524994798268, guid: d9aa0c9e5e740b34a9886856c359daff, type: 3}
-  - {fileID: 2266849551139906245, guid: b2a79d3af3b0c8448be7800d23a40bb2, type: 3}
-  - {fileID: 3232983970346167605, guid: 5ba37f0c464b36a41b519db91a614056, type: 3}
-  - {fileID: 1393507109402712741, guid: 5651a7862adfb364f9ee4547a453b204, type: 3}
-  - {fileID: 8414628402531840455, guid: 2959d494b94e79e418c231e6d251a10a, type: 3}
-  - {fileID: 5769484828267340112, guid: bb93315784261c24d91c3258eaad655b, type: 3}
-  - {fileID: 8865343465838387198, guid: 8a57763b736eec2479875c371648ce24, type: 3}
-  - {fileID: 3916457866011437201, guid: b5175282cf7a9be4b9b30e62fffbfffb, type: 3}
-  buildingsLeft: {fileID: 0}
-  buildingsRight: {fileID: 0}
   spawnSystems:
   - {fileID: 1350835576}
   - {fileID: 366985006}
@@ -1824,7 +1790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1443196144
 MonoBehaviour:
   m_ObjectHideFlags: 0

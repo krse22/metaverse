@@ -114,7 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5077410078170175905}
-  - component: {fileID: 6315648390343286526}
+  - component: {fileID: 8040077277586488801}
   m_Layer: 0
   m_Name: Trap02
   m_TagString: InfinityRunnerObsticle
@@ -139,7 +139,7 @@ Transform:
   - {fileID: 7349971598388706721}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6315648390343286526
+--- !u!114 &8040077277586488801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,11 +148,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1741470659517680590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0ac9cbefb45ff646805ba3501e1271d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b8e27a0437f1144dab05900f3b3c2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scaler: {fileID: 5929741232760607394}
-  yOffset: 1
 --- !u!1 &2451378142075474398
 GameObject:
   m_ObjectHideFlags: 0

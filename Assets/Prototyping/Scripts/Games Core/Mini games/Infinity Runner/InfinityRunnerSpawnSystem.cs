@@ -10,7 +10,7 @@ namespace Prototyping.Games {
         [SerializeField] private float gap;
 
         private PlayerRunnerManager manager;
-        private IInfinityRunnerSpawnable lastSpawned;
+        private InfinityRunnerObject lastSpawned;
         private Transform lastSpawnedTransform;
 
         private bool runSystem;
@@ -32,7 +32,7 @@ namespace Prototyping.Games {
             for (int i = 0; i < spawnCount; i++)
             {
                 GameObject gameObject = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
-                IInfinityRunnerSpawnable spawnable = gameObject.GetComponent<IInfinityRunnerSpawnable>();
+                InfinityRunnerObject spawnable = gameObject.GetComponent<InfinityRunnerObject>();
                 spawnable.SetManager(manager);
                 float x = transform.position.x;
        
@@ -57,7 +57,7 @@ namespace Prototyping.Games {
                 if (transform.position.z - lastSpawnedTransform.position.z > gap + lastSpawned.Length / 2f)
                 {
                     GameObject gameObject = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
-                    IInfinityRunnerSpawnable spawnable = gameObject.GetComponent<IInfinityRunnerSpawnable>();
+                    InfinityRunnerObject spawnable = gameObject.GetComponent<InfinityRunnerObject>();
                     spawnable.SetManager(manager);
                     gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + spawnable.Length / 2f);
                     lastSpawned = spawnable;
