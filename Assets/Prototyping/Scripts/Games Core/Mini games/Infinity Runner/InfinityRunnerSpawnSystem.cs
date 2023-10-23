@@ -8,6 +8,7 @@ namespace Prototyping.Games {
         [SerializeField] private GameObject[] spawnableObjects;
         [SerializeField] private int spawnCount;
         [SerializeField] private float gap;
+        [SerializeField] private bool invert = false;
 
         private PlayerRunnerManager manager;
         private InfinityRunnerObject lastSpawned;
@@ -31,8 +32,8 @@ namespace Prototyping.Games {
             float spawnGap = transform.position.z;
             for (int i = 0; i < spawnCount; i++)
             {
-                GameObject gameObject = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
-                InfinityRunnerObject spawnable = gameObject.GetComponent<InfinityRunnerObject>();
+                GameObject go = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
+                InfinityRunnerObject spawnable = go.GetComponent<InfinityRunnerObject>();
                 spawnable.SetManager(manager);
                 float x = transform.position.x;
        
@@ -43,11 +44,12 @@ namespace Prototyping.Games {
                     offset = 0;
                 }
                 spawnGap += offset;
-                gameObject.transform.position = new Vector3(x, transform.position.y, spawnGap);
+                go.transform.position = new Vector3(x, transform.position.y, spawnGap);
                 lastSpawned = spawnable;
-                lastSpawnedTransform = gameObject.transform;
-            }
-            transform.position = new Vector3(transform.position.x, transform.position.y, lastSpawnedTransform.position.z + lastSpawned.Length / 2f);
+                lastSpawnedTransform = go.transform;
+                InvertSpawned(go);
+            } 
+            transform.position = new Vector3(transform.position.x, transform.position.y, spawnGap);
         }
 
         void Spawn()
@@ -56,13 +58,22 @@ namespace Prototyping.Games {
             {
                 if (transform.position.z - lastSpawnedTransform.position.z > gap + lastSpawned.Length / 2f)
                 {
-                    GameObject gameObject = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
-                    InfinityRunnerObject spawnable = gameObject.GetComponent<InfinityRunnerObject>();
+                    GameObject go = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
+                    InfinityRunnerObject spawnable = go.GetComponent<InfinityRunnerObject>();
                     spawnable.SetManager(manager);
-                    gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + spawnable.Length / 2f);
+                    go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + spawnable.Length / 2f);
                     lastSpawned = spawnable;
-                    lastSpawnedTransform = gameObject.transform;
+                    lastSpawnedTransform = go.transform;
+                    InvertSpawned(go);
                 }
+            }
+        }
+
+        void InvertSpawned(GameObject go)
+        {
+            if (invert)
+            {
+                go.transform.localScale = new Vector3(-1f, go.transform.localScale.y, go.transform.localScale.z);
             }
         }
 

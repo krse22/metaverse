@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7172648188473851513}
-  - component: {fileID: 721808679355527450}
+  - component: {fileID: 1833131197222685664}
   m_Layer: 0
   m_Name: Building_08
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 8996272160209020046}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &721808679355527450
+--- !u!114 &1833131197222685664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,11 +43,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3916457866011437201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1d779cb35e28e48a346183bcf01227, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b8e27a0437f1144dab05900f3b3c2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scaler: {fileID: 8996272160209020046}
-  center: {fileID: 3879652927992587017}
 --- !u!1 &4341117126462436633
 GameObject:
   m_ObjectHideFlags: 0
