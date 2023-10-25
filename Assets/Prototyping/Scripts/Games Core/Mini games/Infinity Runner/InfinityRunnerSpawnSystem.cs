@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 
 namespace Prototyping.Games {
@@ -8,11 +10,16 @@ namespace Prototyping.Games {
         [SerializeField] private float gap;
         [SerializeField] private bool invert = false;
 
+        [Header("Duplication")]
+        [SerializeField] private bool allowDuplicates = true;
+        [SerializeField] private int duplicationCount = 0;
+
         private PlayerRunnerManager manager;
         private InfinityRunnerObject lastSpawned;
 
         private float initialZ;
 
+        private RandomManager randomManager;
         private void Update()
         {
             Spawn();
@@ -26,6 +33,8 @@ namespace Prototyping.Games {
 
         public void Restart()
         {
+            randomManager = new RandomManager();
+            randomManager.Init(duplicationCount, spawnableObjects.Length);
             transform.position = new Vector3(transform.position.x, transform.position.y, initialZ);
             InitialSpawn();
         }
@@ -35,14 +44,16 @@ namespace Prototyping.Games {
             float spawnGap = transform.position.z;
             for (int i = 0; i < spawnCount; i++)
             {
-                GameObject go = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
+                int picker = GetRandom(); 
+                GameObject go = Instantiate(spawnableObjects[picker]);
                 InfinityRunnerObject spawnable = go.GetComponent<InfinityRunnerObject>();
                 spawnable.SetManager(manager);
                 float x = transform.position.x;
                 float currentLength = spawnable.Length / 2f;
                 float lastLength = lastSpawned == null ? 0 : lastSpawned.Length / 2f;
                 float offset = gap + currentLength + lastLength;
-                if (i == 0) {
+                if (i == 0)
+                {
                     offset = 0;
                 }
                 spawnGap += offset;
@@ -50,7 +61,7 @@ namespace Prototyping.Games {
                 lastSpawned = spawnable;
                 InvertSpawned(go);
                 manager.RegisterObject(go);
-            } 
+            }
             transform.position = new Vector3(transform.position.x, transform.position.y, spawnGap);
         }
 
@@ -60,7 +71,8 @@ namespace Prototyping.Games {
             {
                 if (transform.position.z - lastSpawned.transform.position.z > gap + lastSpawned.Length / 2f)
                 {
-                    GameObject go = Instantiate(spawnableObjects[Random.Range(0, spawnableObjects.Length)]);
+                    int picker = GetRandom();
+                    GameObject go = Instantiate(spawnableObjects[picker]);
                     InfinityRunnerObject spawnable = go.GetComponent<InfinityRunnerObject>();
                     spawnable.SetManager(manager);
                     go.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + spawnable.Length / 2f);
@@ -77,6 +89,15 @@ namespace Prototyping.Games {
             {
                 go.transform.localScale = new Vector3(-1f, go.transform.localScale.y, go.transform.localScale.z);
             }
+        }
+
+        int GetRandom()
+        {
+            if (allowDuplicates)
+            {
+                return Random.Range(0, spawnableObjects.Length);
+            }
+            return randomManager.GetUniqueRandom();
         }
 
     }

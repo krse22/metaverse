@@ -375,6 +375,8 @@ MonoBehaviour:
   spawnCount: 3
   gap: 0
   invert: 0
+  allowDuplicates: 1
+  duplicationCount: 0
 --- !u!1 &390615950
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +827,8 @@ MonoBehaviour:
   spawnCount: 10
   gap: 0
   invert: 0
+  allowDuplicates: 0
+  duplicationCount: 4
 --- !u!1 &807205279
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,6 +1800,8 @@ MonoBehaviour:
   spawnCount: 5
   gap: 10
   invert: 0
+  allowDuplicates: 1
+  duplicationCount: 0
 --- !u!1 &1443196143
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,6 +3031,8 @@ MonoBehaviour:
   spawnCount: 10
   gap: 3
   invert: 1
+  allowDuplicates: 0
+  duplicationCount: 4
 --- !u!1 &1198091233125001
 GameObject:
   m_ObjectHideFlags: 0
