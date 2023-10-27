@@ -91,6 +91,9 @@ namespace Prototyping.Games
             obj.transform.SetParent(objectsParent);
         }
 
+        // Called on Play
+        // If this is a 5 lane manager, 3 lane manager UI button will call this
+        // if this is a 3 lane manager, 5 lane manager UI button will call this
         public void ObjectCleanup()
         {
             foreach (Transform child in objectsParent)
