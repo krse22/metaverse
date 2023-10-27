@@ -13,17 +13,14 @@ namespace Prototyping.Games
         [SerializeField] private GameObject endgameUI;
         [SerializeField] private int laneCount;
 
-        PlayerRunnerController controller;
+        [SerializeField] private InfinityRunnerSpawnSystem[] spawnSystems;
 
         [SerializeField] private bool prototype;
-
-        [SerializeField] private GameObject[] threeLaneBaseBlocks;
         [SerializeField] private float sideDashDistance;
         [SerializeField] private float movementSpeed;
 
         private bool gameStarted = false;
-
-        [SerializeField] private InfinityRunnerSpawnSystem[] spawnSystems;
+        private PlayerRunnerController controller;
 
         public float MovementSpeed { get { return movementSpeed; } }
         public bool IsPlaying { get { return gameStarted; } }
@@ -36,17 +33,19 @@ namespace Prototyping.Games
             if (prototype)
             {
                 Play();
-                spawnSystems.ToList().ForEach((s) => s.Initialize(this));
-                spawnSystems.ToList().ForEach((s) => s.Restart());
             }
         }
 
         public void Play()
         {
+
+            spawnSystems.ToList().ForEach((s) => s.Initialize(this));
+            spawnSystems.ToList().ForEach((s) => s.Restart());
             player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
             controller = player.GetComponent<PlayerRunnerController>();
             PlayerCoreCamera.SetCameraOwner(controller);
             endgameUI.SetActive(true);
+            Debug.Log("called");
         }
 
         private int[] GenerateLanes()
@@ -79,7 +78,7 @@ namespace Prototyping.Games
 
         public void StartGame() {
             ObjectCleanup();
-            spawnSystems.ToList().ForEach((s) => s.Restart());
+            spawnSystems.ToList().Where((s) => s.isActiveAndEnabled).ToList().ForEach((s) => s.Restart());
             endgameUI.SetActive(false);
             int[] lanes = GenerateLanes();
             controller.Play(lanes, sideDashDistance, this);
