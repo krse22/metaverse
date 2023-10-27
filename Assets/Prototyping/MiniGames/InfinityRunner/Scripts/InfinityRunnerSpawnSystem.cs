@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Linq;
 using UnityEngine;
 
 namespace Prototyping.Games {
@@ -18,6 +16,7 @@ namespace Prototyping.Games {
         private InfinityRunnerObject lastSpawned;
 
         private float initialZ;
+        private bool zSet = false;
 
         private RandomManager randomManager;
         private void Update()
@@ -27,12 +26,12 @@ namespace Prototyping.Games {
 
         public void Initialize(PlayerRunnerManager playerRunnerManager)
         {
-            initialZ = transform.position.z;
+            if (!zSet)
+            {
+                initialZ = transform.position.z;
+                zSet = true;
+            }
             manager = playerRunnerManager;
-        }
-
-        public void Restart()
-        {
             randomManager = new RandomManager();
             randomManager.Init(duplicationCount, spawnableObjects.Length);
             transform.position = new Vector3(transform.position.x, transform.position.y, initialZ);
@@ -67,7 +66,7 @@ namespace Prototyping.Games {
 
         void Spawn()
         {
-            if (manager.IsPlaying)
+            if (manager != null && manager.IsPlaying)
             {
                 if (transform.position.z - lastSpawned.transform.position.z > gap + lastSpawned.Length / 2f)
                 {

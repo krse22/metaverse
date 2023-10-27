@@ -71,12 +71,6 @@ namespace Prototyping.Games
             dashing = false;
         }
 
-        public void Stop()
-        {
-            isPlaying = false;
-            rigidBody.isKinematic = true;
-        }
-
         public void Update()
         {
             if (isPlaying)
@@ -101,6 +95,8 @@ namespace Prototyping.Games
 
         public void ObsticleHit()
         {
+            isPlaying = false;
+            rigidBody.isKinematic = true;
             manager.OnGameEnd(); 
         }
 

@@ -28,26 +28,6 @@ namespace Prototyping.Games
 
         [SerializeField] private Transform objectsParent;
 
-        void Start()
-        {
-            if (prototype)
-            {
-                Play();
-            }
-        }
-
-        public void Play()
-        {
-
-            spawnSystems.ToList().ForEach((s) => s.Initialize(this));
-            spawnSystems.ToList().ForEach((s) => s.Restart());
-            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
-            controller = player.GetComponent<PlayerRunnerController>();
-            PlayerCoreCamera.SetCameraOwner(controller);
-            endgameUI.SetActive(true);
-            Debug.Log("called");
-        }
-
         private int[] GenerateLanes()
         {
             if (laneCount % 2 == 0 || laneCount < 3)
@@ -73,17 +53,31 @@ namespace Prototyping.Games
         {
             gameStarted = false;
             endgameUI.SetActive(true);
-            controller.Stop();
         }
 
-        public void StartGame() {
+        // Called directly from Buttons in UI
+        public void Play() {
             ObjectCleanup();
-            spawnSystems.ToList().Where((s) => s.isActiveAndEnabled).ToList().ForEach((s) => s.Restart());
+            InitSystems();
+            InitController();
+
             endgameUI.SetActive(false);
-            int[] lanes = GenerateLanes();
-            controller.Play(lanes, sideDashDistance, this);
             gameStarted = true;
             controller.Restart();
+        }
+
+        void InitController()
+        {
+            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
+            controller = player.GetComponent<PlayerRunnerController>();
+            PlayerCoreCamera.SetCameraOwner(controller);
+            int[] lanes = GenerateLanes();
+            controller.Play(lanes, sideDashDistance, this);
+        }
+
+        void InitSystems()
+        {
+            spawnSystems.ToList().ForEach((s) => s.Initialize(this));
         }
 
         public void ExitGame()
