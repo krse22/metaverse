@@ -63,7 +63,6 @@ namespace Prototyping.Games
 
             endgameUI.SetActive(false);
             gameStarted = true;
-            controller.Restart();
         }
 
         void InitController()

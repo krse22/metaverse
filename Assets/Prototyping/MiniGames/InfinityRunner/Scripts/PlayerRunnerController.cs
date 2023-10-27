@@ -17,8 +17,11 @@ namespace Prototyping.Games
         private float sideDashDistance;
 
         private float currentX;
-        private float initialX;
         private float currentY;
+
+        private float initialX;
+        private bool initialSet = false;
+
         private bool dashing = false;
 
         [SerializeField] private float jumpForce;
@@ -39,41 +42,31 @@ namespace Prototyping.Games
         private float timeToCancel = 1.2f;
         private float cancelTick = 0f;
 
-        private bool isPlaying = false;
-
-        void Start()
+        public void Play(int[] lanesFromManager, float dashDistance, PlayerRunnerManager runnerManager)
         {
+            if (!initialSet)
+            {
+                initialX = transform.position.x;
+                initialSet = true;
+            }
+            transform.position = new Vector3(initialX, 1f, 0f);
             rigidBody = GetComponent<Rigidbody>();
             colliderReference = GetComponent<CapsuleCollider>();
             currentX = transform.position.x;
-            initialX = transform.position.x;
             currentY = transform.position.y;
             initialColliderheight = colliderReference.height;
             initalCamLocalY = cameraTarget.localPosition.y;
-        }
-
-        public void Play(int[] lanesFromManager, float dashDistance, PlayerRunnerManager runnerManager)
-        {
-            isPlaying = true;
+            rigidBody.isKinematic = false;
+            lanePosition = 0;
+            dashing = false;
             lanes = lanesFromManager;
             sideDashDistance = dashDistance;
             manager = runnerManager;
         }
 
-        public void Restart()
-        {
-            isPlaying = true;
-            rigidBody.isKinematic = false;
-            transform.position = new Vector3(initialX, 1f, 0f);
-            currentX = transform.position.x;
-            currentY = transform.position.y;
-            lanePosition = 0;
-            dashing = false;
-        }
-
         public void Update()
         {
-            if (isPlaying)
+            if (manager != null && manager.IsPlaying)
             {
                 Inputs();
                 CalculateDeltaX();
@@ -95,9 +88,8 @@ namespace Prototyping.Games
 
         public void ObsticleHit()
         {
-            isPlaying = false;
+            manager.OnGameEnd();
             rigidBody.isKinematic = true;
-            manager.OnGameEnd(); 
         }
 
         void Inputs()
