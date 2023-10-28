@@ -46,16 +46,17 @@ namespace Prototyping.Games
         {
             if (!initialSet)
             {
+                rigidBody = GetComponent<Rigidbody>();
+                colliderReference = GetComponent<CapsuleCollider>();
                 initialX = transform.position.x;
+                initalCamLocalY = cameraTarget.localPosition.y;
+                initialColliderheight = colliderReference.height;
                 initialSet = true;
             }
             transform.position = new Vector3(initialX, 1f, 0f);
-            rigidBody = GetComponent<Rigidbody>();
-            colliderReference = GetComponent<CapsuleCollider>();
             currentX = transform.position.x;
             currentY = transform.position.y;
-            initialColliderheight = colliderReference.height;
-            initalCamLocalY = cameraTarget.localPosition.y;
+            colliderReference.height = initialColliderheight;
             rigidBody.isKinematic = false;
             lanePosition = 0;
             dashing = false;
