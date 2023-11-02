@@ -24,6 +24,10 @@ public class RandomManager
 
     int GetRandomWithoutRepeating()
     {
+        if (memoryCount > max)
+        {
+            return Random.Range(0, max);
+        }
         int random = Random.Range(0, max);
         while (uniqueRandoms.Contains(random))
         {
