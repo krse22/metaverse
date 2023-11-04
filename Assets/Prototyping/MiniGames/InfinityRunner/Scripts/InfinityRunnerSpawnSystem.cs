@@ -12,6 +12,9 @@ namespace Prototyping.Games {
         [SerializeField] private bool allowDuplicates = true;
         [SerializeField] private int duplicationCount = 0;
 
+        [SerializeField] private bool testSingleTrap;
+        [SerializeField] private int singleTrapId;
+
         private PlayerRunnerManager manager;
         private InfinityRunnerObject lastSpawned;
 
@@ -92,6 +95,10 @@ namespace Prototyping.Games {
 
         int GetRandom()
         {
+            if (testSingleTrap)
+            {
+                return singleTrapId;
+            }
             if (allowDuplicates)
             {
                 return Random.Range(0, spawnableObjects.Length);
