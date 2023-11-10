@@ -63,10 +63,7 @@ crashlytics-build.properties
 /Assets/Plugins/Android
 /Assets/Plugins/Android.meta
 /Assets/Plugins.meta
-/Docker/Server
-/Docker/Master
-/Pirate-Club/Docker/Master
-/Pirate-Club/Docker/Server
+/Assets/Imported
 /Build
 /Linux-build
 /Windows-build
