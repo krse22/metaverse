@@ -11,6 +11,7 @@ namespace Prototyping.Games
         [SerializeField] private Transform startPosition;
 
         [SerializeField] private GameObject endgameUI;
+        [SerializeField] private GameObject ingameUI;
         [SerializeField] private int laneCount;
 
         [SerializeField] private InfinityRunnerSpawnSystem[] spawnSystems;
@@ -53,6 +54,7 @@ namespace Prototyping.Games
         {
             gameStarted = false;
             endgameUI.SetActive(true);
+            ingameUI.SetActive(false);
         }
 
         // Called directly from Buttons in UI

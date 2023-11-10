@@ -110,7 +110,7 @@ namespace Prototyping.Games
             }
         }
 
-        void SlideLeft()
+        public void SlideLeft()
         {
             if (lanePosition > lanes[0] && !dashing)
             {
@@ -120,7 +120,7 @@ namespace Prototyping.Games
             }
         }
 
-        void SlideRight()
+        public void SlideRight()
         {
             if (lanePosition < lanes[lanes.Length - 1] && !dashing)
             {
@@ -130,7 +130,7 @@ namespace Prototyping.Games
             }
         }
 
-        void Jump()
+        public void Jump()
         {
             if (IsGrounded())
             {
@@ -140,7 +140,7 @@ namespace Prototyping.Games
             }
         }
 
-        void Slide()
+        public void Slide()
         {
             slideCancel = false;
             colliderReference.height = initialColliderheight / 2f;
