@@ -8,9 +8,9 @@ namespace Prototyping.Games
         [SerializeField] private Transform scaler;
         public float Length { get { return scaler.localScale.z; } }
 
-        private PlayerRunnerManager manager;
+        private RunnerManagerBase manager;
 
-        public void SetManager(PlayerRunnerManager playerRunnerManager)
+        public void SetManager(RunnerManagerBase playerRunnerManager)
         {
             manager = playerRunnerManager;
         }

@@ -15,7 +15,7 @@ namespace Prototyping.Games {
         [SerializeField] private bool testSingleTrap;
         [SerializeField] private int singleTrapId;
 
-        private PlayerRunnerManager manager;
+        private RunnerManagerBase manager;
         private InfinityRunnerObject lastSpawned;
 
         private float initialZ;
@@ -27,7 +27,7 @@ namespace Prototyping.Games {
             Spawn();
         }
 
-        public void Initialize(PlayerRunnerManager playerRunnerManager)
+        public void Initialize(RunnerManagerBase playerRunnerManager)
         {
             if (!zSet)
             {

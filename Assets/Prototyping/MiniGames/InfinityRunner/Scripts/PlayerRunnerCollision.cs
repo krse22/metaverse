@@ -1,17 +1,19 @@
-using Prototyping.Games;
 using UnityEngine;
 
-public class PlayerRunnerCollision : MonoBehaviour
+namespace Prototyping.Games
 {
-
-    [SerializeField] private string obsticleTag;
-
-    private void OnCollisionEnter(Collision collision)
+    public class PlayerRunnerCollision : MonoBehaviour
     {
-        if (collision.collider.CompareTag(obsticleTag))
-        {
-            GetComponent<PlayerRunnerController>().ObsticleHit();
-        }
-    }
 
+        [SerializeField] private string obsticleTag;
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.collider.CompareTag(obsticleTag))
+            {
+                GetComponent<PlayerRunnerController>().ObsticleHit();
+            }
+        }
+
+    }
 }

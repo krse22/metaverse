@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class TrapRotator : MonoBehaviour
+namespace Prototyping.Games
 {
-
-    [SerializeField] private float rotateSpeed;
-
-    void Update()
+    public class TrapRotator : MonoBehaviour
     {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + rotateSpeed * Time.deltaTime);
+
+        [SerializeField] private float rotateSpeed;
+
+        void Update()
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + rotateSpeed * Time.deltaTime);
+        }
     }
 }

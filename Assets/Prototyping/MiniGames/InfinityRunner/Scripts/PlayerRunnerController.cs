@@ -7,7 +7,7 @@ namespace Prototyping.Games
         private Rigidbody rigidBody;
         private CapsuleCollider colliderReference;
 
-        private PlayerRunnerManager manager;
+        private RunnerManagerBase manager;
 
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float sideDashPower;
@@ -39,7 +39,7 @@ namespace Prototyping.Games
         private float timeToCancel = 1.2f;
         private float cancelTick = 0f;
 
-        public void Play(int[] lanesFromManager, float dashDistance, PlayerRunnerManager runnerManager)
+        public void Play(int[] lanesFromManager, float dashDistance, RunnerManagerBase runnerManager)
         {
             if (!initialSet)
             {
