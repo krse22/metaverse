@@ -11,22 +11,18 @@ public abstract class RunnerManagerBase : MonoBehaviour
     [SerializeField] protected Transform player;
     [SerializeField] protected Transform startPosition;
 
-    [SerializeField] protected GameObject endgameUI;
-    [SerializeField] protected GameObject ingameUI;
-    [SerializeField] protected int laneCount;
-
     [SerializeField] protected InfinityRunnerSpawnSystem[] spawnSystems;
 
-    [SerializeField] protected bool prototype;
+    [SerializeField] protected int laneCount;
     [SerializeField] protected float sideDashDistance;
     [SerializeField] protected float movementSpeed;
 
-    protected bool gameStarted = false;
+    protected bool isPlaying = false;
     protected PlayerRunnerController controller;
 
     public float MovementSpeed { get { return movementSpeed; } }
-    public bool IsPlaying { get { return gameStarted; } }
-    public float PlayerZ { get { return player.position.z; } }
+    public bool IsPlaying { get { return isPlaying; } }
+    public float PlayerZ { get { return startPosition.position.z; } }
 
     [SerializeField] protected Transform objectsParent;
 

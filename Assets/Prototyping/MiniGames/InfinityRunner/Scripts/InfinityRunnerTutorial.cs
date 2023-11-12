@@ -8,7 +8,7 @@ namespace Prototyping.Games
     {
 
         [Serializable]
-        public struct TutorialObject
+        public class TutorialObject
         {
             public GameObject go;
             private Vector3 startPosition;
@@ -34,15 +34,24 @@ namespace Prototyping.Games
             ObjectCleanup();
             InitSystems();
             tutorialTraps.ToList().ForEach(t => t.Init());
-            gameStarted = true;
-            controller = player.gameObject.GetComponent<PlayerRunnerController>();
+            isPlaying = true;
+            InitController();
+        }
+
+
+        void InitController()
+        {
+            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
+            controller = player.GetComponent<PlayerRunnerController>();
+            PlayerCoreCamera.SetCameraOwner(controller);
             int[] lanes = InfinityRunnerUtils.GenerateLanes(laneCount);
             controller.Play(lanes, sideDashDistance, this);
         }
 
         public override void OnGameEnd()
         {
-            StartTutorial();
+            isPlaying = false;
+            onGameEndEvent.Invoke();
         }
 
         private void Update()

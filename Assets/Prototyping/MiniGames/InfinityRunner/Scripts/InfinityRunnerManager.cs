@@ -9,7 +9,7 @@ namespace Prototyping.Games
 
         public override void OnGameEnd()
         {
-            gameStarted = false;
+            isPlaying = false;
             onGameEndEvent.Invoke();
         }
 
@@ -19,7 +19,7 @@ namespace Prototyping.Games
             InitSystems();
             InitController();
 
-            gameStarted = true;
+            isPlaying = true;
         }
 
         void InitController()
