@@ -16,13 +16,15 @@ public abstract class RunnerManagerBase : MonoBehaviour
     [SerializeField] protected int laneCount;
     [SerializeField] protected float sideDashDistance;
     [SerializeField] protected float movementSpeed;
+    [SerializeField] private float offsetDeleteFix = 0;
 
     protected bool isPlaying = false;
     protected PlayerRunnerController controller;
 
-    public float MovementSpeed { get { return movementSpeed; } }
-    public bool IsPlaying { get { return isPlaying; } }
-    public float PlayerZ { get { return startPosition.position.z; } }
+    public float MovementSpeed =>  movementSpeed;
+    public bool IsPlaying => isPlaying;
+    public float PlayerZ => startPosition.position.z; 
+    public float OffsetDeleteFix => offsetDeleteFix;
 
     [SerializeField] protected Transform objectsParent;
 

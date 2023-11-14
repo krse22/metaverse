@@ -14,6 +14,7 @@ namespace Prototyping.Games {
 
         [SerializeField] private bool testSingleTrap;
         [SerializeField] private int singleTrapId;
+        [SerializeField] private bool testDontSpawnTraps;
 
         private RunnerManagerBase manager;
         private InfinityRunnerObject lastSpawned;
@@ -42,7 +43,10 @@ namespace Prototyping.Games {
         }
 
         void InitialSpawn()
-        {
+        {   
+            if (testDontSpawnTraps) return;
+            
+
             float spawnGap = transform.position.z;
             for (int i = 0; i < spawnCount; i++)
             {
@@ -67,11 +71,13 @@ namespace Prototyping.Games {
             transform.position = new Vector3(transform.position.x, transform.position.y, spawnGap);
         }
 
+        [SerializeField] private bool debugGap;
+
         void Spawn()
         {
-            if (manager != null && manager.IsPlaying)
+            if (manager != null && manager.IsPlaying && !testDontSpawnTraps)
             {
-                if (transform.position.z - lastSpawned.transform.position.z > gap + lastSpawned.Length / 2f)
+                if (transform.position.z - lastSpawned.transform.position.z >= gap + lastSpawned.Length / 2f - 0.15f)
                 {
                     int picker = GetRandom();
                     GameObject go = Instantiate(spawnableObjects[picker]);

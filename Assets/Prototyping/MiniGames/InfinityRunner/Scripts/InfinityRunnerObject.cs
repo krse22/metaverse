@@ -24,7 +24,7 @@ namespace Prototyping.Games
             }
             if (transform.position.z < manager.PlayerZ)
             {
-                if (transform.position.z < manager.PlayerZ - Length / 2f)
+                if (transform.position.z < manager.PlayerZ - Length / 2f - manager.OffsetDeleteFix)
                 {
                     Destroy(gameObject);
                 }
