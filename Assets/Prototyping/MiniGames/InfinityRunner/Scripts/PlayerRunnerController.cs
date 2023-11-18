@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Prototyping.Games
@@ -39,6 +40,8 @@ namespace Prototyping.Games
         private float timeToCancel = 1.2f;
         private float cancelTick = 0f;
 
+        private bool canCheckForTraps = false;
+
         public void Play(int[] lanesFromManager, float dashDistance, RunnerManagerBase runnerManager)
         {
             if (!initialSet)
@@ -60,6 +63,13 @@ namespace Prototyping.Games
             lanes = lanesFromManager;
             sideDashDistance = dashDistance;
             manager = runnerManager;
+            StartCoroutine(CanCheckForTrapsInit());
+        }
+
+        IEnumerator CanCheckForTrapsInit()
+        {
+            yield return new WaitForSeconds(0.2f);
+            canCheckForTraps = true;
         }
 
         public void Update()
@@ -71,6 +81,24 @@ namespace Prototyping.Games
                 CalculateDeltaY();
                 SlideCanceling();
                 CameraEffects();
+                CheckForTrapsFix();
+            }
+        }
+
+        void CheckForTrapsFix()
+        {
+            // For some reason, SOMETIMES when sliding you just pass through a trap, can't find a fix so this is a fix for now
+            // Yea also sometimes it calls this when you start the game so il do an easy fix of waiting for 0.2 secs before this can be played
+            if (canCheckForTraps)
+            {
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+                foreach (Collider col in colliders)
+                {
+                    if (col.transform.CompareTag("InfinityRunnerObsticle"))
+                    {
+                        ObsticleHit();
+                    }
+                }
             }
         }
 
@@ -78,7 +106,7 @@ namespace Prototyping.Games
         {
             if (IsGrounded() && !isSliding)
             {
-                camSinValue += camSinChangeForce;
+                camSinValue += manager.MovementSpeed / 200f;
                 Vector3 localPos = cameraTarget.localPosition;
                 cameraTarget.localPosition = new Vector3(localPos.x, initalCamLocalY + Mathf.Sin(camSinValue) * camSinYChange, localPos.z);
             }
@@ -88,6 +116,7 @@ namespace Prototyping.Games
         {
             manager.OnGameEnd();
             rigidBody.isKinematic = true;
+            canCheckForTraps = false;
         }
 
         void Inputs()
@@ -110,12 +139,16 @@ namespace Prototyping.Games
             }
         }
 
+        private enum SlideSide { Left = -1, Right = 1 };
+        private SlideSide slideSide;
+
         public void SlideLeft()
         {
             if (lanePosition > lanes[0] && !dashing)
             {
-                rigidBody.AddForce(-Vector3.right * sideDashPower, ForceMode.Impulse);
+                // rigidBody.AddForce(-Vector3.right * sideDashPower, ForceMode.Impulse);
                 lanePosition--;
+                slideSide = SlideSide.Left;
                 dashing = true;
             }
         }
@@ -124,8 +157,9 @@ namespace Prototyping.Games
         {
             if (lanePosition < lanes[lanes.Length - 1] && !dashing)
             {
-                rigidBody.AddForce(Vector3.right * sideDashPower, ForceMode.Impulse);
+                // rigidBody.AddForce(Vector3.right * sideDashPower, ForceMode.Impulse);
                 lanePosition++;
+                slideSide = SlideSide.Right;
                 dashing = true;
             }
         }
@@ -180,10 +214,13 @@ namespace Prototyping.Games
         {
             if (dashing)
             {
+                float slidingSide = (float)slideSide;
+                transform.position = new Vector3(transform.position.x + slidingSide * sideDashPower * Time.deltaTime, transform.position.y, transform.position.z);
+
                 float delta = Mathf.Abs(currentX - transform.position.x);
                 if (delta > sideDashDistance)
                 {
-                    rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y, rigidBody.velocity.z);
+                    // rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y, rigidBody.velocity.z);
 
                     float side = Mathf.Sign(lanePosition);
                     float targetX = initialX + (sideDashDistance * Mathf.Abs(lanePosition) * side);
@@ -198,7 +235,7 @@ namespace Prototyping.Games
         void CalculateDeltaY()
         {
             float delta = Mathf.Abs(currentY - transform.position.y);
-            if (delta > sideDashDistance)
+            if (delta > sideDashDistance - 0.15f)
             {
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, -1.2f, rigidBody.velocity.z);
             }

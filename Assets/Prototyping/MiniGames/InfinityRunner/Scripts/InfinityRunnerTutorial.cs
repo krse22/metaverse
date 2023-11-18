@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Prototyping.Games
 {
@@ -28,6 +29,10 @@ namespace Prototyping.Games
         }
 
         [SerializeField] private TutorialObject[] tutorialTraps;
+        private string currentTutorialSide = "";
+        private float initialMovemendSpeed = 0f;
+
+        [SerializeField] private Image[] buttonImages;
 
         public void StartTutorial()
         {
@@ -36,6 +41,7 @@ namespace Prototyping.Games
             tutorialTraps.ToList().ForEach(t => t.Init());
             isPlaying = true;
             InitController();
+            initialMovemendSpeed = movementSpeed;
         }
 
 
@@ -52,6 +58,42 @@ namespace Prototyping.Games
         {
             isPlaying = false;
             onGameEndEvent.Invoke();
+            movementSpeed = initialMovemendSpeed;
+        }
+
+        public void OnTutorialHit(string side)
+        {
+            movementSpeed = 2f;
+            currentTutorialSide = side;
+            buttonImages.ToList().ForEach((btn) =>
+            {
+                if (btn.GetComponent<InfinityRunnerTutorialActivator>().side != side)
+                {
+                    btn.raycastTarget = false;
+                    btn.color = new Color(1f, 1f, 1f, 0.5f);
+                } else
+                {
+                    btn.gameObject.GetComponent<Animation>().Play("TutorialButtonAnimation");
+                }
+            });
+        }
+
+        public void ButtonClicked(string side)
+        {
+            if (side == currentTutorialSide)
+            {
+                movementSpeed = initialMovemendSpeed;
+                buttonImages.ToList().ForEach((btn) =>
+                {
+                    if (btn.GetComponent<InfinityRunnerTutorialActivator>().side != side)
+                    {
+                        btn.raycastTarget = true;
+                        btn.color = Color.white;
+                    }
+                    Animation anim = btn.gameObject.GetComponent<Animation>();
+                    anim.Play("IdleButton");
+                });
+            }
         }
 
         private void Update()

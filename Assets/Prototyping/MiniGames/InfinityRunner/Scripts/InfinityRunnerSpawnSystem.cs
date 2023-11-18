@@ -71,8 +71,6 @@ namespace Prototyping.Games {
             transform.position = new Vector3(transform.position.x, transform.position.y, spawnGap);
         }
 
-        [SerializeField] private bool debugGap;
-
         void Spawn()
         {
             if (manager != null && manager.IsPlaying && !testDontSpawnTraps)

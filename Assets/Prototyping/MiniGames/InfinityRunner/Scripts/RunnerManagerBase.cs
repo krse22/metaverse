@@ -29,6 +29,7 @@ public abstract class RunnerManagerBase : MonoBehaviour
     [SerializeField] protected Transform objectsParent;
 
     public abstract void OnGameEnd();
+
     public void RegisterObject(GameObject go)
     {
         go.transform.SetParent(objectsParent);
