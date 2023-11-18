@@ -1,11 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Prototyping.Games
 {
     public class InfinityRunnerTutorialActivator : MonoBehaviour
     {
-
-        [SerializeField] private InfinityRunnerTutorial manager;
+        [SerializeField] private UnityEvent hitEvent;
 
         private const string PLAYER_TAG = "Player";
         public string side;
@@ -14,7 +14,7 @@ namespace Prototyping.Games
         {
             if (other.gameObject.CompareTag(PLAYER_TAG))
             {
-                manager.OnTutorialHit(side);
+                hitEvent.Invoke();
             }
         }
 

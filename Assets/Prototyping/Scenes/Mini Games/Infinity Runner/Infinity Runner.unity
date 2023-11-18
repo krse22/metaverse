@@ -1309,7 +1309,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   side: right
 --- !u!111 &161668237
 Animation:
@@ -1464,6 +1466,140 @@ Transform:
   - {fileID: 2052530297}
   m_Father: {fileID: 326761730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &212462493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 212462494}
+  - component: {fileID: 212462498}
+  - component: {fileID: 212462497}
+  - component: {fileID: 212462496}
+  - component: {fileID: 212462495}
+  m_Layer: 0
+  m_Name: TrapActivator (11)
+  m_TagString: InfinityRunnerTutorial
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &212462494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212462493}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.4339594, z: 21.83}
+  m_LocalScale: {x: 6, y: 3, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 741604127260391137}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &212462495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212462493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnGameEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: up
+          m_BoolArgument: 0
+        m_CallState: 2
+  side: up
+--- !u!65 &212462496
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212462493}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &212462497
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212462493}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &212462498
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212462493}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &212891292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,7 +2085,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   side: up
 --- !u!111 &272365438
 Animation:
@@ -2265,7 +2403,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
   side: down
 --- !u!65 &326843514
 BoxCollider:
@@ -3552,7 +3704,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
   side: down
 --- !u!65 &474917324
 BoxCollider:
@@ -3854,7 +4020,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   side: left
 --- !u!111 &480610219
 Animation:
@@ -5565,7 +5733,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: up
+          m_BoolArgument: 0
+        m_CallState: 2
   side: up
 --- !u!65 &691871312
 BoxCollider:
@@ -10621,7 +10803,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
   side: down
 --- !u!65 &1375361668
 BoxCollider:
@@ -10820,7 +11016,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
   side: down
 --- !u!65 &1396072137
 BoxCollider:
@@ -11642,7 +11852,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: up
+          m_BoolArgument: 0
+        m_CallState: 2
   side: up
 --- !u!65 &1463429127
 BoxCollider:
@@ -11845,7 +12069,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
   side: down
 --- !u!65 &1473049698
 BoxCollider:
@@ -11998,7 +12236,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: right
+          m_BoolArgument: 0
+        m_CallState: 2
   side: right
 --- !u!65 &1476308922
 BoxCollider:
@@ -12971,7 +13223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   side: down
 --- !u!111 &1590815475
 Animation:
@@ -13072,7 +13326,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
   side: down
 --- !u!65 &1607508099
 BoxCollider:
@@ -15051,8 +15319,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
-  side: left
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: left
+          m_BoolArgument: 0
+        m_CallState: 2
+  side: 
 --- !u!1 &1908301706
 GameObject:
   m_ObjectHideFlags: 0
@@ -16707,7 +16989,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d6226d263bba148abd4e85d86b04a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1181258575}
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1181258575}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerTutorial, Assembly-CSharp
+        m_MethodName: OnTutorialHit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: right
+          m_BoolArgument: 0
+        m_CallState: 2
   side: right
 --- !u!65 &2083227323
 BoxCollider:
@@ -17455,6 +17751,7 @@ Transform:
   - {fileID: 1463429125}
   - {fileID: 326843512}
   - {fileID: 691871310}
+  - {fileID: 212462494}
   m_Father: {fileID: 1181258574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &790033145488160813
