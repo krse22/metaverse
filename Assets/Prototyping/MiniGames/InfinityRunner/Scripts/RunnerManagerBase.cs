@@ -18,6 +18,8 @@ public abstract class RunnerManagerBase : MonoBehaviour
     [SerializeField] protected float movementSpeed;
     [SerializeField] private float offsetDeleteFix = 0;
 
+    [SerializeField] protected InfinityRunnerManagerCurrent current;
+
     protected bool isPlaying = false;
     protected PlayerRunnerController controller;
 
@@ -51,5 +53,14 @@ public abstract class RunnerManagerBase : MonoBehaviour
         }
     }
 
+    public void Pause()
+    {
+        isPlaying = false;
+    }
+
+    public void Unpause()
+    {
+        isPlaying = true;
+    }
 
 }

@@ -13,6 +13,7 @@ namespace Prototyping.Games
 
         // Called directly from Buttons in UI
         public void Play() {
+            current.currentManager = this;
             ObjectCleanup();
             InitSystems();
             InitController();

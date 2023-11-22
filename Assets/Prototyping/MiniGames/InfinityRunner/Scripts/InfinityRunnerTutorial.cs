@@ -36,12 +36,18 @@ namespace Prototyping.Games
 
         public void StartTutorial()
         {
+            current.currentManager = this;
             ObjectCleanup();
             InitSystems();
             tutorialTraps.ToList().ForEach(t => t.Init());
             isPlaying = true;
             InitController();
             initialMovemendSpeed = movementSpeed;
+            buttonImages.ToList().ForEach((btn) =>
+            {
+                btn.raycastTarget = false;
+                btn.color = new Color(1f, 1f, 1f, 0.5f);
+            });
         }
 
 
@@ -52,6 +58,17 @@ namespace Prototyping.Games
             PlayerCoreCamera.SetCameraOwner(controller);
             int[] lanes = InfinityRunnerUtils.GenerateLanes(laneCount);
             controller.Play(lanes, sideDashDistance, this);
+        }
+
+        public void ExitTutorial()
+        {
+            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
+            buttonImages.ToList().ForEach((btn) =>
+            {
+                btn.raycastTarget = true;
+                btn.color = Color.white;
+                btn.gameObject.GetComponent<Animation>().Play("IdleButton");
+            });
         }
 
         public override void OnGameEnd()
@@ -73,6 +90,8 @@ namespace Prototyping.Games
                     btn.color = new Color(1f, 1f, 1f, 0.5f);
                 } else
                 {
+                    btn.raycastTarget = true;
+                    btn.color = Color.white;
                     btn.gameObject.GetComponent<Animation>().Play("TutorialButtonAnimation");
                 }
             });
@@ -80,18 +99,19 @@ namespace Prototyping.Games
 
         public void ButtonClicked(string side)
         {
-            if (side == currentTutorialSide)
+            if (side == currentTutorialSide && isPlaying)
             {
                 movementSpeed = initialMovemendSpeed;
                 buttonImages.ToList().ForEach((btn) =>
                 {
-                    if (btn.GetComponent<InfinityRunnerTutorialActivator>().side != side)
+                    if (btn.GetComponent<InfinityRunnerTutorialActivator>().side == side)
                     {
-                        btn.raycastTarget = true;
-                        btn.color = Color.white;
+                        Animation anim = btn.gameObject.GetComponent<Animation>();
+                        anim.Play("IdleButton");
+                        btn.raycastTarget = false;
+                        btn.color = new Color(1f, 1f, 1f, 0.5f);
                     }
-                    Animation anim = btn.gameObject.GetComponent<Animation>();
-                    anim.Play("IdleButton");
+    
                 });
             }
         }
