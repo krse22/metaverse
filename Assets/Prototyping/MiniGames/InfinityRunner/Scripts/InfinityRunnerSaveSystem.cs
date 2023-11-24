@@ -43,4 +43,9 @@ public class InfinityRunnerSaveSystem : MonoBehaviour
         }
     }
 
+    public int GetScore(int lanes)
+    {
+        return PlayerPrefs.GetInt($"IR_{lanes}_Lane");
+    }
+
 }

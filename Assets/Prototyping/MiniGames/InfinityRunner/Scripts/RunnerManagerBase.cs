@@ -5,9 +5,6 @@ using UnityEngine.Events;
 
 public abstract class RunnerManagerBase : MonoBehaviour
 {
-
-    [SerializeField] protected UnityEvent onGameEndEvent;
-
     [SerializeField] protected Transform player;
     [SerializeField] protected Transform startPosition;
 
@@ -33,6 +30,7 @@ public abstract class RunnerManagerBase : MonoBehaviour
     [SerializeField] protected Transform objectsParent;
 
     public abstract void OnGameEnd();
+    public abstract void OnGameStart();
 
     public void RegisterObject(GameObject go)
     {

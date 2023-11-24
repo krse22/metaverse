@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Prototyping.Games
 {
-    public class InfinityRunnerManager : RunnerManagerBase, IGamePortal
+    public class InfinityRunnerManager : RunnerManagerBase
     {
 
         private float currentScore = 0;
@@ -10,13 +10,12 @@ namespace Prototyping.Games
         public override void OnGameEnd()
         {
             isPlaying = false;
-            onGameEndEvent.Invoke();
             current.GameEnd();
         }
 
         // Called directly from Buttons in UI
-        public void Play() {
-            current.CurrentManager = this;
+        public override void OnGameStart() {
+            currentScore = 0;
             ObjectCleanup();
             InitSystems();
             InitController();
@@ -41,12 +40,6 @@ namespace Prototyping.Games
             int[] lanes = InfinityRunnerUtils.GenerateLanes(laneCount);
             controller.Play(lanes, sideDashDistance, this);
         }
-
-        public void ExitGame()
-        {
-            GameCore.Instance.ExitPortal();
-            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
-        }   
 
     }
 }

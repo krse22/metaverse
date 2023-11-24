@@ -7,8 +7,38 @@ namespace Prototyping.Games
     {
 
         [SerializeField] private UnityEvent<int> onScoreUpdated;
+        [SerializeField] private UnityEvent onHighScoreBeaten;
+        [SerializeField] private UnityEvent onGameStartEvent;
+        [SerializeField] private UnityEvent onGameEndEvent;
+        [SerializeField] private UnityEvent onRenderMain;
+        [SerializeField] private UnityEvent onTutorialFailed;
+
         public RunnerManagerBase CurrentManager { get; set; }
         private int currentScore = 0;
+        private int currentMaxScore = 0;
+
+        private InfinityRunnerSaveSystem saveSystem;
+
+        private bool scoreBeatingInCurrentRun = false;
+
+        private void Start()
+        {
+            saveSystem = GetComponent<InfinityRunnerSaveSystem>();
+        }
+
+        public void Play(RunnerManagerBase manager)
+        {
+            onGameStartEvent.Invoke();
+            CurrentManager = manager;
+            currentMaxScore = saveSystem.GetScore(CurrentManager.LaneCount);
+            currentScore = 0;
+            CurrentManager.OnGameStart();
+        }
+
+        public void RenderMain()
+        {
+            onRenderMain.Invoke();
+        }
 
         public void StopCurrent()
         {
@@ -28,7 +58,13 @@ namespace Prototyping.Games
 
         public void GameEnd()
         {
-            GetComponent<InfinityRunnerSaveSystem>().FinishedGameScore(currentScore, CurrentManager.LaneCount);
+            saveSystem.FinishedGameScore(currentScore, CurrentManager.LaneCount);
+            onGameEndEvent.Invoke();
+        }
+
+        public void OnTutorialFailed()
+        {
+            onTutorialFailed.Invoke();
         }
 
         public void UpdateScore(int updatedScore)
@@ -37,6 +73,12 @@ namespace Prototyping.Games
             {
                 onScoreUpdated.Invoke(updatedScore);
                 currentScore = updatedScore;
+            }
+
+            if (updatedScore > currentMaxScore && !scoreBeatingInCurrentRun)
+            {
+                scoreBeatingInCurrentRun = true;
+                onHighScoreBeaten.Invoke();
             }
         }
 

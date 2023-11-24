@@ -34,7 +34,7 @@ namespace Prototyping.Games
 
         [SerializeField] private Image[] buttonImages;
 
-        public void StartTutorial()
+        public override void OnGameStart()
         {
             current.CurrentManager = this;
             ObjectCleanup();
@@ -62,6 +62,8 @@ namespace Prototyping.Games
 
         public void ExitTutorial()
         {
+            isPlaying = false;
+            movementSpeed = initialMovemendSpeed;
             player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
             buttonImages.ToList().ForEach((btn) =>
             {
@@ -74,8 +76,8 @@ namespace Prototyping.Games
         public override void OnGameEnd()
         {
             isPlaying = false;
-            onGameEndEvent.Invoke();
             movementSpeed = initialMovemendSpeed;
+            current.OnTutorialFailed();
         }
 
         public void OnTutorialHit(string side)
