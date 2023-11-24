@@ -1,28 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Prototyping.Games
 {
     public class InfinityRunnerManagerCurrent : MonoBehaviour
     {
-        public RunnerManagerBase currentManager;
+
+        [SerializeField] private UnityEvent<int> onScoreUpdated;
+        public RunnerManagerBase CurrentManager { get; set; }
+        private int currentScore = 0;
 
         public void StopCurrent()
         {
-            currentManager.Pause();
+            CurrentManager.Pause();
         }
 
         public void ContinueCurrent()
         {
-            currentManager.Unpause();
+            CurrentManager.Unpause();
         }
 
         public void ExitCurrent()
         {
-            currentManager.OnGameEnd();
-            currentManager.ObjectCleanup();
+            CurrentManager.OnGameEnd();
+            CurrentManager.ObjectCleanup();
         }
+
+        public void UpdateScore(int updatedScore)
+        {
+            if (updatedScore != currentScore)
+            {
+                onScoreUpdated.Invoke(updatedScore);
+                currentScore = updatedScore;
+            }
+        }
+
 
     }
 }

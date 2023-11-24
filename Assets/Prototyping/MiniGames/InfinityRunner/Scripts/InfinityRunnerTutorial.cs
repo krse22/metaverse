@@ -36,7 +36,7 @@ namespace Prototyping.Games
 
         public void StartTutorial()
         {
-            current.currentManager = this;
+            current.CurrentManager = this;
             ObjectCleanup();
             InitSystems();
             tutorialTraps.ToList().ForEach(t => t.Init());

@@ -5,6 +5,8 @@ namespace Prototyping.Games
     public class InfinityRunnerManager : RunnerManagerBase, IGamePortal
     {
 
+        private float currentScore = 0;
+
         public override void OnGameEnd()
         {
             isPlaying = false;
@@ -13,12 +15,21 @@ namespace Prototyping.Games
 
         // Called directly from Buttons in UI
         public void Play() {
-            current.currentManager = this;
+            current.CurrentManager = this;
             ObjectCleanup();
             InitSystems();
             InitController();
 
             isPlaying = true;
+        }
+
+        void Update()
+        {
+            if (isPlaying)
+            {
+                currentScore = currentScore + (movementSpeed * Time.deltaTime);
+                current.UpdateScore(Mathf.CeilToInt(currentScore));
+            }
         }
 
         void InitController()
