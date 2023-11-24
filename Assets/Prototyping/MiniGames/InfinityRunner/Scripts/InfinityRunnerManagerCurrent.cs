@@ -26,6 +26,11 @@ namespace Prototyping.Games
             CurrentManager.ObjectCleanup();
         }
 
+        public void GameEnd()
+        {
+            GetComponent<InfinityRunnerSaveSystem>().FinishedGameScore(currentScore, CurrentManager.LaneCount);
+        }
+
         public void UpdateScore(int updatedScore)
         {
             if (updatedScore != currentScore)

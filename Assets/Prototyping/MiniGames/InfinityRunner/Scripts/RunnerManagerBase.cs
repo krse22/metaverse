@@ -28,6 +28,8 @@ public abstract class RunnerManagerBase : MonoBehaviour
     public float PlayerZ => startPosition.position.z; 
     public float OffsetDeleteFix => offsetDeleteFix;
 
+    public int LaneCount => laneCount;
+
     [SerializeField] protected Transform objectsParent;
 
     public abstract void OnGameEnd();

@@ -11,6 +11,7 @@ namespace Prototyping.Games
         {
             isPlaying = false;
             onGameEndEvent.Invoke();
+            current.GameEnd();
         }
 
         // Called directly from Buttons in UI
