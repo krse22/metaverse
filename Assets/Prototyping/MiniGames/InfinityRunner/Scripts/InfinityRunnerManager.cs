@@ -13,7 +13,6 @@ namespace Prototyping.Games
             current.GameEnd();
         }
 
-        // Called directly from Buttons in UI
         public override void OnGameStart() {
             currentScore = 0;
             ObjectCleanup();

@@ -146,7 +146,6 @@ namespace Prototyping.Games
         {
             if (lanePosition > lanes[0] && !dashing)
             {
-                // rigidBody.AddForce(-Vector3.right * sideDashPower, ForceMode.Impulse);
                 lanePosition--;
                 slideSide = SlideSide.Left;
                 dashing = true;
@@ -157,7 +156,6 @@ namespace Prototyping.Games
         {
             if (lanePosition < lanes[lanes.Length - 1] && !dashing)
             {
-                // rigidBody.AddForce(Vector3.right * sideDashPower, ForceMode.Impulse);
                 lanePosition++;
                 slideSide = SlideSide.Right;
                 dashing = true;
@@ -220,8 +218,6 @@ namespace Prototyping.Games
                 float delta = Mathf.Abs(currentX - transform.position.x);
                 if (delta > sideDashDistance)
                 {
-                    // rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y, rigidBody.velocity.z);
-
                     float side = Mathf.Sign(lanePosition);
                     float targetX = initialX + (sideDashDistance * Mathf.Abs(lanePosition) * side);
                     transform.position = new Vector3(targetX, transform.position.y, transform.position.z);

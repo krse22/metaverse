@@ -33,6 +33,7 @@ namespace Prototyping.Games
             currentMaxScore = saveSystem.GetScore(CurrentManager.LaneCount);
             currentScore = 0;
             CurrentManager.OnGameStart();
+            scoreBeatingInCurrentRun = false;
         }
 
         public void RenderMain()
@@ -75,7 +76,7 @@ namespace Prototyping.Games
                 currentScore = updatedScore;
             }
 
-            if (updatedScore > currentMaxScore && !scoreBeatingInCurrentRun)
+            if (updatedScore > currentMaxScore && !scoreBeatingInCurrentRun && currentMaxScore != 0)
             {
                 scoreBeatingInCurrentRun = true;
                 onHighScoreBeaten.Invoke();

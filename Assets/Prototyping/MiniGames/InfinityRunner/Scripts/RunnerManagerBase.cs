@@ -42,9 +42,6 @@ public abstract class RunnerManagerBase : MonoBehaviour
         spawnSystems.ToList().ForEach((s) => s.Initialize(this));
     }
 
-    // Called on Play from a button
-    // If this is a 5 lane manager, 3 lane manager UI button will call this
-    // if this is a 3 lane manager, 5 lane manager UI button will call this
     public void ObjectCleanup()
     {
         foreach (Transform child in objectsParent)
