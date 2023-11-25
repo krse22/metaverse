@@ -41,6 +41,7 @@ namespace Prototyping.Games
     {
         [SerializeField] private TutorialObject[] tutorialTraps;
         [SerializeField] private Image[] buttonImages;
+        [SerializeField] private GameObject scoreField;
         private string currentTutorialSide = "";
         private float initialMovemendSpeed;
 
@@ -51,12 +52,14 @@ namespace Prototyping.Games
             movementSpeed = initialMovemendSpeed;
             tutorialTraps.ToList().ForEach(t => t.Init());
             buttonImages.ToList().ForEach((btn) =>  btn.SetButtonState(false));
+            scoreField.SetActive(false);
         }
 
         public void ExitTutorial()
         {
             isPlaying = false;
             buttonImages.ToList().ForEach((btn) => btn.SetButtonState(true, "IdleButton", true));
+            scoreField.SetActive(true);
         }
 
         public override void OnGameEnd()
