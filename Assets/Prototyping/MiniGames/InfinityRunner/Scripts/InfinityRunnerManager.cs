@@ -14,12 +14,8 @@ namespace Prototyping.Games
         }
 
         public override void OnGameStart() {
+            base.OnGameStart();
             currentScore = 0;
-            ObjectCleanup();
-            InitSystems();
-            InitController();
-
-            isPlaying = true;
         }
 
         void Update()
@@ -29,15 +25,6 @@ namespace Prototyping.Games
                 currentScore = currentScore + (movementSpeed * Time.deltaTime);
                 current.UpdateScore(Mathf.CeilToInt(currentScore));
             }
-        }
-
-        void InitController()
-        {
-            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
-            controller = player.GetComponent<PlayerRunnerController>();
-            PlayerCoreCamera.SetCameraOwner(controller);
-            int[] lanes = InfinityRunnerUtils.GenerateLanes(laneCount);
-            controller.Play(lanes, sideDashDistance, this);
         }
 
     }

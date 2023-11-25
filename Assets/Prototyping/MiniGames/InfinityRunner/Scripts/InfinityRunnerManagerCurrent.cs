@@ -13,7 +13,7 @@ namespace Prototyping.Games
         [SerializeField] private UnityEvent onRenderMain;
         [SerializeField] private UnityEvent onTutorialFailed;
 
-        public RunnerManagerBase CurrentManager { get; set; }
+        private RunnerManagerBase currentManager;
         private int currentScore = 0;
         private int currentMaxScore = 0;
 
@@ -29,10 +29,10 @@ namespace Prototyping.Games
         public void Play(RunnerManagerBase manager)
         {
             onGameStartEvent.Invoke();
-            CurrentManager = manager;
-            currentMaxScore = saveSystem.GetScore(CurrentManager.LaneCount);
+            currentManager = manager;
+            currentMaxScore = saveSystem.GetScore(currentManager.LaneCount);
             currentScore = 0;
-            CurrentManager.OnGameStart();
+            currentManager.OnGameStart();
             scoreBeatingInCurrentRun = false;
         }
 
@@ -43,23 +43,23 @@ namespace Prototyping.Games
 
         public void StopCurrent()
         {
-            CurrentManager.Pause();
+            currentManager.Pause();
         }
 
         public void ContinueCurrent()
         {
-            CurrentManager.Unpause();
+            currentManager.Unpause();
         }
 
         public void ExitCurrent()
         {
-            CurrentManager.OnGameEnd();
-            CurrentManager.ObjectCleanup();
+            currentManager.OnGameEnd();
+            currentManager.ObjectCleanup();
         }
 
         public void GameEnd()
         {
-            saveSystem.FinishedGameScore(currentScore, CurrentManager.LaneCount);
+            saveSystem.FinishedGameScore(currentScore, currentManager.LaneCount);
             onGameEndEvent.Invoke();
         }
 

@@ -5,59 +5,52 @@ using UnityEngine.UI;
 
 namespace Prototyping.Games
 {
-    public class InfinityRunnerTutorial : RunnerManagerBase
+
+    public static class ButtonStateExtension
     {
-
-        [Serializable]
-        public class TutorialObject
+        public static void SetButtonState(this Image button, bool enabled, string clip = "", bool playClip = false)
         {
-            public GameObject go;
-            private Vector3 startPosition;
-            private bool isInit;
-
-            public void Init()
+            button.raycastTarget = enabled;
+            button.color = enabled ? UnityEngine.Color.white : new UnityEngine.Color(1f, 1f, 1f, 0.5f);
+            if (playClip)
             {
-                if (!isInit)
-                {
-                    startPosition = go.transform.position;
-                    isInit = true;
-                } else
-                {
-                    go.transform.position = startPosition;
-                }
+                button.gameObject.GetComponent<Animation>().Play(clip);
             }
         }
+    }
 
+    [Serializable]
+    public class TutorialObject
+    {
+        public GameObject go;
+        private Vector3 startPosition;
+        private bool isInit;
+
+        public void Init()
+        {
+            if (!isInit)
+            {
+                startPosition = go.transform.position;
+                isInit = true;
+                return;
+            }
+            go.transform.position = startPosition;
+        }
+    }
+
+    public class InfinityRunnerTutorial : RunnerManagerBase
+    {
         [SerializeField] private TutorialObject[] tutorialTraps;
-        private string currentTutorialSide = "";
-        private float initialMovemendSpeed = 0f;
-
         [SerializeField] private Image[] buttonImages;
+        private string currentTutorialSide = "";
+        private float initialMovemendSpeed;
 
         public override void OnGameStart()
         {
-            current.CurrentManager = this;
-            ObjectCleanup();
-            InitSystems();
-            tutorialTraps.ToList().ForEach(t => t.Init());
-            isPlaying = true;
-            InitController();
+            base.OnGameStart();
             initialMovemendSpeed = movementSpeed;
-            buttonImages.ToList().ForEach((btn) =>
-            {
-                btn.raycastTarget = false;
-                btn.color = new Color(1f, 1f, 1f, 0.5f);
-            });
-        }
-
-
-        void InitController()
-        {
-            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
-            controller = player.GetComponent<PlayerRunnerController>();
-            PlayerCoreCamera.SetCameraOwner(controller);
-            int[] lanes = InfinityRunnerUtils.GenerateLanes(laneCount);
-            controller.Play(lanes, sideDashDistance, this);
+            tutorialTraps.ToList().ForEach(t => t.Init());
+            buttonImages.ToList().ForEach((btn) =>  btn.SetButtonState(false));
         }
 
         public void ExitTutorial()
@@ -65,12 +58,7 @@ namespace Prototyping.Games
             isPlaying = false;
             movementSpeed = initialMovemendSpeed;
             player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
-            buttonImages.ToList().ForEach((btn) =>
-            {
-                btn.raycastTarget = true;
-                btn.color = Color.white;
-                btn.gameObject.GetComponent<Animation>().Play("IdleButton");
-            });
+            buttonImages.ToList().ForEach((btn) => btn.SetButtonState(true, "IdleButton", true));
         }
 
         public override void OnGameEnd()
@@ -86,16 +74,8 @@ namespace Prototyping.Games
             currentTutorialSide = side;
             buttonImages.ToList().ForEach((btn) =>
             {
-                if (btn.GetComponent<InfinityRunnerTutorialActivator>().side != side)
-                {
-                    btn.raycastTarget = false;
-                    btn.color = new Color(1f, 1f, 1f, 0.5f);
-                } else
-                {
-                    btn.raycastTarget = true;
-                    btn.color = Color.white;
-                    btn.gameObject.GetComponent<Animation>().Play("TutorialButtonAnimation");
-                }
+                bool correctSide = btn.GetComponent<InfinityRunnerTutorialActivator>().side == side;
+                btn.SetButtonState(correctSide, "TutorialButtonAnimation", correctSide);
             });
         }
 
@@ -108,18 +88,15 @@ namespace Prototyping.Games
                 {
                     if (btn.GetComponent<InfinityRunnerTutorialActivator>().side == side)
                     {
-                        Animation anim = btn.gameObject.GetComponent<Animation>();
-                        anim.Play("IdleButton");
-                        btn.raycastTarget = false;
-                        btn.color = new Color(1f, 1f, 1f, 0.5f);
+                        btn.SetButtonState(false, "IdleButton", true);
                     }
-    
                 });
             }
         }
 
         private void Update()
         {
+          
             if (IsPlaying)
             {
                 foreach(var t in tutorialTraps)
@@ -129,7 +106,6 @@ namespace Prototyping.Games
                 }
             }
         }
-
     }
 
 }

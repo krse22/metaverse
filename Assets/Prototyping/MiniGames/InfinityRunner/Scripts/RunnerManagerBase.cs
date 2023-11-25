@@ -1,63 +1,79 @@
-using Prototyping.Games;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
-public abstract class RunnerManagerBase : MonoBehaviour
+namespace Prototyping.Games
 {
-    [SerializeField] protected Transform player;
-    [SerializeField] protected Transform startPosition;
-
-    [SerializeField] protected InfinityRunnerSpawnSystem[] spawnSystems;
-
-    [SerializeField] protected int laneCount;
-    [SerializeField] protected float sideDashDistance;
-    [SerializeField] protected float movementSpeed;
-    [SerializeField] private float offsetDeleteFix = 0;
-
-    [SerializeField] protected InfinityRunnerManagerCurrent current;
-
-    protected bool isPlaying = false;
-    protected PlayerRunnerController controller;
-
-    public float MovementSpeed =>  movementSpeed;
-    public bool IsPlaying => isPlaying;
-    public float PlayerZ => startPosition.position.z; 
-    public float OffsetDeleteFix => offsetDeleteFix;
-
-    public int LaneCount => laneCount;
-
-    [SerializeField] protected Transform objectsParent;
-
-    public abstract void OnGameEnd();
-    public abstract void OnGameStart();
-
-    public void RegisterObject(GameObject go)
+    public abstract class RunnerManagerBase : MonoBehaviour
     {
-        go.transform.SetParent(objectsParent);
-    }
+        [SerializeField] protected Transform player;
+        [SerializeField] protected Transform startPosition;
+        [SerializeField] protected InfinityRunnerSpawnSystem[] spawnSystems;
 
-    protected void InitSystems()
-    {
-        spawnSystems.ToList().ForEach((s) => s.Initialize(this));
-    }
+        [SerializeField] protected int laneCount;
+        [SerializeField] protected float sideDashDistance;
+        [SerializeField] protected float movementSpeed;
+        [SerializeField] private float offsetDeleteFix = 0;
 
-    public void ObjectCleanup()
-    {
-        foreach (Transform child in objectsParent)
+        [SerializeField] protected InfinityRunnerManagerCurrent current;
+
+        private int[] lanes;
+        protected bool isPlaying = false;
+        public float MovementSpeed => movementSpeed;
+        public bool IsPlaying => isPlaying;
+        public Transform StartPosition => startPosition;
+        public float OffsetDeleteFix => offsetDeleteFix;
+        public int LaneCount => laneCount;
+        public float SideDashDistance => sideDashDistance;
+        public int[] Lanes => lanes;
+
+        [SerializeField] protected Transform objectsParent;
+
+        public abstract void OnGameEnd();
+        public virtual void OnGameStart()
         {
-            Destroy(child.gameObject);
+            ObjectCleanup();
+            InitSystems();
+            InitController();
+            isPlaying = true;
         }
-    }
 
-    public void Pause()
-    {
-        isPlaying = false;
-    }
+        private void Start()
+        {
+            lanes = InfinityRunnerUtils.GenerateLanes(laneCount);
+        }
 
-    public void Unpause()
-    {
-        isPlaying = true;
-    }
+        public void RegisterObject(GameObject go)
+        {
+            go.transform.SetParent(objectsParent);
+        }
 
+        protected void InitSystems()
+        {
+            spawnSystems.ToList().ForEach((s) => s.Initialize(this));
+        }
+
+        protected void InitController()
+        {
+            player.GetComponent<PlayerRunnerController>().Play(this);
+        }
+
+        public void ObjectCleanup()
+        {
+            foreach (Transform child in objectsParent)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        public void Pause()
+        {
+            isPlaying = false;
+        }
+
+        public void Unpause()
+        {
+            isPlaying = true;
+        }
+
+    }
 }

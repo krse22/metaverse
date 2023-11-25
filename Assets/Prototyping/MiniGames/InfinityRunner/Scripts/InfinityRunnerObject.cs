@@ -22,9 +22,9 @@ namespace Prototyping.Games
                 Vector3 vec = transform.position;
                 transform.position = new Vector3(vec.x, vec.y, vec.z - manager.MovementSpeed * Time.deltaTime);
             }
-            if (transform.position.z < manager.PlayerZ)
+            if (transform.position.z < manager.StartPosition.position.z)
             {
-                if (transform.position.z < manager.PlayerZ - Length / 2f - manager.OffsetDeleteFix)
+                if (transform.position.z < manager.StartPosition.position.z - Length / 2f - manager.OffsetDeleteFix)
                 {
                     Destroy(gameObject);
                 }

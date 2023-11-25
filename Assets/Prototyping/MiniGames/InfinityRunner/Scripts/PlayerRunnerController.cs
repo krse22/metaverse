@@ -5,32 +5,23 @@ namespace Prototyping.Games
 {
     public class PlayerRunnerController : MonoBehaviour, ICameraHolder
     {
-        private Rigidbody rigidBody;
-        private CapsuleCollider colliderReference;
-
         private RunnerManagerBase manager;
 
+        [SerializeField] private Rigidbody rigidBody;
+        [SerializeField] private CapsuleCollider colliderReference;
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float sideDashPower;
-        private float sideDashDistance;
 
-        private float currentX;
-        private float currentY;
 
-        private float initialX;
-        private bool initialSet = false;
-
-        private bool dashing = false;
-
-        [SerializeField] private float jumpForce;
         [SerializeField] private Transform cameraTarget;
+        [SerializeField] private float jumpForce;
+        [SerializeField] private float camSinChangeForce;
+        [SerializeField] private float camSinYChange;
         private float camSinValue = 0;
         private float initalCamLocalY;
 
-        [SerializeField] private float camSinChangeForce;
-        [SerializeField] private float camSinYChange;
-
-        private int[] lanes;
+        private Vector2 currentPosition;
+        private bool dashing = false;
         private int lanePosition = 0;
 
         private float initialColliderheight;
@@ -42,27 +33,19 @@ namespace Prototyping.Games
 
         private bool canCheckForTraps = false;
 
-        public void Play(int[] lanesFromManager, float dashDistance, RunnerManagerBase runnerManager)
+        void Start()
         {
-            if (!initialSet)
-            {
-                rigidBody = GetComponent<Rigidbody>();
-                colliderReference = GetComponent<CapsuleCollider>();
-                initialX = transform.position.x;
-                initalCamLocalY = cameraTarget.localPosition.y;
-                initialColliderheight = colliderReference.height;
-                initialSet = true;
-            }
-            transform.position = new Vector3(initialX, 1f, 0f);
-            currentX = transform.position.x;
-            currentY = transform.position.y;
-            colliderReference.height = initialColliderheight;
+            initalCamLocalY = cameraTarget.localPosition.y;
+            initialColliderheight = colliderReference.height;
+            PlayerCoreCamera.SetCameraOwner(this);
+        }
+
+        public void Play(RunnerManagerBase runnerManager)
+        {
+            manager = runnerManager;
+            currentPosition = transform.position;
             rigidBody.isKinematic = false;
             lanePosition = 0;
-            dashing = false;
-            lanes = lanesFromManager;
-            sideDashDistance = dashDistance;
-            manager = runnerManager;
             StartCoroutine(CanCheckForTrapsInit());
         }
 
@@ -87,17 +70,16 @@ namespace Prototyping.Games
 
         void CheckForTrapsFix()
         {
+            if (!canCheckForTraps) return;
+
             // For some reason, SOMETIMES when sliding you just pass through a trap, can't find a fix so this is a fix for now
             // Yea also sometimes it calls this when you start the game so il do an easy fix of waiting for 0.2 secs before this can be played
-            if (canCheckForTraps)
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+            foreach (Collider col in colliders)
             {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
-                foreach (Collider col in colliders)
+                if (col.transform.CompareTag("InfinityRunnerObsticle"))
                 {
-                    if (col.transform.CompareTag("InfinityRunnerObsticle"))
-                    {
-                        ObsticleHit();
-                    }
+                    ObsticleHit();
                 }
             }
         }
@@ -117,6 +99,8 @@ namespace Prototyping.Games
             manager.OnGameEnd();
             rigidBody.isKinematic = true;
             canCheckForTraps = false;
+            dashing = false;
+            colliderReference.height = initialColliderheight;
         }
 
         void Inputs()
@@ -144,7 +128,7 @@ namespace Prototyping.Games
 
         public void SlideLeft()
         {
-            if (lanePosition > lanes[0] && !dashing)
+            if (lanePosition > manager.Lanes[0] && !dashing)
             {
                 lanePosition--;
                 slideSide = SlideSide.Left;
@@ -154,7 +138,7 @@ namespace Prototyping.Games
 
         public void SlideRight()
         {
-            if (lanePosition < lanes[lanes.Length - 1] && !dashing)
+            if (lanePosition < manager.Lanes[manager.Lanes.Length - 1] && !dashing)
             {
                 lanePosition++;
                 slideSide = SlideSide.Right;
@@ -210,28 +194,27 @@ namespace Prototyping.Games
 
         void CalculateDeltaX()
         {
-            if (dashing)
+            if (!dashing) return;
+
+            float slidingSide = (float)slideSide;
+            transform.position = new Vector3(transform.position.x + slidingSide * sideDashPower * Time.deltaTime, transform.position.y, transform.position.z);
+
+            float delta = Mathf.Abs(currentPosition.x - transform.position.x);
+            if (delta > manager.SideDashDistance)
             {
-                float slidingSide = (float)slideSide;
-                transform.position = new Vector3(transform.position.x + slidingSide * sideDashPower * Time.deltaTime, transform.position.y, transform.position.z);
+                float side = Mathf.Sign(lanePosition);
+                float targetX = manager.StartPosition.position.x + (manager.SideDashDistance * Mathf.Abs(lanePosition) * side);
+                transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
+                currentPosition.x = transform.position.x;
 
-                float delta = Mathf.Abs(currentX - transform.position.x);
-                if (delta > sideDashDistance)
-                {
-                    float side = Mathf.Sign(lanePosition);
-                    float targetX = initialX + (sideDashDistance * Mathf.Abs(lanePosition) * side);
-                    transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
-                    currentX = transform.position.x;
-
-                    dashing = false;
-                }
+                dashing = false;
             }
         }
 
         void CalculateDeltaY()
         {
-            float delta = Mathf.Abs(currentY - transform.position.y);
-            if (delta > sideDashDistance - 0.15f)
+            float delta = Mathf.Abs((currentPosition.y - transform.position.y));
+            if (delta > manager.SideDashDistance - 0.15f)
             {
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, -1.2f, rigidBody.velocity.z);
             }
