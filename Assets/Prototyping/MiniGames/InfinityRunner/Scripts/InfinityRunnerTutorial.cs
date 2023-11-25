@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace Prototyping.Games
 {
-
     public static class ButtonStateExtension
     {
         public static void SetButtonState(this Image button, bool enabled, string clip = "", bool playClip = false)
@@ -49,6 +48,7 @@ namespace Prototyping.Games
         {
             base.OnGameStart();
             initialMovemendSpeed = movementSpeed;
+            movementSpeed = initialMovemendSpeed;
             tutorialTraps.ToList().ForEach(t => t.Init());
             buttonImages.ToList().ForEach((btn) =>  btn.SetButtonState(false));
         }
@@ -56,8 +56,6 @@ namespace Prototyping.Games
         public void ExitTutorial()
         {
             isPlaying = false;
-            movementSpeed = initialMovemendSpeed;
-            player.transform.position = new Vector3(startPosition.position.x, player.position.y, startPosition.position.z);
             buttonImages.ToList().ForEach((btn) => btn.SetButtonState(true, "IdleButton", true));
         }
 

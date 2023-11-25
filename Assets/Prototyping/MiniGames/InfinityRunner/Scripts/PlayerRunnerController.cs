@@ -32,6 +32,8 @@ namespace Prototyping.Games
         private float cancelTick = 0f;
 
         private bool canCheckForTraps = false;
+        private enum SlideSide { Left = -1, Right = 1 };
+        private SlideSide slideSide;
 
         void Start()
         {
@@ -42,6 +44,7 @@ namespace Prototyping.Games
 
         public void Play(RunnerManagerBase runnerManager)
         {
+            transform.position = runnerManager.StartPosition.position;
             manager = runnerManager;
             currentPosition = transform.position;
             rigidBody.isKinematic = false;
@@ -122,9 +125,6 @@ namespace Prototyping.Games
                 Slide();
             }
         }
-
-        private enum SlideSide { Left = -1, Right = 1 };
-        private SlideSide slideSide;
 
         public void SlideLeft()
         {
