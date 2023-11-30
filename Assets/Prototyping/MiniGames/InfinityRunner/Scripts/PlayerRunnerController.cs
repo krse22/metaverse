@@ -7,9 +7,11 @@ namespace Prototyping.Games
     {
         private RunnerManagerBase manager;
 
+
         [SerializeField] private Rigidbody rigidBody;
         [SerializeField] private CapsuleCollider colliderReference;
         [SerializeField] private LayerMask groundMask;
+        [SerializeField] private Animation cameraAnimation;
         [SerializeField] private float sideDashPower;
 
         [SerializeField] private float increasedGravityForce;
@@ -108,8 +110,7 @@ namespace Prototyping.Games
         {
             if (lanePosition > manager.Lanes[0] && !dashing)
             {
-
-                // transform.position = new Vector3(transform.position.x + slidingSide * sideDashPower * Time.deltaTime, transform.position.y, transform.position.z);
+                cameraAnimation.Play("SlideLeftCam");
                 rigidBody.AddForce(transform.right * (float)SlideSide.Left * sideDashPower, ForceMode.Impulse);
                 lanePosition--;
                 slideSide = SlideSide.Left;
@@ -121,6 +122,7 @@ namespace Prototyping.Games
         {
             if (lanePosition < manager.Lanes[manager.Lanes.Length - 1] && !dashing)
             {
+                cameraAnimation.Play("SlideRightCam");
                 rigidBody.AddForce(transform.right * (float)SlideSide.Right * sideDashPower, ForceMode.Impulse);
                 lanePosition++;
                 slideSide = SlideSide.Right;
@@ -179,14 +181,13 @@ namespace Prototyping.Games
             if (!dashing) return;
 
             float delta = Mathf.Abs(currentPosition.x - transform.position.x);
-            if (delta > manager.SideDashDistance)
+            if (delta > manager.SideDashDistance - 0.1f)
             {
                 rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y, rigidBody.velocity.z);
                 float side = Mathf.Sign(lanePosition);
                 float targetX = manager.StartPosition.position.x + (manager.SideDashDistance * Mathf.Abs(lanePosition) * side);
                 transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
                 currentPosition.x = transform.position.x;
-
                 dashing = false;
             }
         }

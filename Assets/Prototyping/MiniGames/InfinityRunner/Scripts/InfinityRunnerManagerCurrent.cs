@@ -39,6 +39,7 @@ namespace Prototyping.Games
         public void RenderMain()
         {
             onRenderMain.Invoke();
+            saveSystem.FinishedGameScore(currentScore, currentManager.LaneCount);
         }
 
         public void StopCurrent()

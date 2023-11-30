@@ -8120,6 +8120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 883550202}
+  - component: {fileID: 883550203}
   m_Layer: 9
   m_Name: CameraTarget
   m_TagString: Untagged
@@ -8142,6 +8143,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1443196150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &883550203
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883550201}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: e7784e34a168e2745a280de7d4f1bd11, type: 2}
+  - {fileID: 7400000, guid: f6a344c110d9a0743a9aed536c524784, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &883783912
 GameObject:
   m_ObjectHideFlags: 0
@@ -10666,7 +10684,7 @@ MonoBehaviour:
   duplicationCount: 2
   testSingleTrap: 0
   singleTrapId: 8
-  testDontSpawnTraps: 0
+  testDontSpawnTraps: 1
 --- !u!4 &1205698281
 Transform:
   m_ObjectHideFlags: 0
@@ -12735,6 +12753,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   sideDashPower: 12
+  increasedGravityForce: 3.3
   cameraTarget: {fileID: 883550202}
   jumpForce: 10
   camSinChangeForce: 0.06
@@ -12763,7 +12782,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!136 &1443196147
@@ -12848,7 +12867,7 @@ Transform:
   m_GameObject: {fileID: 1443196143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 3}
+  m_LocalPosition: {x: 0, y: 1.039, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
