@@ -12,7 +12,7 @@ namespace Prototyping.Games
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float sideDashPower;
 
-
+        [SerializeField] private float increasedGravityForce;
         [SerializeField] private Transform cameraTarget;
         [SerializeField] private float jumpForce;
         [SerializeField] private float camSinChangeForce;
@@ -30,8 +30,6 @@ namespace Prototyping.Games
 
         private float timeToCancel = 1.2f;
         private float cancelTick = 0f;
-
-        private bool canCheckForTraps = false;
         private enum SlideSide { Left = -1, Right = 1 };
         private SlideSide slideSide;
 
@@ -49,13 +47,6 @@ namespace Prototyping.Games
             currentPosition = transform.position;
             rigidBody.isKinematic = false;
             lanePosition = 0;
-            StartCoroutine(CanCheckForTrapsInit());
-        }
-
-        IEnumerator CanCheckForTrapsInit()
-        {
-            yield return new WaitForSeconds(0.2f);
-            canCheckForTraps = true;
         }
 
         public void Update()
@@ -64,27 +55,15 @@ namespace Prototyping.Games
             {
                 Inputs();
                 CalculateDeltaX();
-                CalculateDeltaY();
                 SlideCanceling();
                 CameraEffects();
-                CheckForTrapsFix();
+                IncreaseGravity();
             }
         }
 
-        void CheckForTrapsFix()
+        void IncreaseGravity()
         {
-            if (!canCheckForTraps) return;
-
-            // For some reason, SOMETIMES when sliding you just pass through a trap, can't find a fix so this is a fix for now
-            // Yea also sometimes it calls this when you start the game so il do an easy fix of waiting for 0.2 secs before this can be played
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
-            foreach (Collider col in colliders)
-            {
-                if (col.transform.CompareTag("InfinityRunnerObsticle"))
-                {
-                    ObsticleHit();
-                }
-            }
+            rigidBody.AddForce(-transform.up * increasedGravityForce, ForceMode.Force);
         }
 
         void CameraEffects()
@@ -101,7 +80,6 @@ namespace Prototyping.Games
         {
             manager.OnGameEnd();
             rigidBody.isKinematic = true;
-            canCheckForTraps = false;
             dashing = false;
             colliderReference.height = initialColliderheight;
         }
@@ -130,6 +108,9 @@ namespace Prototyping.Games
         {
             if (lanePosition > manager.Lanes[0] && !dashing)
             {
+
+                // transform.position = new Vector3(transform.position.x + slidingSide * sideDashPower * Time.deltaTime, transform.position.y, transform.position.z);
+                rigidBody.AddForce(transform.right * (float)SlideSide.Left * sideDashPower, ForceMode.Impulse);
                 lanePosition--;
                 slideSide = SlideSide.Left;
                 dashing = true;
@@ -140,6 +121,7 @@ namespace Prototyping.Games
         {
             if (lanePosition < manager.Lanes[manager.Lanes.Length - 1] && !dashing)
             {
+                rigidBody.AddForce(transform.right * (float)SlideSide.Right * sideDashPower, ForceMode.Impulse);
                 lanePosition++;
                 slideSide = SlideSide.Right;
                 dashing = true;
@@ -196,27 +178,16 @@ namespace Prototyping.Games
         {
             if (!dashing) return;
 
-            float slidingSide = (float)slideSide;
-            transform.position = new Vector3(transform.position.x + slidingSide * sideDashPower * Time.deltaTime, transform.position.y, transform.position.z);
-
             float delta = Mathf.Abs(currentPosition.x - transform.position.x);
             if (delta > manager.SideDashDistance)
             {
+                rigidBody.velocity = new Vector3(0f, rigidBody.velocity.y, rigidBody.velocity.z);
                 float side = Mathf.Sign(lanePosition);
                 float targetX = manager.StartPosition.position.x + (manager.SideDashDistance * Mathf.Abs(lanePosition) * side);
                 transform.position = new Vector3(targetX, transform.position.y, transform.position.z);
                 currentPosition.x = transform.position.x;
 
                 dashing = false;
-            }
-        }
-
-        void CalculateDeltaY()
-        {
-            float delta = Mathf.Abs((currentPosition.y - transform.position.y));
-            if (delta > manager.SideDashDistance - 0.15f)
-            {
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, -1.2f, rigidBody.velocity.z);
             }
         }
 

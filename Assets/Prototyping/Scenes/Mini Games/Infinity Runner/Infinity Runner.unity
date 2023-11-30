@@ -10315,7 +10315,7 @@ GameObject:
   - component: {fileID: 1110813835}
   - component: {fileID: 1110813834}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10614,6 +10614,7 @@ MonoBehaviour:
   - {fileID: 480610215}
   - {fileID: 272365434}
   - {fileID: 1590815471}
+  scoreField: {fileID: 1110813832}
 --- !u!224 &1187335642 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2559037202506892817, guid: 88a59c8e316774bf68b9a81e990ede96, type: 3}
@@ -11780,7 +11781,7 @@ MonoBehaviour:
   invert: 0
   allowDuplicates: 0
   duplicationCount: 3
-  testSingleTrap: 0
+  testSingleTrap: 1
   singleTrapId: 7
   testDontSpawnTraps: 0
 --- !u!1 &1361288863
