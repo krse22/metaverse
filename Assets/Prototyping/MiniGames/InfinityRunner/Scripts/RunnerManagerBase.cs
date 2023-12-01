@@ -5,7 +5,7 @@ namespace Prototyping.Games
 {
     public abstract class RunnerManagerBase : MonoBehaviour
     {
-        [SerializeField] protected Transform player;
+        [SerializeField] protected PlayerRunnerController player;
         [SerializeField] protected Transform startPosition;
         [SerializeField] protected InfinityRunnerSpawnSystem[] spawnSystems;
 
@@ -30,8 +30,7 @@ namespace Prototyping.Games
 
         public abstract void OnGameEnd();
         public virtual void OnGameStart()
-        {
-            ObjectCleanup();
+        { 
             InitSystems();
             InitController();
             isPlaying = true;
@@ -54,7 +53,7 @@ namespace Prototyping.Games
 
         protected void InitController()
         {
-            player.GetComponent<PlayerRunnerController>().Play(this);
+            player.Play(this);
         }
 
         public void ObjectCleanup()

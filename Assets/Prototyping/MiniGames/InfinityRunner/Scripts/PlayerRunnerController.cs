@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using UnityEngine;
 
 namespace Prototyping.Games
@@ -6,7 +6,6 @@ namespace Prototyping.Games
     public class PlayerRunnerController : MonoBehaviour, ICameraHolder
     {
         private RunnerManagerBase manager;
-
 
         [SerializeField] private Rigidbody rigidBody;
         [SerializeField] private CapsuleCollider colliderReference;
@@ -32,8 +31,9 @@ namespace Prototyping.Games
 
         private float timeToCancel = 1.2f;
         private float cancelTick = 0f;
-        private enum SlideSide { Left = -1, Right = 1 };
-        private SlideSide slideSide;
+
+        private bool jumped = false;
+        private bool started = false;
 
         void Start()
         {
@@ -44,23 +44,34 @@ namespace Prototyping.Games
 
         public void Play(RunnerManagerBase runnerManager)
         {
+            dashing = false;
+            jumped = false;
+            slideCancel = false;
+            isSliding = false;
+            lanePosition = 0;
+            rigidBody.velocity = Vector3.zero;
+            currentPosition = runnerManager.StartPosition.position;
             transform.position = runnerManager.StartPosition.position;
             manager = runnerManager;
-            currentPosition = transform.position;
             rigidBody.isKinematic = false;
-            lanePosition = 0;
+            started = false;
         }
 
-        public void Update()
+        void Update()
         {
             if (manager != null && manager.IsPlaying)
             {
                 Inputs();
-                CalculateDeltaX();
                 SlideCanceling();
                 CameraEffects();
                 IncreaseGravity();
             }
+            if (!started && manager != null && manager.IsPlaying)
+            {
+                Debug.Log("called");
+                transform.position = currentPosition;
+            }
+            CalculateDeltaX();
         }
 
         void IncreaseGravity()
@@ -70,7 +81,7 @@ namespace Prototyping.Games
 
         void CameraEffects()
         {
-            if (IsGrounded() && !isSliding)
+            if (IsGrounded() && !isSliding && !cameraAnimation.isPlaying)
             {
                 camSinValue += manager.MovementSpeed / 200f;
                 Vector3 localPos = cameraTarget.localPosition;
@@ -86,23 +97,36 @@ namespace Prototyping.Games
             colliderReference.height = initialColliderheight;
         }
 
+        public void GroundHit()
+        {
+            if (jumped)
+            {
+                cameraAnimation.Play("CameraGrounded");
+                jumped = false;
+            }
+        }
+
         void Inputs()
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
                 SlideLeft();
+                started = true;
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
                 SlideRight();
+                started = true;
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
+                started = true;
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
                 Slide();
+                started = true;
             }
         }
 
@@ -111,9 +135,8 @@ namespace Prototyping.Games
             if (lanePosition > manager.Lanes[0] && !dashing)
             {
                 cameraAnimation.Play("SlideLeftCam");
-                rigidBody.AddForce(transform.right * (float)SlideSide.Left * sideDashPower, ForceMode.Impulse);
+                rigidBody.AddForce(-transform.right * sideDashPower, ForceMode.Impulse);
                 lanePosition--;
-                slideSide = SlideSide.Left;
                 dashing = true;
             }
         }
@@ -123,9 +146,8 @@ namespace Prototyping.Games
             if (lanePosition < manager.Lanes[manager.Lanes.Length - 1] && !dashing)
             {
                 cameraAnimation.Play("SlideRightCam");
-                rigidBody.AddForce(transform.right * (float)SlideSide.Right * sideDashPower, ForceMode.Impulse);
+                rigidBody.AddForce(transform.right * sideDashPower, ForceMode.Impulse);
                 lanePosition++;
-                slideSide = SlideSide.Right;
                 dashing = true;
             }
         }
@@ -137,6 +159,7 @@ namespace Prototyping.Games
                 float slideOffset = (initialColliderheight - colliderReference.height);
                 rigidBody.AddForce(Vector3.up * (jumpForce + slideOffset), ForceMode.Impulse);
                 slideCancel = true;
+                jumped = true;
             }
         }
 
