@@ -5,7 +5,7 @@ namespace Prototyping.Games
 {
     public abstract class RunnerManagerBase : MonoBehaviour
     {
-        [SerializeField] protected PlayerRunnerController player;
+        private GameObject currentPlayer;
         [SerializeField] protected Transform startPosition;
         [SerializeField] protected InfinityRunnerSpawnSystem[] spawnSystems;
 
@@ -29,10 +29,10 @@ namespace Prototyping.Games
         [SerializeField] protected Transform objectsParent;
 
         public abstract void OnGameEnd();
-        public virtual void OnGameStart()
+        public virtual void OnGameStart(GameObject playerPrefab)
         { 
             InitSystems();
-            InitController();
+            InitController(playerPrefab);
             isPlaying = true;
         }
 
@@ -51,9 +51,12 @@ namespace Prototyping.Games
             spawnSystems.ToList().ForEach((s) => s.Initialize(this));
         }
 
-        protected void InitController()
+        protected void InitController(GameObject playerPrefab)
         {
-            player.Play(this);
+            GameObject go = Instantiate(playerPrefab, startPosition.position, Quaternion.identity);
+            go.GetComponent<PlayerRunnerController>().Play(this);
+            InfinityRunnerInputSystem.RegisterController(go.GetComponent<PlayerRunnerController>());
+            currentPlayer = go;
         }
 
         public void ObjectCleanup()
@@ -62,6 +65,7 @@ namespace Prototyping.Games
             {
                 Destroy(child.gameObject);
             }
+            Destroy(currentPlayer);
         }
 
         public void Pause()

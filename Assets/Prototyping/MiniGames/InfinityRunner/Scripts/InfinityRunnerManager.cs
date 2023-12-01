@@ -13,8 +13,8 @@ namespace Prototyping.Games
             current.GameEnd();
         }
 
-        public override void OnGameStart() {
-            base.OnGameStart();
+        public override void OnGameStart(GameObject playerPrefab) {
+            base.OnGameStart(playerPrefab);
             currentScore = 0;
         }
 

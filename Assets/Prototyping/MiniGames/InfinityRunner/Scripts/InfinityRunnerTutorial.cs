@@ -45,9 +45,9 @@ namespace Prototyping.Games
         private string currentTutorialSide = "";
         private float initialMovemendSpeed;
 
-        public override void OnGameStart()
+        public override void OnGameStart(GameObject playerPrefab)
         {
-            base.OnGameStart();
+            base.OnGameStart(playerPrefab);
             initialMovemendSpeed = movementSpeed;
             movementSpeed = initialMovemendSpeed;
             tutorialTraps.ToList().ForEach(t => t.Init());
@@ -60,6 +60,7 @@ namespace Prototyping.Games
             isPlaying = false;
             buttonImages.ToList().ForEach((btn) => btn.SetButtonState(true, "IdleButton", true));
             scoreField.SetActive(true);
+            movementSpeed = initialMovemendSpeed;
         }
 
         public override void OnGameEnd()

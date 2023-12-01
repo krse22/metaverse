@@ -3,9 +3,10 @@ using UnityEngine.Events;
 
 namespace Prototyping.Games
 {
-    public class InfinityRunnerManagerCurrent : MonoBehaviour
+    public class InfinityRunnerManagerCurrent : MonoBehaviour, ICameraHolder
     {
 
+        [SerializeField] private GameObject playerPrefab;
         [SerializeField] private UnityEvent<int> onScoreUpdated;
         [SerializeField] private UnityEvent onHighScoreBeaten;
         [SerializeField] private UnityEvent onGameStartEvent;
@@ -32,7 +33,7 @@ namespace Prototyping.Games
             currentManager = manager;
             currentMaxScore = saveSystem.GetScore(currentManager.LaneCount);
             currentScore = 0;
-            currentManager.OnGameStart();
+            currentManager.OnGameStart(playerPrefab);
             scoreBeatingInCurrentRun = false;
         }
 
@@ -40,6 +41,7 @@ namespace Prototyping.Games
         {
             onRenderMain.Invoke();
             saveSystem.FinishedGameScore(currentScore, currentManager.LaneCount);
+            PlayerCoreCamera.SetCameraOwner(this);
         }
 
         public void StopCurrent()
@@ -84,6 +86,9 @@ namespace Prototyping.Games
             }
         }
 
-
+        public (Vector3, Vector3) PositionAndRotation()
+        {
+            return (transform.position, transform.eulerAngles);
+        }
     }
 }

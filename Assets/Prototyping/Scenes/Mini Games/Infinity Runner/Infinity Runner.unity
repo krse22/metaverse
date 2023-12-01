@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4671741, g: 0.63610977, b: 0.73326945, a: 1}
+  m_IndirectSpecularColor: {r: 0.4647506, g: 0.6337522, b: 0.7313133, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1273,16 +1273,17 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1443196145}
-        m_TargetAssemblyTypeName: Prototyping.Games.PlayerRunnerController, Assembly-CSharp
-        m_MethodName: SlideRight
-        m_Mode: 1
+      - m_Target: {fileID: 769778337}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerManagerCurrent,
+          Assembly-CSharp
+        m_MethodName: InvokeKeypress
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: right
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1181258575}
@@ -2050,16 +2051,17 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1443196145}
-        m_TargetAssemblyTypeName: Prototyping.Games.PlayerRunnerController, Assembly-CSharp
-        m_MethodName: Jump
-        m_Mode: 1
+      - m_Target: {fileID: 769778337}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerManagerCurrent,
+          Assembly-CSharp
+        m_MethodName: InvokeKeypress
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: up
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1181258575}
@@ -2784,7 +2786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b543909150ff7c746988cb0c64c106c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1443196145}
   startPosition: {fileID: 2008278436}
   spawnSystems:
   - {fileID: 1350835576}
@@ -4243,16 +4244,17 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1443196145}
-        m_TargetAssemblyTypeName: Prototyping.Games.PlayerRunnerController, Assembly-CSharp
-        m_MethodName: SlideLeft
-        m_Mode: 1
+      - m_Target: {fileID: 769778337}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerManagerCurrent,
+          Assembly-CSharp
+        m_MethodName: InvokeKeypress
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: left
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1181258575}
@@ -6936,6 +6938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d2225491f141242945ac2d69909d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 8899712808823214584, guid: 1e4d1e5b68441a6428ee36fdcd08584a, type: 3}
   onScoreUpdated:
     m_PersistentCalls:
       m_Calls:
@@ -7311,7 +7314,7 @@ Transform:
   m_GameObject: {fileID: 769778336}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.52280164, y: 1.4769819, z: -28.912971}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8111,56 +8114,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1875542916}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &883550201
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 883550202}
-  - component: {fileID: 883550203}
-  m_Layer: 9
-  m_Name: CameraTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &883550202
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883550201}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.597, z: 0.424}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1443196150}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.2}
---- !u!111 &883550203
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883550201}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: e7784e34a168e2745a280de7d4f1bd11, type: 2}
-  - {fileID: 7400000, guid: f6a344c110d9a0743a9aed536c524784, type: 2}
-  - {fileID: 7400000, guid: 62d5c0f484f76cf49b2b1a5be4fe8a9b, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &883783912
 GameObject:
   m_ObjectHideFlags: 0
@@ -10609,7 +10562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a805cb00fac426b48a601ca035f22813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1443196145}
   startPosition: {fileID: 1308346355}
   spawnSystems:
   - {fileID: 857620200}
@@ -12701,184 +12653,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436767381}
   m_CullTransparentMesh: 1
---- !u!1 &1443196143
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1443196150}
-  - component: {fileID: 1443196149}
-  - component: {fileID: 1443196148}
-  - component: {fileID: 1443196147}
-  - component: {fileID: 1443196146}
-  - component: {fileID: 1443196145}
-  - component: {fileID: 1443196144}
-  m_Layer: 9
-  m_Name: RunnerPlayer
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1443196144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443196143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c442afa5c17bcdd4f84520ba162f2c01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obsticleTag: InfinityRunnerObsticle
-  ground:
-    serializedVersion: 2
-    m_Bits: 64
---- !u!114 &1443196145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443196143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eb604488e7b0c941a05d258ab775afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidBody: {fileID: 1443196146}
-  colliderReference: {fileID: 1443196147}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  cameraAnimation: {fileID: 883550203}
-  sideDashPower: 12
-  increasedGravityForce: 3.3
-  cameraTarget: {fileID: 883550202}
-  jumpForce: 10
-  camSinChangeForce: 0.06
-  camSinYChange: 0.06
---- !u!54 &1443196146
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443196143}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 120
-  m_CollisionDetection: 0
---- !u!136 &1443196147
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443196143}
-  m_Material: {fileID: 13400000, guid: c882b361fa759ff4b9396d7a399468cd, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1443196148
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443196143}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1443196149
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443196143}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1443196150
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1443196143}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.039, z: 0.06}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 883550202}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1450093112
 GameObject:
   m_ObjectHideFlags: 0
@@ -14816,16 +14590,17 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1443196145}
-        m_TargetAssemblyTypeName: Prototyping.Games.PlayerRunnerController, Assembly-CSharp
-        m_MethodName: Slide
-        m_Mode: 1
+      - m_Target: {fileID: 769778337}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerManagerCurrent,
+          Assembly-CSharp
+        m_MethodName: InvokeKeypress
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: down
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1181258575}
@@ -16951,7 +16726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b543909150ff7c746988cb0c64c106c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1443196145}
   startPosition: {fileID: 728474149}
   spawnSystems:
   - {fileID: 1205698280}
@@ -23199,7 +22973,6 @@ SceneRoots:
   - {fileID: 769778338}
   - {fileID: 1181258574}
   - {fileID: 2008106149}
-  - {fileID: 1443196150}
   - {fileID: 1623368400}
   - {fileID: 1941173474}
   - {fileID: 1160742167}

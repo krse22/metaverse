@@ -33,28 +33,13 @@ namespace Prototyping.Games
         private float cancelTick = 0f;
 
         private bool jumped = false;
-        private bool started = false;
 
-        void Start()
+        public void Play(RunnerManagerBase runnerManager)
         {
             initalCamLocalY = cameraTarget.localPosition.y;
             initialColliderheight = colliderReference.height;
             PlayerCoreCamera.SetCameraOwner(this);
-        }
-
-        public void Play(RunnerManagerBase runnerManager)
-        {
-            dashing = false;
-            jumped = false;
-            slideCancel = false;
-            isSliding = false;
-            lanePosition = 0;
-            rigidBody.velocity = Vector3.zero;
-            currentPosition = runnerManager.StartPosition.position;
-            transform.position = runnerManager.StartPosition.position;
             manager = runnerManager;
-            rigidBody.isKinematic = false;
-            started = false;
         }
 
         void Update()
@@ -64,13 +49,8 @@ namespace Prototyping.Games
                 Inputs();
                 SlideCanceling();
                 CameraEffects();
-                IncreaseGravity();
             }
-            if (!started && manager != null && manager.IsPlaying)
-            {
-                Debug.Log("called");
-                transform.position = currentPosition;
-            }
+            IncreaseGravity();
             CalculateDeltaX();
         }
 
@@ -106,27 +86,43 @@ namespace Prototyping.Games
             }
         }
 
+        private void OnKeyPressed(string key)
+        {
+            if (key == "left")
+            {
+                SlideLeft();
+            }
+            if (key == "right")
+            {
+                SlideRight();
+            }
+            if (key == "up")
+            {
+                Jump();
+            }
+            if (key == "down")
+            {
+                Slide();
+            }
+        }
+
         void Inputs()
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
                 SlideLeft();
-                started = true;
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
                 SlideRight();
-                started = true;
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
-                started = true;
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
                 Slide();
-                started = true;
             }
         }
 
