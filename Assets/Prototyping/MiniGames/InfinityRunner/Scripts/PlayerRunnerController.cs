@@ -46,7 +46,6 @@ namespace Prototyping.Games
         {
             if (manager != null && manager.IsPlaying)
             {
-                Inputs();
                 SlideCanceling();
                 CameraEffects();
             }
@@ -83,46 +82,6 @@ namespace Prototyping.Games
             {
                 cameraAnimation.Play("CameraGrounded");
                 jumped = false;
-            }
-        }
-
-        private void OnKeyPressed(string key)
-        {
-            if (key == "left")
-            {
-                SlideLeft();
-            }
-            if (key == "right")
-            {
-                SlideRight();
-            }
-            if (key == "up")
-            {
-                Jump();
-            }
-            if (key == "down")
-            {
-                Slide();
-            }
-        }
-
-        void Inputs()
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                SlideLeft();
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                SlideRight();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Jump();
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                Slide();
             }
         }
 

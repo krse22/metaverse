@@ -207,7 +207,7 @@ MonoBehaviour:
     m_Bits: 64
   cameraAnimation: {fileID: 6649440713281025648}
   sideDashPower: 12
-  increasedGravityForce: 3.3
+  increasedGravityForce: 3.2
   cameraTarget: {fileID: 2885427325756541994}
   jumpForce: 10
   camSinChangeForce: 0.06

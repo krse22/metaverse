@@ -13,6 +13,31 @@ namespace Prototyping.Games
             controller = controllerInstance;
         }
 
+        private void Update()
+        {
+            Inputs();
+        }
+
+        void Inputs()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                Left();
+            }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                Right();
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Up();
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                Slide();
+            }
+        }
+
         public void Left()
         {
             if (controller != null)

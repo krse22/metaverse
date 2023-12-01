@@ -1273,11 +1273,10 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 769778337}
-        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerManagerCurrent,
-          Assembly-CSharp
-        m_MethodName: InvokeKeypress
-        m_Mode: 5
+      - m_Target: {fileID: 769778340}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerInputSystem, Assembly-CSharp
+        m_MethodName: Right
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2051,11 +2050,10 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 769778337}
-        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerManagerCurrent,
-          Assembly-CSharp
-        m_MethodName: InvokeKeypress
-        m_Mode: 5
+      - m_Target: {fileID: 769778340}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerInputSystem, Assembly-CSharp
+        m_MethodName: Up
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4244,11 +4242,10 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 769778337}
-        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerManagerCurrent,
-          Assembly-CSharp
-        m_MethodName: InvokeKeypress
-        m_Mode: 5
+      - m_Target: {fileID: 769778340}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerInputSystem, Assembly-CSharp
+        m_MethodName: Left
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6919,6 +6916,7 @@ GameObject:
   - component: {fileID: 769778338}
   - component: {fileID: 769778337}
   - component: {fileID: 769778339}
+  - component: {fileID: 769778340}
   m_Layer: 0
   m_Name: GAME - Main manager
   m_TagString: Untagged
@@ -7363,6 +7361,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   testing: 1
+--- !u!114 &769778340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769778336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb90e6495f854804d8f7a42d5166aad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &775098527
 GameObject:
   m_ObjectHideFlags: 0
@@ -14590,11 +14600,10 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 769778337}
-        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerManagerCurrent,
-          Assembly-CSharp
-        m_MethodName: InvokeKeypress
-        m_Mode: 5
+      - m_Target: {fileID: 769778340}
+        m_TargetAssemblyTypeName: Prototyping.Games.InfinityRunnerInputSystem, Assembly-CSharp
+        m_MethodName: Slide
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
