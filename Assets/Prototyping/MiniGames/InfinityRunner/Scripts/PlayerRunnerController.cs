@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Prototyping.Games
@@ -111,8 +110,7 @@ namespace Prototyping.Games
         {
             if (IsGrounded())
             {
-                float slideOffset = (initialColliderheight - colliderReference.height);
-                rigidBody.AddForce(Vector3.up * (jumpForce + slideOffset), ForceMode.Impulse);
+                rigidBody.AddForce(Vector3.up * (jumpForce + (initialColliderheight - colliderReference.height)), ForceMode.VelocityChange);
                 slideCancel = true;
                 jumped = true;
             }

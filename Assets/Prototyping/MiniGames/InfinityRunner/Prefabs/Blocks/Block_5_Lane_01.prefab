@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 6362248175826914814}
   - component: {fileID: 5389450469939987011}
   - component: {fileID: 6550306572186000896}
-  - component: {fileID: 5093639349141154639}
   m_Layer: 6
-  m_Name: ScalerAndCollider
+  m_Name: Scaler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,27 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5093639349141154639
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418806329778982999}
-  m_Material: {fileID: 13400000, guid: c882b361fa759ff4b9396d7a399468cd, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2871512656317393365
 GameObject:
   m_ObjectHideFlags: 0
