@@ -39,6 +39,7 @@ namespace Prototyping.Games
             initialColliderheight = colliderReference.height;
             PlayerCoreCamera.SetCameraOwner(this);
             manager = runnerManager;
+            // Application.targetFrameRate = 60;
         }
 
         void Update()
@@ -54,7 +55,7 @@ namespace Prototyping.Games
 
         void IncreaseGravity()
         {
-            rigidBody.AddForce(-transform.up * increasedGravityForce, ForceMode.Force);
+            rigidBody.AddForce(-transform.up * increasedGravityForce * Time.deltaTime, ForceMode.Force);
         }
 
         void CameraEffects()
