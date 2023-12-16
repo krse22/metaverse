@@ -28,7 +28,7 @@ namespace Prototyping.Games
 
             if (Screen.height < originTop.y || Screen.width < originRight.x)
             {
-                y += 25f * Time.deltaTime;
+                y += 100f * Time.deltaTime;
             }
 
             return (new Vector3(0f, y, 0f), eulerRotation);
