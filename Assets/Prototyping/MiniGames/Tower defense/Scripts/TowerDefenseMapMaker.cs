@@ -5,40 +5,46 @@ using UnityEngine;
 
 namespace Prototyping.Games {
 
-    [ExecuteInEditMode]
     public class TowerDefenseMapMaker : MonoBehaviour
     {
         [SerializeField] private GameObject mapEnvironmentCube;
+        [SerializeField] private GameObject positionCube;
 
         [SerializeField] private Transform rightDimension;
         [SerializeField] private Transform topDimension;
 
+        [SerializeField] private bool deletionMode;
+
+#if UNITY_EDITOR
         void OnDrawGizmos()
         {
-#if UNITY_EDITOR
-            Event e = Event.current;
-            //Ray ray = SceneView.lastActiveSceneView.camera.ScreenPointToRay(new Vector3(e.mousePosition.x, Screen.height - e.mousePosition.y - 36, 0)); //Upside-down and offset a little because of menus
-            //RaycastHit hit;
-
-            //  Ray ray = SceneView.currentDrawingSceneView.camera.ScreenPointToRay(e.mousePosition);
-            Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-            // Debug.Log("Mouse pos: " + e.mousePosition + " world point: " + mousePosition);
-            // Debug.Log(mousePosition);
-            // Ray ray = new Ray(mousePosition, SceneView.currentDrawingSceneView.camera.transform.forward);
+    
+            Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                Debug.Log(hit.collider.gameObject.name);
+                if (hit.collider.gameObject.transform.CompareTag("TowerDefenseField"))
+                {
+                    if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
+                    {
+                        Debug.Log("Instantiate");
+                    }
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawCube(hit.collider.gameObject.transform.position, hit.collider.gameObject.transform.localScale);
+                }
             }
 
             // Ensure continuous Update calls.
             if (!Application.isPlaying)
             {
-                UnityEditor.EditorApplication.QueuePlayerLoopUpdate();
-                UnityEditor.SceneView.RepaintAll();
+                EditorApplication.QueuePlayerLoopUpdate();
+                SceneView.RepaintAll();
             }
-#endif
+
         }
+
+
+#endif
 
         [Button("Make field")]
         [BoxGroup("MakingField")]
