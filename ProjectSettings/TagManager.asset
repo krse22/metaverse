@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InfinityRunnerObsticle
   - InfinityRunnerTutorial
+  - TowerDefenseField
   layers:
   - Default
   - TransparentFX
