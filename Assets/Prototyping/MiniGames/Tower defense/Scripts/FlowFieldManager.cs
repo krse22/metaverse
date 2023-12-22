@@ -8,7 +8,6 @@ namespace Prototyping.Games
     {
 
         [SerializeField] private GameObject flowFieldCube;
-        [SerializeField] private LayerMask waveFrontLayer;
 
         public FlowFieldCube target;
 
@@ -16,7 +15,6 @@ namespace Prototyping.Games
         private Transform rightDimension;
 
         private bool showMesh = true;
-        private bool visualizeTarget = true;
 
         [HorizontalGroup("Offset")]
         [SerializeField] private float leftOffset;
@@ -72,6 +70,9 @@ namespace Prototyping.Games
         [BoxGroup("Baking flow field")]
         public void BakeFlowField()
         {
+            GameObject managerGo = GameObject.Find("CONSTRUCTION");
+            LayerMask waveFrontLayer = managerGo.GetComponent<TowerDefenseFlowField>().WaveFrontLayer;
+
             if (target == null)
             {
                 Debug.LogError("Flow field target not set");
@@ -80,31 +81,40 @@ namespace Prototyping.Games
 
             foreach (Transform t in transform)
             {
+                t.GetComponent<FlowFieldCube>().Initialize();
+            }
+
+            foreach (Transform t in transform)
+            {
                 t.GetComponent<FlowFieldCube>().SetAdjacent(waveFrontLayer);
             }
 
-            Queue<FlowFieldCube> flowFieldCubes = new Queue<FlowFieldCube>();
+            Queue<FlowFieldMember> flowFieldMembers = new Queue<FlowFieldMember>();
 
-            FlowFieldCube initial = target.GetComponent<FlowFieldCube>();
+            FlowFieldMember initial = target.GetComponent<FlowFieldCube>().member;
+
             initial.visited = true;
-            initial.value = 0;
-            flowFieldCubes.Enqueue(initial);
-            int value = 0;
+            initial.value = 1;
+            flowFieldMembers.Enqueue(initial);
 
-            while (flowFieldCubes.Count != 0)
+            while (flowFieldMembers.Count != 0)
             {
-                FlowFieldCube v = flowFieldCubes.Dequeue();
-
+                FlowFieldMember v = flowFieldMembers.Dequeue();
                 for (int i = 0; i < v.edges.Count; i++)
                 {
-                    FlowFieldCube edge = v.edges[i];
-                    if (!edge.visited)
+                    FlowFieldMember edge = v.edges[i];
+                    if (!edge.visited && !edge.emptyEdge && !edge.obsticle)
                     {
                         edge.value = v.value + 1;
                         edge.visited = true;
-                        flowFieldCubes.Enqueue(edge);
+                        flowFieldMembers.Enqueue(edge);
                     }
                 }
+            }
+
+            foreach (Transform t in transform)
+            {
+                t.GetComponent<FlowFieldCube>().CalculateVector();
             }
 
         }
@@ -121,19 +131,26 @@ namespace Prototyping.Games
         }
 
         [BoxGroup("Visualizing Field")]
-        [Button("Visualize target renderer")]
-        public void VisualizeTarget()
+        [Button("Toggle flow field values")]
+        public void ToggleFlowFieldValues()
         {
-            if (target == null) return;
-
-            visualizeTarget = !visualizeTarget;
-            if (visualizeTarget)
+            showMesh = !showMesh;
+            foreach (Transform t in transform)
             {
-                target.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+                FlowFieldCube cube = t.GetComponent<FlowFieldCube>();
+                cube.visualizeValue = !cube.visualizeValue;
             }
-            else
+        }
+
+        [BoxGroup("Visualizing Field")]
+        [Button("Toggle visualize vector field")]
+        public void ToggleFlowFieldVectors()
+        {
+            showMesh = !showMesh;
+            foreach (Transform t in transform)
             {
-                target.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+                FlowFieldCube cube = t.GetComponent<FlowFieldCube>();
+                cube.visualizeVector = !cube.visualizeVector;
             }
         }
 
@@ -172,6 +189,15 @@ namespace Prototyping.Games
         public void SetTarget(FlowFieldCube ffc)
         {
             target = ffc;
+            foreach(Transform t in transform)
+            {
+                FlowFieldCube flowFieldCube = t.GetComponent<FlowFieldCube>();
+                if (flowFieldCube != ffc)
+                {
+                    flowFieldCube.RemoveIsTarget();
+                }
+
+            }
         }
 
     }
