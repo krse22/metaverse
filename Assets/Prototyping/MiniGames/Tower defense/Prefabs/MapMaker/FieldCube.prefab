@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 5713621795615892904}
   - component: {fileID: 5769611226851940146}
   - component: {fileID: 8957145611452416198}
+  - component: {fileID: -7849521640959842059}
   m_Layer: 0
-  m_Name: EnvironmentCube
+  m_Name: FieldCube
   m_TagString: TowerDefenseField
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,9 +57,22 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7849521640959842059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451005787738973028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0729a9959565e5348a089d4341162adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxCollider: {fileID: 8957145611452416198}
