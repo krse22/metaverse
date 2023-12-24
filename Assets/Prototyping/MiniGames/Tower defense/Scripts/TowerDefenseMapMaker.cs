@@ -60,8 +60,6 @@ namespace Prototyping.Games {
             }
 
         }
-
-
 #endif
 
         public void DrawGizmosCube(RaycastHit hit, Color color, float yOffset)
@@ -130,6 +128,20 @@ namespace Prototyping.Games {
                 if (fieldSingle.IsOccupied)
                 {
                     fieldSingle.RemoveSpawnable();
+                }
+            }
+        }
+
+        [Button("Remove is trigger from environment cubes")]
+        [BoxGroup("Making Field")]
+        public void RemoveIsTriggerFromEnvironmentCubes()
+        {
+            foreach (Transform child in fieldsParent)
+            {
+                TowerDefenseFieldSingle fieldSingle = child.gameObject.GetComponent<TowerDefenseFieldSingle>();
+                if (fieldSingle.IsOccupied)
+                {
+                    fieldSingle.GetComponent<BoxCollider>().isTrigger = false;
                 }
             }
         }

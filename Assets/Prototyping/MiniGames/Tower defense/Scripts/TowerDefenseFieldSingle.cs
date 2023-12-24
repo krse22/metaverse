@@ -5,7 +5,7 @@ public class TowerDefenseFieldSingle : MonoBehaviour
 
     [SerializeField] private BoxCollider boxCollider;
 
-    public bool IsOccupied { get; private set; }
+    public bool IsOccupied;
 
     public void SetIntoSpawnable(GameObject graphics)
     {

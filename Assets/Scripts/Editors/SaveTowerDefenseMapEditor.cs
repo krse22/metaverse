@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,7 +36,15 @@ public class SaveTowerDefenseMapEditor : OdinEditorWindow
 
         if (!Validate()) return;
 
-        PrefabUtility.SaveAsPrefabAsset(mapMaker.gameObject, $"{savePath}/{mapName}.prefab", out bool prefabSuccess);
+        // Since you can't directly remove script from a prefab
+        GameObject duplicate = Instantiate(mapMaker.gameObject);
+        DestroyImmediate(duplicate.GetComponent<TowerDefenseMapMaker>());
+        duplicate.transform.name = "MAP";
+
+        PrefabUtility.SaveAsPrefabAsset(duplicate, $"{savePath}/{mapName}.prefab", out bool prefabSuccess);
+
+        DestroyImmediate(duplicate);
+
         if (prefabSuccess == true)
         {
             Instance.Close();
