@@ -70,6 +70,7 @@ namespace Prototyping.Games
 
         public FlowFieldMember member;
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (IsTarget)
@@ -98,7 +99,7 @@ namespace Prototyping.Games
                 Gizmos.DrawRay(startPosition, direction / 2f);
             }
         }
-
+#endif
         public void Initialize()
         {
             member = new FlowFieldMember(isObsticle);

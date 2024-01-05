@@ -248,8 +248,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fieldMask:
     serializedVersion: 2
+    m_Bits: 8256
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  fieldOnlyMask:
+    serializedVersion: 2
     m_Bits: 8192
+  structureMask:
+    serializedVersion: 2
+    m_Bits: 16384
   ghostStructure: {fileID: 4322556077738120985, guid: c3ebeb6de204dac4198483366fa18a0a, type: 3}
+  testStructure: {fileID: 3774132142621979000, guid: 3f5d8ed5137724b449e5f11264a5353a, type: 3}
 --- !u!4 &380028555
 Transform:
   m_ObjectHideFlags: 0
@@ -364,7 +374,7 @@ Transform:
   m_GameObject: {fileID: 480113197}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -60}
+  m_LocalPosition: {x: 0, y: 0, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -774,7 +784,7 @@ Transform:
   m_GameObject: {fileID: 1169639183}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 70, y: 0, z: 0}
+  m_LocalPosition: {x: 60, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -981,7 +991,7 @@ Transform:
   m_GameObject: {fileID: 1293040739}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -70, y: 0, z: 0}
+  m_LocalPosition: {x: -60, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1086,7 +1096,7 @@ Transform:
   m_GameObject: {fileID: 1357748775}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 60}
+  m_LocalPosition: {x: 0, y: 0, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3472,7 +3482,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2045657285

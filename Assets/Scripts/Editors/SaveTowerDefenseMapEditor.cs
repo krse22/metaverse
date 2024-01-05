@@ -1,9 +1,9 @@
+#if UNITY_EDITOR
+
 using Prototyping.Games;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -86,3 +86,5 @@ public class SaveTowerDefenseMapEditor : OdinEditorWindow
 
 
 }
+
+#endif

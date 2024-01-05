@@ -146,11 +146,15 @@ namespace Prototyping.Games {
             }
         }
 
+
+
         [Button("Save Field")]
         [BoxGroup("Making Field")]
         public void SaveField()
         {
+#if UNITY_EDITOR
             SaveTowerDefenseMapEditor.OpenWindow(this);
+#endif
         }
 
 
