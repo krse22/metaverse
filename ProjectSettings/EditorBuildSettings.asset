@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Core/Scenes/World.unity
+    guid: 61fa99ab88d8532429762ae421a554fe
+  - enabled: 0
     path: Assets/Prototyping/Scenes/Mini Games/Tower Defence/TowerDefenseGameplay.unity
     guid: 36fd02378e285814389d89df13adbdd8
   - enabled: 0
