@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Ad Color
+    second: {fileID: 2100000, guid: 67677033c76f68049be25cc479be3d80, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: BuildingBase
     second: {fileID: 2100000, guid: 2596044e003002345a743ea7ab56edbc, type: 2}
   - first:
@@ -14,6 +19,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: BuildingEmmisive
     second: {fileID: 2100000, guid: c0947b748505197478d0494d851a0cde, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ground
+    second: {fileID: 2100000, guid: 2596044e003002345a743ea7ab56edbc, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
