@@ -14,6 +14,8 @@ public class PlayerMovement : NetworkBehaviour
     private NetworkVariable<float> verticalInput = new NetworkVariable<float>(default, NetworkVariableReadPermission.Owner, NetworkVariableWritePermission.Owner);
     private NetworkVariable<float> clientYRotation = new NetworkVariable<float>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
+    public  bool IsMoving { get { return new Vector3(horizontalInput.Value, 0f, verticalInput.Value).magnitude > 0; } }
+
     public override void OnNetworkSpawn()
     {
         references = GetComponent<PlayerReferences>();
