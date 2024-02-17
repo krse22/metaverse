@@ -23,7 +23,7 @@ public class CustomizationManager : MonoBehaviour
         if (currentTarget != null) 
         {
             cam.transform.position = currentTarget.position;
-            cam.transform.eulerAngles = currentTarget.eulerAngles;
+            cam.transform.eulerAngles = currentTarget.eulerAngles; 
         }
     }
 
