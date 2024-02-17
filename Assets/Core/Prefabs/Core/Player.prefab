@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4066868111
+  GlobalObjectIdHash: 206607851
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c765f9e32a28a014abecd8a03c7299c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  malePrefab: {fileID: 5164884749508668193, guid: eda6f86663abcee48a8d365a34681d38, type: 3}
+  malePrefab: {fileID: 386527517101760767, guid: 01e6a86b2fd4d8b45b1cfa50cb51cf25, type: 3}
   rotator: {fileID: 2765384150100966559}
 --- !u!1 &9141402561236273372
 GameObject:
