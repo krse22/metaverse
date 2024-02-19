@@ -25,6 +25,94 @@ MonoBehaviour:
       networkId: 3
     - color: {r: 0.23137255, g: 0.13333334, b: 0.09803922, a: 1}
       networkId: 4
+  - customizationName: Lips
+    colors:
+    - color: {r: 0.9764706, g: 0.5294118, b: 0.5294118, a: 1}
+      networkId: 0
+    - color: {r: 0.90588236, g: 0.41568628, b: 0.41568628, a: 1}
+      networkId: 1
+    - color: {r: 0.8392157, g: 0.35686275, b: 0.35686275, a: 1}
+      networkId: 2
+    - color: {r: 0.75686276, g: 0.29411766, b: 0.29411766, a: 1}
+      networkId: 3
+    - color: {r: 0.72156864, g: 0.24705882, b: 0.24705882, a: 1}
+      networkId: 4
+    - color: {r: 0.8745099, g: 0.627451, b: 0.49803925, a: 1}
+      networkId: 5
+    - color: {r: 0.82745105, g: 0.5686275, b: 0.4666667, a: 1}
+      networkId: 6
+    - color: {r: 0.7725491, g: 0.50980395, b: 0.40784317, a: 1}
+      networkId: 7
+    - color: {r: 0.7490196, g: 0.454902, b: 0.3803922, a: 1}
+      networkId: 8
+    - color: {r: 0.6509804, g: 0.36862746, b: 0.28235295, a: 1}
+      networkId: 9
+    - color: {r: 0.6862745, g: 0.4901961, b: 0.46274513, a: 1}
+      networkId: 10
+    - color: {r: 0.5921569, g: 0.40000004, b: 0.3803922, a: 1}
+      networkId: 11
+    - color: {r: 0.4156863, g: 0.25490198, b: 0.24705884, a: 1}
+      networkId: 12
+    - color: {r: 0.26666668, g: 0.1137255, b: 0.11764707, a: 1}
+      networkId: 13
+  - customizationName: Eyes
+    colors:
+    - color: {r: 0.9333334, g: 0.909804, b: 0.6666667, a: 1}
+      networkId: 0
+    - color: {r: 0.7960785, g: 0.8078432, b: 0.5254902, a: 1}
+      networkId: 1
+    - color: {r: 0.65882355, g: 0.7058824, b: 0.3803922, a: 1}
+      networkId: 2
+    - color: {r: 0.5254902, g: 0.6, b: 0.2392157, a: 1}
+      networkId: 3
+    - color: {r: 0.38823533, g: 0.49803925, b: 0.098039225, a: 1}
+      networkId: 4
+    - color: {r: 0.7411765, g: 1, b: 1, a: 1}
+      networkId: 5
+    - color: {r: 0.07058824, g: 0.20000002, b: 0.35686275, a: 1}
+      networkId: 6
+    - color: {r: 0.0627451, g: 0.14509805, b: 0.25882354, a: 1}
+      networkId: 7
+    - color: {r: 0.0627451, g: 0.14509805, b: 0.25882354, a: 1}
+      networkId: 8
+    - color: {r: 0.36862746, g: 0.28235295, b: 0.11764707, a: 1}
+      networkId: 9
+    - color: {r: 0.32941177, g: 0.16470589, b: 0.054901965, a: 1}
+      networkId: 10
+    - color: {r: 0.38823533, g: 0.22352943, b: 0.058823533, a: 1}
+      networkId: 11
+    - color: {r: 0.37647063, g: 0.19215688, b: 0.003921569, a: 1}
+      networkId: 12
+    - color: {r: 0.27058825, g: 0.09411766, b: 0, a: 1}
+      networkId: 13
+  - customizationName: Nails
+    colors:
+    - color: {r: 0.9921569, g: 0.9058824, b: 0.8078432, a: 1}
+      networkId: 0
+    - color: {r: 1, g: 0.8313726, b: 0.72156864, a: 1}
+      networkId: 1
+    - color: {r: 1, g: 0.6627451, b: 0.6431373, a: 1}
+      networkId: 2
+    - color: {r: 1, g: 0.5568628, b: 0.5921569, a: 1}
+      networkId: 3
+    - color: {r: 0.058823533, g: 0.10588236, b: 0.25882354, a: 1}
+      networkId: 4
+    - color: {r: 0.3019608, g: 0.26666668, b: 0.26666668, a: 1}
+      networkId: 5
+    - color: {r: 0.78823537, g: 0.27058825, b: 0.27058825, a: 1}
+      networkId: 6
+    - color: {r: 0.83921576, g: 0.41176474, b: 0.26666668, a: 1}
+      networkId: 7
+    - color: {r: 0.8588236, g: 0.5137255, b: 0.28627452, a: 1}
+      networkId: 8
+    - color: {r: 0.8588236, g: 0.5137255, b: 0.28627452, a: 1}
+      networkId: 9
+    - color: {r: 0.6313726, g: 0.8235295, b: 0.75294125, a: 1}
+      networkId: 10
+    - color: {r: 1, g: 0, b: 0.6666667, a: 1}
+      networkId: 11
+    - color: {r: 1, g: 0, b: 0.9333334, a: 1}
+      networkId: 12
   lipColor:
   - color: {r: 0.9764706, g: 0.5294118, b: 0.5294118, a: 1}
     networkId: 0

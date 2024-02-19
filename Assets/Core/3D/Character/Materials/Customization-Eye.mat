@@ -179,7 +179,7 @@ Material:
     - _LightFalloffSoftness: 1
     - _LightIntensity: -1
     - _LightIntensityAffectOCALCTPTDirectionalLight: 0
-    - _MCIALO: 1
+    - _MCIALO: 0
     - _MCapIntensity: 1
     - _MVCOL: 0
     - _MainTextureColorAO: 0
@@ -317,8 +317,8 @@ Material:
     - _CustomLightDirection: {r: 0, g: 0, b: 10, a: 0}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlossColor: {r: 1, g: 1, b: 1, a: 1}
-    - _HighlightColor: {r: 0.44313726, g: 0.7084805, b: 0.8509804, a: 1}
-    - _MainColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+    - _HighlightColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
+    - _MainColor: {r: 0.7411765, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineOffset: {r: 0, g: 0, b: 0, a: 1}
     - _OverallShadowColor: {r: 1, g: 1, b: 1, a: 1}
