@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CustomizationManager : MonoBehaviour
@@ -12,6 +13,7 @@ public class CustomizationManager : MonoBehaviour
     [SerializeField] private CustomizationScriptableObject bodyColors;
 
     private CharacterCustomization currentModel;
+    private string currentEditedShapeKeyName;
 
     private void Start()
     {
@@ -53,5 +55,14 @@ public class CustomizationManager : MonoBehaviour
         currentModel.UpdateSkinMaterial(bodyGroup, colorToSet);
     }
 
+    public void SetCurrentShapeKey(string shapeKey)
+    {
+        currentEditedShapeKeyName = shapeKey;
+    }
+
+    public void UpdateSlider(int value)
+    {
+        currentModel.UpdateBodyShapeKey(currentEditedShapeKeyName, value);
+    }
 
 }

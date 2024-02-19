@@ -4,9 +4,9 @@ using UnityEngine;
 [Serializable]
 public class ShapeKey
 {
-    private static float maxValue = 100;
+    private static int maxValue = 100;
 
-    private float value;
+    private int value;
     
     [SerializeField] private bool hasNegative;
     [SerializeField] private string shapeKeyName;
@@ -16,5 +16,20 @@ public class ShapeKey
 
     public string ShapeKeyName { get { return shapeKeyName; } }
     public bool HasNegative { get {  return hasNegative; } }
+    public int Value { get { return value; } }
+
+    public void SetValue(int value)
+    {
+        this.value = value;
+    }
+
+    public int GetIndex()
+    {
+        if (this.value >= 0)
+        {
+            return shapeIndexPositive;
+        }
+        return shapeIndexNegative;
+    }
 
 }

@@ -13758,9 +13758,9 @@ MonoBehaviour:
   - hasNegative: 1
     shapeKeyName: NoseWidth
   - hasNegative: 1
-    shapeKeyName: NoseWidthUp+
+    shapeKeyName: NoseWidthUp
   - hasNegative: 1
-    shapeKeyName: NoseLength+
+    shapeKeyName: NoseLength
   - hasNegative: 0
     shapeKeyName: NoseShape
   - hasNegative: 1
@@ -13783,24 +13783,45 @@ MonoBehaviour:
   - materialName: Cloth
     index: 0
     material: {fileID: 0}
-  - materialName: Eye
+    customizationColor:
+      color: {r: 0, g: 0, b: 0, a: 0}
+      networkId: 0
+  - materialName: Eyes
     index: 1
     material: {fileID: 0}
+    customizationColor:
+      color: {r: 0, g: 0, b: 0, a: 0}
+      networkId: 0
   - materialName: EyeDark
     index: 2
     material: {fileID: 0}
+    customizationColor:
+      color: {r: 0, g: 0, b: 0, a: 0}
+      networkId: 0
   - materialName: Skin
     index: 3
     material: {fileID: 0}
+    customizationColor:
+      color: {r: 0, g: 0, b: 0, a: 0}
+      networkId: 0
   - materialName: Nails
     index: 4
     material: {fileID: 0}
+    customizationColor:
+      color: {r: 0, g: 0, b: 0, a: 0}
+      networkId: 0
   - materialName: Lips
     index: 5
     material: {fileID: 0}
+    customizationColor:
+      color: {r: 0, g: 0, b: 0, a: 0}
+      networkId: 0
   - materialName: Eyelash
     index: 6
     material: {fileID: 0}
+    customizationColor:
+      color: {r: 0, g: 0, b: 0, a: 0}
+      networkId: 0
   mainBodyRenderer: {fileID: 235482308500273014}
   cameraTarget: {fileID: 0}
 --- !u!1 &5646172924630229511

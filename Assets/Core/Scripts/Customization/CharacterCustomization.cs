@@ -71,4 +71,24 @@ public class CharacterCustomization : MonoBehaviour
         material.SetColor(color);
     }
 
+    public void UpdateBodyShapeKey(string shapeKeyName, int value)
+    {
+        ShapeKey shapeKey = mainBodyKeys.FirstOrDefault((sp) => sp.ShapeKeyName == shapeKeyName);
+        if (shapeKey == null)
+        {
+            Debug.LogError($"Shape key with value ");
+        }
+
+        shapeKey.SetValue(value);
+        int index = shapeKey.GetIndex();
+
+        int correctedShapeKeyValue = value;
+        if (value <= 0)
+        {
+            correctedShapeKeyValue = Mathf.Abs(value);
+        }
+
+        mainBodyRenderer.SetBlendShapeWeight(index, correctedShapeKeyValue);
+    }
+
 }
