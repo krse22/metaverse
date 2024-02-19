@@ -697,7 +697,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3161714483296477933}
   - component: {fileID: 2511893742682601003}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Eyebrow - 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,7 +739,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3d998f1c6730b74184c764741fe1b7d, type: 2}
+  - {fileID: 2100000, guid: da0b6924a388af94887ad4604f931644, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2147,7 +2147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3771487046742791813}
   - component: {fileID: 1775994158444581999}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Eyebrow - 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2189,7 +2189,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3d998f1c6730b74184c764741fe1b7d, type: 2}
+  - {fileID: 2100000, guid: da0b6924a388af94887ad4604f931644, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2749,7 +2749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5720860594744758660}
   - component: {fileID: 5984484969885871969}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Eyebrow - 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2791,7 +2791,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3d998f1c6730b74184c764741fe1b7d, type: 2}
+  - {fileID: 2100000, guid: da0b6924a388af94887ad4604f931644, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3676,7 +3676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8931403650605473140}
   - component: {fileID: 8300457871295987295}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Eyebrow - 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3718,7 +3718,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3d998f1c6730b74184c764741fe1b7d, type: 2}
+  - {fileID: 2100000, guid: da0b6924a388af94887ad4604f931644, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6678,7 +6678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6197705033291867325}
   - component: {fileID: 5713400688249787957}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Eyebrow - 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6720,7 +6720,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3d998f1c6730b74184c764741fe1b7d, type: 2}
+  - {fileID: 2100000, guid: da0b6924a388af94887ad4604f931644, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12258,7 +12258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8770577748461934285}
   - component: {fileID: 235482308500273014}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Game-Ready-High-Poly-Male
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12300,12 +12300,12 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0631bdd8e3fdb16459be88229cb9edf3, type: 2}
-  - {fileID: 2100000, guid: 7fb6768178ca7614f857d7b37fcaec8d, type: 2}
+  - {fileID: 2100000, guid: 7e982eb68dac2b74f91208ab4b50e6a0, type: 2}
+  - {fileID: 2100000, guid: bd98dd69435ced445a6a435abf19debc, type: 2}
   - {fileID: 2100000, guid: 899d957c4b708ae4ebe88c8280486f36, type: 2}
-  - {fileID: 2100000, guid: 98295002cd921f84daa7533095d9b68d, type: 2}
-  - {fileID: 2100000, guid: 351d1cedd081e4f4296895981055757f, type: 2}
-  - {fileID: 2100000, guid: 4920dc976c23e484ab52eb77ba6551f0, type: 2}
+  - {fileID: 2100000, guid: fcab05c33ed3d634eaec9d83d16cccd5, type: 2}
+  - {fileID: 2100000, guid: 00d66d411d248d44d9101422c9e39195, type: 2}
+  - {fileID: 2100000, guid: 16a39f3870e8f8f45b6f3b5800fe5fb3, type: 2}
   - {fileID: 2100000, guid: 296c8043f5618294aa7fd91338e53bd4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -13753,6 +13753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c37322e25b21084a8e1ceb0d1c22cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterType: 1
   mainBodyKeys:
   - hasNegative: 1
     shapeKeyName: NoseWidth
@@ -13778,6 +13779,28 @@ MonoBehaviour:
     shapeKeyName: Fat
   - hasNegative: 0
     shapeKeyName: Muscle
+  customizationMaterials:
+  - materialName: Cloth
+    index: 0
+    material: {fileID: 0}
+  - materialName: Eye
+    index: 1
+    material: {fileID: 0}
+  - materialName: EyeDark
+    index: 2
+    material: {fileID: 0}
+  - materialName: Skin
+    index: 3
+    material: {fileID: 0}
+  - materialName: Nails
+    index: 4
+    material: {fileID: 0}
+  - materialName: Lips
+    index: 5
+    material: {fileID: 0}
+  - materialName: Eyelash
+    index: 6
+    material: {fileID: 0}
   mainBodyRenderer: {fileID: 235482308500273014}
   cameraTarget: {fileID: 0}
 --- !u!1 &5646172924630229511
@@ -18524,7 +18547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7161850757500652406}
   - component: {fileID: 6254991666687191028}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Eyebrow - 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18566,7 +18589,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3d998f1c6730b74184c764741fe1b7d, type: 2}
+  - {fileID: 2100000, guid: da0b6924a388af94887ad4604f931644, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19000,13 +19023,13 @@ GameObject:
   m_Component:
   - component: {fileID: 6953886345261351528}
   - component: {fileID: 8290372627113302644}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: Eyebrow - 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6953886345261351528
 Transform:
   m_ObjectHideFlags: 0
@@ -19042,7 +19065,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c3d998f1c6730b74184c764741fe1b7d, type: 2}
+  - {fileID: 2100000, guid: da0b6924a388af94887ad4604f931644, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

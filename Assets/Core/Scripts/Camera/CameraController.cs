@@ -1,28 +1,32 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+namespace Core
 {
-    private static CameraController Instance;
-
-    private ICameraHolder target;
-
-    void Awake()
+    public class CameraController : MonoBehaviour
     {
-        Instance = this;
-    }
+        private static CameraController Instance;
 
-    public static void SetCameraOwner(ICameraHolder holderTarget)
-    {
-        Instance.target = holderTarget;
-    }
+        private ICameraHolder target;
 
-    private void LateUpdate()
-    {
-        if (target != null)
+        void Awake()
         {
-            (Vector3 positionTarget, Vector3 rotationTarget) = target.PositionAndRotation();
-            transform.position = positionTarget;
-            transform.rotation = Quaternion.Euler(rotationTarget);
+            Instance = this;
+        }
+
+        public static void SetCameraOwner(ICameraHolder holderTarget)
+        {
+            Instance.target = holderTarget;
+        }
+
+        private void LateUpdate()
+        {
+            if (target != null)
+            {
+                (Vector3 positionTarget, Vector3 rotationTarget) = target.PositionAndRotation();
+                transform.position = positionTarget;
+                transform.rotation = Quaternion.Euler(rotationTarget);
+            }
         }
     }
 }
+

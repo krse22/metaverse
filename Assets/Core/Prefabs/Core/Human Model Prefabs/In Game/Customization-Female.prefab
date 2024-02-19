@@ -9131,11 +9131,11 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 98295002cd921f84daa7533095d9b68d, type: 2}
-  - {fileID: 2100000, guid: 4920dc976c23e484ab52eb77ba6551f0, type: 2}
-  - {fileID: 2100000, guid: 351d1cedd081e4f4296895981055757f, type: 2}
+  - {fileID: 2100000, guid: fcab05c33ed3d634eaec9d83d16cccd5, type: 2}
+  - {fileID: 2100000, guid: 16a39f3870e8f8f45b6f3b5800fe5fb3, type: 2}
+  - {fileID: 2100000, guid: 00d66d411d248d44d9101422c9e39195, type: 2}
   - {fileID: 2100000, guid: 7fb6768178ca7614f857d7b37fcaec8d, type: 2}
-  - {fileID: 2100000, guid: 0631bdd8e3fdb16459be88229cb9edf3, type: 2}
+  - {fileID: 2100000, guid: 7e982eb68dac2b74f91208ab4b50e6a0, type: 2}
   - {fileID: 2100000, guid: 899d957c4b708ae4ebe88c8280486f36, type: 2}
   - {fileID: 2100000, guid: 296c8043f5618294aa7fd91338e53bd4, type: 2}
   m_StaticBatchInfo:
@@ -11603,6 +11603,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8618246560396240564}
+  - component: {fileID: 3681776597115596062}
+  - component: {fileID: 7195284269135787034}
   m_Layer: 0
   m_Name: Customization-Female
   m_TagString: Untagged
@@ -11634,6 +11636,65 @@ Transform:
   - {fileID: 6937340950148250384}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3681776597115596062
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5299102744021873568}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5924e3898cdfdcf4997cd4bead33c2ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7195284269135787034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5299102744021873568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c37322e25b21084a8e1ceb0d1c22cf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 2
+  mainBodyKeys: []
+  customizationMaterials:
+  - materialName: Cloth
+    index: 0
+    material: {fileID: 0}
+  - materialName: Eye
+    index: 1
+    material: {fileID: 0}
+  - materialName: EyeDark
+    index: 2
+    material: {fileID: 0}
+  - materialName: Skin
+    index: 3
+    material: {fileID: 0}
+  - materialName: Nails
+    index: 4
+    material: {fileID: 0}
+  - materialName: Lips
+    index: 5
+    material: {fileID: 0}
+  - materialName: Eyelash
+    index: 6
+    material: {fileID: 0}
+  mainBodyRenderer: {fileID: 319993623185785569}
+  cameraTarget: {fileID: 0}
 --- !u!1 &5304491313633438928
 GameObject:
   m_ObjectHideFlags: 0

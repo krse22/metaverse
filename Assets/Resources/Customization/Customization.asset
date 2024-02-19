@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3777741bba32ba6478d7ad29b5a5810a, type: 3}
+  m_Name: Customization
+  m_EditorClassIdentifier: 
+  colorGroups:
+  - customizationName: Skin
+    colors:
+    - color: {r: 1, g: 0.90588236, b: 0.81960785, a: 1}
+      networkId: 0
+    - color: {r: 0.9019608, g: 0.7372549, b: 0.59607846, a: 1}
+      networkId: 1
+    - color: {r: 0.83137256, g: 0.6666667, b: 0.47058824, a: 1}
+      networkId: 2
+    - color: {r: 0.6313726, g: 0.43137255, b: 0.29411766, a: 1}
+      networkId: 3
+    - color: {r: 0.23137255, g: 0.13333334, b: 0.09803922, a: 1}
+      networkId: 4
+  lipColor:
+  - color: {r: 0.9764706, g: 0.5294118, b: 0.5294118, a: 1}
+    networkId: 0
+  - color: {r: 0.90588236, g: 0.41568628, b: 0.41568628, a: 1}
+    networkId: 1
+  - color: {r: 0.8392157, g: 0.35686275, b: 0.35686275, a: 1}
+    networkId: 2
+  - color: {r: 0.75686276, g: 0.29411766, b: 0.29411766, a: 1}
+    networkId: 3
+  - color: {r: 0.72156864, g: 0.24705882, b: 0.24705882, a: 1}
+    networkId: 4
+  eyebrowColor:
+  - color: {r: 0.9882353, g: 0.98039216, b: 0.972549, a: 1}
+    networkId: 0
+  - color: {r: 0.9137255, g: 0.8666667, b: 0.8039216, a: 1}
+    networkId: 1
+  - color: {r: 0.7490196, g: 0.64705884, b: 0.5411765, a: 1}
+    networkId: 2
+  - color: {r: 0.67058825, g: 0.5372549, b: 0.4392157, a: 1}
+    networkId: 3
+  - color: {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 1}
+    networkId: 4
+  eyelashColor:
+  - color: {r: 0, g: 0, b: 0, a: 1}
+    networkId: 0
+  - color: {r: 0, g: 0, b: 0, a: 1}
+    networkId: 1
+  - color: {r: 0, g: 0, b: 0, a: 1}
+    networkId: 2
+  - color: {r: 0, g: 0, b: 0, a: 1}
+    networkId: 3
+  - color: {r: 0, g: 0, b: 0, a: 1}
+    networkId: 4
+  skinColor:
+  - color: {r: 1, g: 0.90588236, b: 0.81960785, a: 1}
+    networkId: 0
+  - color: {r: 0.9019608, g: 0.7372549, b: 0.59607846, a: 1}
+    networkId: 1
+  - color: {r: 0.83137256, g: 0.6666667, b: 0.47058824, a: 1}
+    networkId: 2
+  - color: {r: 0.6313726, g: 0.43137255, b: 0.29411766, a: 1}
+    networkId: 3
+  - color: {r: 0.23137255, g: 0.13333334, b: 0.09803922, a: 1}
+    networkId: 4
+  nailsColor:
+  - color: {r: 0.9921569, g: 0.9058824, b: 0.8078432, a: 1}
+    networkId: 0
+  - color: {r: 1, g: 0.8313726, b: 0.72156864, a: 1}
+    networkId: 1
+  - color: {r: 1, g: 0.6627451, b: 0.6431373, a: 1}
+    networkId: 2
+  - color: {r: 1, g: 0.5568628, b: 0.5921569, a: 1}
+    networkId: 3
+  - color: {r: 0.058823533, g: 0.10588236, b: 0.25882354, a: 1}
+    networkId: 4
+  - color: {r: 0.3019608, g: 0.26666668, b: 0.26666668, a: 1}
+    networkId: 5
+  - color: {r: 0.78823537, g: 0.27058825, b: 0.27058825, a: 1}
+    networkId: 6
+  - color: {r: 0.83921576, g: 0.41176474, b: 0.26666668, a: 1}
+    networkId: 7
+  - color: {r: 0.8588236, g: 0.5137255, b: 0.28627452, a: 1}
+    networkId: 8
+  - color: {r: 0.8588236, g: 0.5137255, b: 0.28627452, a: 1}
+    networkId: 9
+  - color: {r: 0.6313726, g: 0.8235295, b: 0.75294125, a: 1}
+    networkId: 10
+  - color: {r: 1, g: 0, b: 0.6666667, a: 1}
+    networkId: 11
+  - color: {r: 1, g: 0, b: 0.9333334, a: 1}
+    networkId: 12
+  eyesColor:
+  - color: {r: 0.9333334, g: 0.909804, b: 0.6666667, a: 1}
+    networkId: 0
+  - color: {r: 0.7960785, g: 0.8078432, b: 0.5254902, a: 1}
+    networkId: 1
+  - color: {r: 0.65882355, g: 0.7058824, b: 0.3803922, a: 1}
+    networkId: 2
+  - color: {r: 0.5254902, g: 0.6, b: 0.2392157, a: 1}
+    networkId: 3
+  - color: {r: 0.38823533, g: 0.49803925, b: 0.098039225, a: 1}
+    networkId: 4
+  - color: {r: 0.7411765, g: 1, b: 1, a: 1}
+    networkId: 5
+  - color: {r: 0.07058824, g: 0.20000002, b: 0.35686275, a: 1}
+    networkId: 6
+  - color: {r: 0.0627451, g: 0.14509805, b: 0.25882354, a: 1}
+    networkId: 7
+  - color: {r: 0.0627451, g: 0.14509805, b: 0.25882354, a: 1}
+    networkId: 8
+  - color: {r: 0.36862746, g: 0.28235295, b: 0.11764707, a: 1}
+    networkId: 9
+  - color: {r: 0.32941177, g: 0.16470589, b: 0.054901965, a: 1}
+    networkId: 10
+  - color: {r: 0.38823533, g: 0.22352943, b: 0.058823533, a: 1}
+    networkId: 11
+  - color: {r: 0.37647063, g: 0.19215688, b: 0.003921569, a: 1}
+    networkId: 12
+  - color: {r: 0.27058825, g: 0.09411766, b: 0, a: 1}
+    networkId: 13
+  baseAtlas:
+  - mainColor: {fileID: 2800000, guid: 5e625409d06426a498d188aceacaa49e, type: 3}
+    id: 0
+  - mainColor: {fileID: 2800000, guid: 6e3871b8a56d6f844858d724fb8d44a0, type: 3}
+    id: 1
+  - mainColor: {fileID: 2800000, guid: f17af2a4e64992d4a9959652237e1727, type: 3}
+    id: 2
+  - mainColor: {fileID: 2800000, guid: 6997cd759eacadb43bab1a5f37c26209, type: 3}
+    id: 3
+  - mainColor: {fileID: 2800000, guid: ea5c2df4d162dfe4eb5084db5fd4e435, type: 3}
+    id: 4

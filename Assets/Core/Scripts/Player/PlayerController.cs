@@ -13,7 +13,7 @@ public class PlayerController : NetworkBehaviour, ICameraHolder
     {
         if (!IsServer && IsOwner)
         {
-            CameraController.SetCameraOwner(this);
+            Core.CameraController.SetCameraOwner(this);
         }
     }
 
