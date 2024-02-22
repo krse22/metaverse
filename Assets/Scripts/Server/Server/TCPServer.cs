@@ -15,7 +15,6 @@ public class TCPServer : MonoBehaviour
     private Thread listenerThread;
 
     public delegate void PacketHandler(ulong _fromClient, Packet _packet);
-    public static Dictionary<int, PacketHandler> packetHandlers;
 
     private static Dictionary<ulong, Client> clients;
 
@@ -33,7 +32,6 @@ public class TCPServer : MonoBehaviour
 
     void StartServer()
     {
-        InitializeServerData();
         clients = new Dictionary<ulong, Client>();
 
         listener = new TcpListener(IPAddress.Any, port);
@@ -53,20 +51,10 @@ public class TCPServer : MonoBehaviour
 
     }
 
-    public static void WelcomeReceived(ulong _fromClient, Packet _packet)
+    public static void ReceivedFromClient(ulong from, Packet packet)
     {
-        string username = _packet.ReadString();
-        Debug.Log(username);
-
-    }
-
-    private static void InitializeServerData()
-    {
-        packetHandlers = new Dictionary<int, PacketHandler>()
-            {
-                { (int)ClientPackets.welcomeReceived, WelcomeReceived },
-            };
-  
+        string text = packet.ReadString();
+        Debug.Log($"Received from {from} text: {text}");
     }
 
     public void Broadcast()
@@ -74,7 +62,6 @@ public class TCPServer : MonoBehaviour
         foreach(ulong key in clients.Keys)
         {
             Packet packet = new Packet();
-            packet.InsertInt(1);
             packet.Write("Hello from server ;))))");
             clients[key].SendData(packet);
         }

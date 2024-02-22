@@ -1,7 +1,6 @@
 using System;
 using System.Net.Sockets;
 using UnityEngine;
-using static Unity.Networking.Transport.Utilities.ReliableUtility;
 
 public class Client 
 {
@@ -54,13 +53,12 @@ public class Client
             if (client != null)
             {
                 _packet.WriteLength();
-                Debug.Log(_packet.Length());
                 stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
             }
         }
         catch (Exception _ex)
         {
-            Console.WriteLine($"Error sending data to player {id} via TCP: {_ex}");
+            Debug.Log($"Error sending data to player {id} via TCP: {_ex}");
         }
     }
 
@@ -84,10 +82,10 @@ public class Client
             byte[] _packetBytes = receivedData.ReadBytes(_packetLength);
             UnityThread.ExecuteInUnityThread(() =>
             {
+       
                 using (Packet _packet = new Packet(_packetBytes))
                 {
-                    int _packetId = _packet.ReadInt();
-                    TCPServer.packetHandlers[_packetId](id, _packet);
+                    TCPServer.ReceivedFromClient(id, _packet);
                 }
             });
 

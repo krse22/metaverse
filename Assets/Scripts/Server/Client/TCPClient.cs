@@ -46,7 +46,6 @@ public class TCPClient : MonoBehaviour
 
         using (Packet packet = new Packet())
         {
-            packet.InsertInt(1);
             packet.Write("Hello server!");
 
             SendData(packet);
@@ -108,9 +107,9 @@ public class TCPClient : MonoBehaviour
             {
                 using (Packet _packet = new Packet(_packetBytes))
                 {
-                    int _packetId = _packet.ReadInt();
-                    packetHandlers[_packetId](1, _packet);
+                    ReceivedFromServer(_packet);
                 }
+
             });
 
             _packetLength = 0;
@@ -130,6 +129,12 @@ public class TCPClient : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void ReceivedFromServer(Packet packet)
+    {
+        string text = packet.ReadString();
+        Debug.Log("Received from server: " + text);
     }
 
     private void InitializeClientData()
