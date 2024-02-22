@@ -1,23 +1,39 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Sockets;
 using UnityEngine;
 
+enum ServerPacketType
+{
+    Response = 0,
+    Message = 1,
+}
+
 public class TCPClient : MonoBehaviour
 {
-
     [SerializeField] private int port;
 
-    private TcpClient client;
-    private NetworkStream stream;
-    private Packet receivedData;
-    private byte[] receiveBuffer;
+    private static TCPClient instance;
 
+    private void Awake()
+    {
+        instance = this;
+    }
 
-    private Dictionary<int, TCPServer.PacketHandler> packetHandlers;
+    private static TcpClient client;
+    private static NetworkStream stream;
+    private static Packet receivedData;
+    private static byte[] receiveBuffer;
+    private static byte requestId;
+
+    private static Dictionary<byte, Response> responses;
 
     public void Connect()
+    {
+        ConnectToServer();
+    }
+
+    private static void ConnectToServer()
     {
         client = new TcpClient()
         {
@@ -25,12 +41,13 @@ public class TCPClient : MonoBehaviour
             SendBufferSize = TCPServer.dataBufferSize,
         };
 
-        InitializeClientData();
+        requestId = 0;
+        responses = new Dictionary<byte, Response>();
 
-        client.BeginConnect("127.0.0.1", port, ConnectCallback, client);
+        client.BeginConnect("127.0.0.1", instance.port, ConnectCallback, client);
     }
 
-    private void ConnectCallback(IAsyncResult _result)
+    private static void ConnectCallback(IAsyncResult _result)
     {
         client.EndConnect(_result);
         stream = client.GetStream();
@@ -44,17 +61,10 @@ public class TCPClient : MonoBehaviour
         receivedData = new Packet();
         receiveBuffer = new byte[TCPServer.dataBufferSize];
 
-        using (Packet packet = new Packet())
-        {
-            packet.Write("Hello server!");
-
-            SendData(packet);
-        }
-
         stream.BeginRead(receiveBuffer, 0, TCPServer.dataBufferSize, ReceiveCallback, null);
     }
 
-    private void ReceiveCallback(IAsyncResult result)
+    private static void ReceiveCallback(IAsyncResult result)
     {
         try
         {
@@ -63,92 +73,67 @@ public class TCPClient : MonoBehaviour
             int byteLength = stream.EndRead(result);
             if (byteLength <= 0)
             {
-                // instance.Disconnect();
+                Disconnect();
                 return;
             }
 
             byte[] data = new byte[byteLength];
             Array.Copy(receiveBuffer, data, byteLength);
 
-            receivedData.Reset(HandleData(data));
+            receivedData.Reset(DataHandler.HandleData(data, receivedData, ReceivedFromServer));
             stream.BeginRead(receiveBuffer, 0, TCPServer.dataBufferSize, ReceiveCallback, null);
         }
         catch
         {
-           // Disconnect();
+            Disconnect();
         }
     }
 
-    public void WelcomeReceived(ulong fromClient, Packet packet)
+    private static void ReceivedFromServer(Packet packet)
     {
-        string text = packet.ReadString();
-        Debug.Log(text);
+        ServerPacketType type = (ServerPacketType)packet.ReadByte();
+        byte requestId = (byte)packet.ReadByte();
+
+        responses[requestId].onResponse();
     }
 
-    private bool HandleData(byte[] _data)
+    public static void Post(string route, string jsonBody, Action onResponse)
     {
-        int _packetLength = 0;
-
-        receivedData.SetBytes(_data);
-
-        if (receivedData.UnreadLength() >= 4)
-        {
-            _packetLength = receivedData.ReadInt();
-            if (_packetLength <= 0)
-            {
-                return true;
-            }
-        }
-
-        while (_packetLength > 0 && _packetLength <= receivedData.UnreadLength())
-        {
-            byte[] _packetBytes = receivedData.ReadBytes(_packetLength);
-            UnityThread.ExecuteInUnityThread(() =>
-            {
-                using (Packet _packet = new Packet(_packetBytes))
-                {
-                    ReceivedFromServer(_packet);
-                }
-
-            });
-
-            _packetLength = 0;
-            if (receivedData.UnreadLength() >= 4)
-            {
-                _packetLength = receivedData.ReadInt();
-                if (_packetLength <= 0)
-                {
-                    return true;
-                }
-            }
-        }
-
-        if (_packetLength <= 1)
-        {
-            return true;
-        }
-
-        return false;
+        SendData(RequestType.Post, route, jsonBody, onResponse);
     }
 
-    private void ReceivedFromServer(Packet packet)
+    public static void Get(string route, string jsonBody, Action onResponse)
     {
-        string text = packet.ReadString();
-        Debug.Log("Received from server: " + text);
+        SendData(RequestType.Get, route, jsonBody, onResponse);
     }
 
-    private void InitializeClientData()
+    public static void Put(string route, string jsonBody, Action onResponse)
     {
-        packetHandlers = new Dictionary<int, TCPServer.PacketHandler>()
+        SendData(RequestType.Put, route, jsonBody, onResponse);
+    }
+
+    public static void Delete(string route, string jsonBody, Action onResponse)
+    {
+        SendData(RequestType.Delete, route, jsonBody, onResponse);
+    }
+
+    public static void SendData(RequestType type, string route, string jsonBody, Action onResponse)
+    {
+
+        Packet packet = new Packet();
+        packet.Write(requestId);
+        packet.Write((byte)type);
+        packet.Write(route);
+        packet.Write(jsonBody);
+
+        responses[requestId] = new Response()
         {
-            { (int)ServerPackets.welcome, WelcomeReceived },
+            ResponseId = requestId,
+            onResponse = onResponse
         };
-        Debug.Log("Initialized packets.");
-    }
 
+        requestId++;
 
-    private void SendData(Packet packet)
-    {
         try
         {
             if (client != null)
@@ -161,6 +146,11 @@ public class TCPClient : MonoBehaviour
         {
             Debug.Log($"Error sending data to server via TCP: {_ex}");
         }
+    }
+
+    private static void Disconnect()
+    {
+        client.Close();
     }
 
 }

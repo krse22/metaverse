@@ -36,7 +36,7 @@ public class Client
             byte[] data = new byte[byteLength];
             Array.Copy(receiveBuffer, data, byteLength);
 
-            receivedData.Reset(HandleData(data));
+            receivedData.Reset(DataHandler.HandleData(data, receivedData, ReceivedFromClient));
             stream.BeginRead(receiveBuffer, 0, TCPServer.dataBufferSize, ReceiveCallback, null);
         }
         catch (Exception _ex)
@@ -44,6 +44,17 @@ public class Client
             Debug.Log($"Error receiving TCP data: {_ex}");
             // Server.clients[id].Disconnect();
         }
+    }
+
+    void ReceivedFromClient(Packet packet)
+    {
+        TCPServer.ReceivedFromClient(id, packet);
+    }
+
+    void Disconnect()
+    {
+        client.Close();
+        TCPServer.DisconnectClient(id);
     }
 
     public void SendData(Packet _packet)
@@ -62,51 +73,6 @@ public class Client
         }
     }
 
-    private bool HandleData(byte[] _data)
-    {
-        int _packetLength = 0;
-
-        receivedData.SetBytes(_data);
-
-        if (receivedData.UnreadLength() >= 4)
-        {
-            _packetLength = receivedData.ReadInt();
-            if (_packetLength <= 0)
-            {
-                return true;
-            }
-        }
-
-        while (_packetLength > 0 && _packetLength <= receivedData.UnreadLength())
-        {
-            byte[] _packetBytes = receivedData.ReadBytes(_packetLength);
-            UnityThread.ExecuteInUnityThread(() =>
-            {
-       
-                using (Packet _packet = new Packet(_packetBytes))
-                {
-                    TCPServer.ReceivedFromClient(id, _packet);
-                }
-            });
-
-            _packetLength = 0;
-            if (receivedData.UnreadLength() >= 4)
-            {
-                _packetLength = receivedData.ReadInt();
-                if (_packetLength <= 0)
-                {
-                    return true;
-                }
-            }
-        }
-
-        if (_packetLength <= 1)
-        {
-            return true;
-        }
-
-        return false;
-    }
 
 
 }

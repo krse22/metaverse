@@ -53,8 +53,19 @@ public class TCPServer : MonoBehaviour
 
     public static void ReceivedFromClient(ulong from, Packet packet)
     {
-        string text = packet.ReadString();
-        Debug.Log($"Received from {from} text: {text}");
+        byte requestid = packet.ReadByte();
+        byte type = packet.ReadByte();
+        string route = packet.ReadString();
+        string jsonData = packet.ReadString();
+        Debug.Log($"Received type {type} from {from} on route {route} text: {jsonData}");
+
+        Packet returnPacket = new Packet();
+        returnPacket.Write((byte)ServerPacketType.Response);
+        returnPacket.Write(requestid);
+
+        clients[from].SendData(returnPacket);
+
+        returnPacket.Dispose();
     }
 
     public void Broadcast()
@@ -65,6 +76,11 @@ public class TCPServer : MonoBehaviour
             packet.Write("Hello from server ;))))");
             clients[key].SendData(packet);
         }
+    }
+
+    public static void DisconnectClient(ulong id)
+    {
+        clients.Remove(id);
     }
 
     private void OnApplicationQuit()
