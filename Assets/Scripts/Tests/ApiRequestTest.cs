@@ -10,9 +10,9 @@ public class ApiRequestTest : MonoBehaviour
         TCPClient.Post("api/character", "jsonBody", OnResponse);
     }
 
-    void OnResponse()
+    void OnResponse(Response response)
     {
-        Debug.Log("Received resposne for api/character");
+        Debug.Log(response.body);
     }
 
 }

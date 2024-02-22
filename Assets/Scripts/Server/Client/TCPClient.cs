@@ -68,7 +68,6 @@ public class TCPClient : MonoBehaviour
     {
         try
         {
-
             Debug.Log("received from serverini");
             int byteLength = stream.EndRead(result);
             if (byteLength <= 0)
@@ -92,32 +91,34 @@ public class TCPClient : MonoBehaviour
     private static void ReceivedFromServer(Packet packet)
     {
         ServerPacketType type = (ServerPacketType)packet.ReadByte();
-        byte requestId = (byte)packet.ReadByte();
+        byte requestId = packet.ReadByte();
+        string response = packet.ReadString();
 
-        responses[requestId].onResponse();
+        responses[requestId].body = response;
+        responses[requestId].onResponse(responses[requestId]);
     }
 
-    public static void Post(string route, string jsonBody, Action onResponse)
+    public static void Post(string route, string jsonBody, Action<Response> onResponse)
     {
         SendData(RequestType.Post, route, jsonBody, onResponse);
     }
 
-    public static void Get(string route, string jsonBody, Action onResponse)
+    public static void Get(string route, string jsonBody, Action<Response> onResponse)
     {
         SendData(RequestType.Get, route, jsonBody, onResponse);
     }
 
-    public static void Put(string route, string jsonBody, Action onResponse)
+    public static void Put(string route, string jsonBody, Action<Response> onResponse)
     {
         SendData(RequestType.Put, route, jsonBody, onResponse);
     }
 
-    public static void Delete(string route, string jsonBody, Action onResponse)
+    public static void Delete(string route, string jsonBody, Action<Response> onResponse)
     {
         SendData(RequestType.Delete, route, jsonBody, onResponse);
     }
 
-    public static void SendData(RequestType type, string route, string jsonBody, Action onResponse)
+    public static void SendData(RequestType type, string route, string jsonBody, Action<Response> onResponse)
     {
 
         Packet packet = new Packet();

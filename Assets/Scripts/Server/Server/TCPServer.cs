@@ -62,6 +62,7 @@ public class TCPServer : MonoBehaviour
         Packet returnPacket = new Packet();
         returnPacket.Write((byte)ServerPacketType.Response);
         returnPacket.Write(requestid);
+        returnPacket.Write("Response for api/character");
 
         clients[from].SendData(returnPacket);
 
