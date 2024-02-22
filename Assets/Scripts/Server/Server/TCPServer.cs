@@ -56,8 +56,8 @@ public class TCPServer : MonoBehaviour
     public static void WelcomeReceived(ulong _fromClient, Packet _packet)
     {
         string username = _packet.ReadString();
-
         Debug.Log(username);
+
     }
 
     private static void InitializeServerData()
@@ -67,6 +67,17 @@ public class TCPServer : MonoBehaviour
                 { (int)ClientPackets.welcomeReceived, WelcomeReceived },
             };
   
+    }
+
+    public void Broadcast()
+    {
+        foreach(ulong key in clients.Keys)
+        {
+            Packet packet = new Packet();
+            packet.InsertInt(1);
+            packet.Write("Hello from server ;))))");
+            clients[key].SendData(packet);
+        }
     }
 
     private void OnApplicationQuit()

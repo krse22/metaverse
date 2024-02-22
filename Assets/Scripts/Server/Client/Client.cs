@@ -1,6 +1,7 @@
 using System;
 using System.Net.Sockets;
 using UnityEngine;
+using static Unity.Networking.Transport.Utilities.ReliableUtility;
 
 public class Client 
 {
@@ -43,6 +44,23 @@ public class Client
         {
             Debug.Log($"Error receiving TCP data: {_ex}");
             // Server.clients[id].Disconnect();
+        }
+    }
+
+    public void SendData(Packet _packet)
+    {
+        try
+        {
+            if (client != null)
+            {
+                _packet.WriteLength();
+                Debug.Log(_packet.Length());
+                stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
+            }
+        }
+        catch (Exception _ex)
+        {
+            Console.WriteLine($"Error sending data to player {id} via TCP: {_ex}");
         }
     }
 
