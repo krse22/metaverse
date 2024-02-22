@@ -222,7 +222,7 @@ Material:
     - _OutlineExtrudeMethod: 0
     - _OutlineMode: 0
     - _OutlineNoiseIntensity: 0
-    - _OutlineWidth: 0.02
+    - _OutlineWidth: 0.04
     - _OutlineWidthAffectedByViewDistance: 0
     - _OutlineZPostionInCamera: 1.7
     - _OverallShadowColorPower: 1.17

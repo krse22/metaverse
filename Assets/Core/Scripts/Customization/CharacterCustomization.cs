@@ -1,31 +1,8 @@
-using System;
 using System.Linq;
 using UnityEngine;
 
-[Serializable]
-public class CustomizationMaterialInstance
-{
-    public string materialName;
-    public int index;
-    public Material material;
-    public CustomizationColor customizationColor;
-
-    public void SetColor(CustomizationColor color)
-    {
-        material.SetColor("_MainColor", color.color);
-        customizationColor = color;
-    }
-}
-
-public enum CharacterType
-{
-    Male = 1,
-    Female = 2,
-}
-
 public class CharacterCustomization : MonoBehaviour
 {
-
     [SerializeField] private CharacterType characterType;
 
     [SerializeField] private ShapeKey[] mainBodyKeys;
@@ -76,7 +53,7 @@ public class CharacterCustomization : MonoBehaviour
         ShapeKey shapeKey = mainBodyKeys.FirstOrDefault((sp) => sp.ShapeKeyName == shapeKeyName);
         if (shapeKey == null)
         {
-            Debug.LogError($"Shape key with value ");
+            Debug.LogError($"Shape key with name {shapeKeyName} not found.");
         }
 
         shapeKey.SetValue(value);
