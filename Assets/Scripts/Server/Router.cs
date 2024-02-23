@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class Router : MonoBehaviour
 {
@@ -44,8 +45,18 @@ public class Router : MonoBehaviour
                         {
                             RouteAttribute route = method.GetCustomAttribute<RouteAttribute>();
                             string combinedRoute = CombineBaseRouteWithRoute(controllerAttribute.Route, route.Route);
-                            routes.Add(new Route(route.RequestType, combinedRoute));
-                            Debug.Log(combinedRoute);
+
+                            var parameters = method.GetParameters();
+                            if (parameters.Length == 1 && parameters[0].ParameterType == typeof(Request))
+                            {
+                                routes.Add(new Route(route.RequestType, combinedRoute, ConvertMethodInfoToAction(monoBehaviour, method)));
+                                Debug.Log(combinedRoute);
+                            } else
+                            {
+                                Debug.LogError($"Failed to create route {route.RequestType}|{combinedRoute} because it doesn't have Requst parameter");
+                            }
+
+ 
                             // Debug.Log($"{route.RequestTypeString}|{controllerAttribute.Route}{route.Route}");    
                         }
                     }
@@ -58,11 +69,27 @@ public class Router : MonoBehaviour
     {
         foreach (Route route in routes)
         {
-            if (route.MatchRoute(requestType, incomingRoute))
+            Dictionary<string, string> reqParams;
+            string[] parts = incomingRoute.Split(new[] { '?' }, 2);
+            string afterQuestionMark = parts.Length > 1 ? parts[1] : string.Empty;
+            string basicRoute = parts[0];
+
+            if (route.MatchRoute(requestType, basicRoute, out reqParams))
             {
-                Debug.Log($"ACTIVATING ROUTE: {Enum.GetName(typeof(RequestType), route.requestType)}|{incomingRoute}");
+                Request request = CreateRequest(reqParams, basicRoute, afterQuestionMark, jsonBody);
+                route.methodToInvokeOnRoute.Invoke(request);
+                // Debug.Log($"ACTIVATING ROUTE: {Enum.GetName(typeof(RequestType), route.requestType)}|{incomingRoute}");
             }
         }
+    }
+
+    private static Request CreateRequest(Dictionary<string, string> reqParams, string incomingRoute, string querystring, string jsonBody) 
+    {
+        Request request = new Request();
+        request.requestParams = reqParams;
+        request.body = jsonBody;
+        request.query = querystring;
+        return request;
     }
 
     private static string CombineBaseRouteWithRoute(string baseRoute, string route)
@@ -74,6 +101,15 @@ public class Router : MonoBehaviour
         return baseRoute;
     }
 
-   
+    // Avoid reflection to boost performance
+    public static Action<Request> ConvertMethodInfoToAction(MonoBehaviour instance, MethodInfo method)
+    {
+        Action<Request> action = (Request request) =>
+        {
+            method.Invoke(instance, new object[] { request });
+        };
+
+        return action;
+    }
 
 }

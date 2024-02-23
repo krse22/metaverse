@@ -6,10 +6,15 @@ using UnityEngine;
 public class TestWalletsController : MonoBehaviour
 {
 
-    [Get(":id")]
-    public void GetWallets()
+    [Get(":walletId")]
+    public void GetWallets(Request request)
     {
+        foreach (string key in request.requestParams.Keys)
+        {
+            Debug.Log($"PARAM: [{key}]={request.requestParams[key]}");
+        }
 
+        Debug.Log($" Transform {transform.position}");
     }
 
 }

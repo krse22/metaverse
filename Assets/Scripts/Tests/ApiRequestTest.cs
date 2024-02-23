@@ -7,7 +7,7 @@ public class ApiRequestTest : MonoBehaviour
     
     public void SendApiRequestToServer()
     {
-        TCPClient.Get("api/test", "jsonBody", OnResponse);
+        TCPClient.Get("api/test?friend=test&yes=and", "jsonBody", OnResponse);
     }
 
     public void SendTestWallets()
