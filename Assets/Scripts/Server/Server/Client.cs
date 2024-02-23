@@ -29,7 +29,7 @@ public class Client
             int byteLength = stream.EndRead(result);
             if (byteLength <= 0)
             {
-                // Server.clients[id].Disconnect();
+                Disconnect();
                 return;
             }
 
@@ -42,7 +42,7 @@ public class Client
         catch (Exception _ex)
         {
             Debug.Log($"Error receiving TCP data: {_ex}");
-            // Server.clients[id].Disconnect();
+            Disconnect();
         }
     }
 

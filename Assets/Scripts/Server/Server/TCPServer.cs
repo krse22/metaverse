@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using UnityEditor.PackageManager;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class TCPServer : MonoBehaviour
 {
     public static int dataBufferSize = 1024;
 
-    [SerializeField] private int port;
+    private static int port;
     private static TcpListener listener;
-    private Thread listenerThread;
+    private static Thread listenerThread;
 
     public delegate void PacketHandler(ulong _fromClient, Packet _packet);
 
@@ -21,8 +21,9 @@ public class TCPServer : MonoBehaviour
     // For local testing only
     private static ulong idIncrementor = 0;
 
-    private void Start()
+    public static void InitializeServer(int portNumber)
     {
+        port = portNumber;
 
         UnityThread.Init();
 
@@ -30,7 +31,7 @@ public class TCPServer : MonoBehaviour
         listenerThread.Start();
     }
 
-    void StartServer()
+    private static void StartServer()
     {
         clients = new Dictionary<ulong, Client>();
 
@@ -53,15 +54,18 @@ public class TCPServer : MonoBehaviour
 
     public static void ReceivedFromClient(ulong from, Packet packet)
     {
-        byte requestid = packet.ReadByte();
+        byte requestId = packet.ReadByte();
         byte type = packet.ReadByte();
         string route = packet.ReadString();
         string jsonData = packet.ReadString();
+
+        Router.InvokeRoutes(requestId, type, route, jsonData);
+
         Debug.Log($"Received type {type} from {from} on route {route} text: {jsonData}");
 
         Packet returnPacket = new Packet();
         returnPacket.Write((byte)ServerPacketType.Response);
-        returnPacket.Write(requestid);
+        returnPacket.Write(requestId);
         returnPacket.Write("Response for api/character");
 
         clients[from].SendData(returnPacket);
@@ -86,8 +90,11 @@ public class TCPServer : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        listener.Stop();
-        listenerThread.Join();
+        if (listener != null)
+        { 
+            listener.Stop();
+            listenerThread.Join();
+        }
     }
 
 

@@ -22,9 +22,9 @@ public class DataHandler
             byte[] packetBytes = receivedData.ReadBytes(packetLength);
             UnityThread.ExecuteInUnityThread(() =>
             {
-                using (Packet _packet = new Packet(packetBytes))
+                using (Packet packet = new Packet(packetBytes))
                 {
-                    onPacketHandled(_packet);
+                    onPacketHandled(packet);
                 }
             });
 
